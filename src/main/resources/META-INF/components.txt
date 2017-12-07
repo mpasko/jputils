@@ -1,0 +1,2 @@
+org.mpasko.internal.DefaultHelloWorld
+org.mpasko.script.HelloWorldScriptService

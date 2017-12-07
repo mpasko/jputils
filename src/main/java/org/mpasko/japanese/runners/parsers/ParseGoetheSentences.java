@@ -1,0 +1,51 @@
+package org.mpasko.japanese.runners.parsers;
+
+import java.util.Arrays;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+import org.mpasko.commons.Classifier;
+import org.mpasko.util.FormatterUtil;
+import org.mpasko.util.Util;
+
+
+
+public class ParseGoetheSentences
+{
+    /**
+     * Says hello by returning a greeting to the caller.
+     *
+     * @return a greeting
+     */
+    public static void main(String args[]) {
+        StringBuilder all = new StringBuilder();
+        for (int i = 1; i<=100; ++i) {
+            all.append(i).append("\n");
+            String alignedNumber = FormatterUtil.alignString(3, "0", String.valueOf(i+2));
+            all.append(processfile(alignedNumber));
+        }
+        Util.saveFile("texts/goethe_only_kanji.txt", all.toString());
+    }
+
+    private static StringBuilder processfile(String alignedNumber) {
+        String filePattern = "inputs/www.goethe-verlag.com/book2/EN/ENJA/ENJA%s.HTM";
+        String filename = String.format(filePattern, alignedNumber);
+        String entityString = Util.loadFile(filename);
+        Document doc = Jsoup.parse(entityString);
+        StringBuilder all = new StringBuilder();
+        for (int num=0; num<40; ++num) {
+            Element div = doc.getElementById(String.format("hn_%s", num));
+            if (div != null) {
+                Element link = div.getElementsByTag("a").first();
+                String kanji_romaji = link.text();
+                String romaji = link.getElementsByTag("span").first().text();
+                String kanji = kanji_romaji.replace(romaji, "");
+                String processed = kanji.replaceAll("&#", "\\u");
+                all.append(processed).append("\n");
+            }
+        }
+        return all;
+    }
+}
+
