@@ -6,6 +6,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.mpasko.util.SimpleUtils;
+import org.mpasko.util.StringUtils;
 import org.mpasko.util.Util;
 
 
@@ -36,11 +37,11 @@ public class ParseJlpt
             if (row.getElementsByTag("th").size() > 0) {
                 continue;
             }
-            String hiragana = SimpleUtils.clear(row.getElementsByClass("kanji").first().text());
+            String hiragana = StringUtils.clear(row.getElementsByClass("kanji").first().text());
             Elements kanjiElements = row.getElementsByClass("kanji");
             //System.out.println(kanjiElements.first().html());
-            String kanji = SimpleUtils.clear(kanjiElements.get(1).text());
-            String english = SimpleUtils.clear(row.getElementsByClass("eng").first().text());
+            String kanji = StringUtils.clear(kanjiElements.get(1).text());
+            String english = StringUtils.clear(row.getElementsByClass("eng").first().text());
             if (kanji.isEmpty()) {
                 withoutKanji.append(hiragana);
                 withoutKanji.append(" -");

@@ -12,26 +12,27 @@ import java.util.Map;
  *
  * @author marcin
  */
-public class MapList <T>{
-    private Map<String, LinkedList<T>> map = new HashMap<String, LinkedList<T>>();
-    
-    public LinkedList<T> get(String key) {
+public class MapList<Key, T> {
+
+    private Map<Key, LinkedList<T>> map = new HashMap<Key, LinkedList<T>>();
+
+    public LinkedList<T> get(Key key) {
         insertEmptyIfNull(key);
         return map.get(key);
     }
-    
-    public void add(String key, T value) {
+
+    public void add(Key key, T value) {
         insertEmptyIfNull(key);
         map.get(key).add(value);
     }
 
-    private void insertEmptyIfNull(String key) {
-        if (map.get(key)==null){
+    private void insertEmptyIfNull(Key key) {
+        if (map.get(key) == null) {
             map.put(key, new LinkedList<T>());
         }
     }
 
-    public Iterable<String> keySet() {
+    public Iterable<Key> keySet() {
         return map.keySet();
     }
 }

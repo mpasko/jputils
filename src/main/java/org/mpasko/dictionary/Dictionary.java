@@ -9,9 +9,11 @@ import java.util.LinkedList;
 import java.util.List;
 import org.mpasko.commons.Classifier;
 import org.mpasko.commons.DictEntry;
+import org.mpasko.commons.Furiganiser;
 import org.mpasko.loadres.dictionaryFileLoader.LineSplitter;
 import org.mpasko.util.LangUtils;
 import org.mpasko.util.Util;
+import org.mpasko.util.collectors.DictEntryCollector;
 
 /**
  *
@@ -30,7 +32,7 @@ public class Dictionary {
         return dict;
     }
 
-    private List<DictEntry> dict = new LinkedList<DictEntry>();
+    private List<DictEntry> dict = new LinkedList<>();
     private MultipleIndexer<DictEntry> strictindex;
     private MultipleIndexer<DictEntry> kanjiindex;
     private MultipleIndexer<DictEntry> stripindex;
@@ -52,8 +54,9 @@ public class Dictionary {
         }
     }
 
+    @SuppressWarnings("unchecked")
     public List<DictEntry> items() {
-        return new LinkedList(getDict());
+        return new LinkedList<>(getDict());
     }
 
     public DictEntry find(String key, String value) {
@@ -75,6 +78,28 @@ public class Dictionary {
             createIndex();
         }
         return readindex.getBest(value, THE_SHORTEST);
+    }
+
+    public LinkedList<DictEntry> findAllByReading(String value) {
+        String furigana = new Furiganiser().furiganise(value);
+        if (readindex == null) {
+            createIndex();
+        }
+        return readindex.getAll(furigana);
+    }
+
+    public LinkedList<DictEntry> findPhoneticWithMeaning(String key, String value) {
+        LinkedList<DictEntry> foundPhonetical = findAllByReading(key);
+        return foundPhonetical
+                .stream()
+                .filter(entry -> containsIgnoreCase(entry.english, value))
+                .collect(new DictEntryCollector());
+    }
+
+    private boolean containsIgnoreCase(String bigger, String smaller) {
+        final String smallerNormalized = smaller.toLowerCase();
+        final String biggerNormalized = bigger.toLowerCase();
+        return biggerNormalized.contains(smallerNormalized);
     }
 
     private void createIndex() {
@@ -131,6 +156,10 @@ public class Dictionary {
      */
     public List<DictEntry> getDict() {
         return dict;
+    }
+
+    public void putAll(LinkedList<DictEntry> found) {
+        found.stream().forEach(this::put);
     }
 
 }

@@ -8,10 +8,9 @@ package org.mpasko.dictionary;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
+import org.mpasko.util.MapList;
 
 /**
  *
@@ -22,15 +21,14 @@ public class MultipleIndexer<T> {
     static Comparator<? super String> THE_SHORTEST = (s1, s2) -> s1.length() - s2.length();
     static Comparator<? super String> THE_LONGEST = (s1, s2) -> s2.length() - s1.length();
 
-    private Map<String, LinkedList<T>> map = new HashMap<String, LinkedList<T>>();
+    private MapList<String, T> map = new MapList<String, T>();
 
     public void put(String key, T item) {
-        LinkedList<T> actual = getOrCreateEmpty(key);
-        actual.add(item);
+        map.add(key, item);
     }
 
     public T getBest(String key, Comparator<? super T> comparator) {
-        List<T> list = getOrCreateEmpty(key);
+        List<T> list = getAll(key);
         if (list.isEmpty()) {
             return null;
         } else {
@@ -40,12 +38,7 @@ public class MultipleIndexer<T> {
         }
     }
 
-    private LinkedList<T> getOrCreateEmpty(String key) {
-        LinkedList<T> actual = map.get(key);
-        if (actual == null) {
-            actual = new LinkedList<>();
-            map.put(key, actual);
-        }
-        return actual;
+    public LinkedList<T> getAll(String key) {
+        return map.get(key);
     }
 }

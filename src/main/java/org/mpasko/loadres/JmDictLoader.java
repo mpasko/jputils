@@ -9,7 +9,6 @@ import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -19,12 +18,11 @@ import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamConstants;
 import javax.xml.stream.XMLStreamException;
-import javax.xml.stream.events.Attribute;
 import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
 import org.mpasko.dictionary.Dictionary;
-import org.mpasko.util.NumericUtil;
 import org.mpasko.util.SimpleUtils;
+import org.mpasko.util.StringUtils;
 import org.mpasko.util.Util;
 
 /**
@@ -34,7 +32,7 @@ import org.mpasko.util.Util;
 public class JmDictLoader {
 
     private static List<String> acceptable = Arrays.asList("keb", "reb", "gloss", "field");
-    
+
     //private List<String> keb = new LinkedList<String>();
     //private List<String> reb = new LinkedList<String>();
     //private List<String> gloss = new LinkedList<String>();
@@ -42,6 +40,7 @@ public class JmDictLoader {
     private Map<String, LinkedList<String>> map = new HashMap<String, LinkedList<String>>();
 
     public Dictionary load(DefaultFilter filter) {
+        System.getProperties().setProperty("jdk.xml.entityExpansionLimit", "0");
         XMLEventReader eventReader = null;
         String tagContent = "";
         String lastTag = "";
@@ -61,7 +60,7 @@ public class JmDictLoader {
                         break;
                     case XMLStreamConstants.CHARACTERS:
                         if (acceptable.contains(lastTag)) {
-                            tagContent = SimpleUtils.clear(event.asCharacters().getData().trim());
+                            tagContent = StringUtils.clear(event.asCharacters().getData().trim());
                         }
                         break;
                     case XMLStreamConstants.END_ELEMENT:
@@ -112,29 +111,29 @@ public class JmDictLoader {
             /*if (!map.get("field").isEmpty()) {
                 System.out.println(map.get("field"));
             }*/
-            if (filter.matches(map)){
+            if (filter.matches(map)) {
                 for (String keb_item : map.get("keb")) {
                     dict.put(keb_item, Util.stringifyList(map.get("reb")), Util.stringifyList(map.get("gloss")));
                 }
             }
         } else if (acceptable.contains(name)) {
             LinkedList<String> list = map.get(name);
-            if (list==null) {
+            if (list == null) {
                 throw new RuntimeException(String.format("List [%s] not found", name));
             }
             list.add(tagContent);
         }
     }
 
-    public static class DefaultFilter implements IJmDictFilter{
-        
+    public static class DefaultFilter implements IJmDictFilter {
+
         private Map<String, String> exactFilters = new HashMap<String, String>();
-        
+
         public DefaultFilter addExactFilter(String key, String value) {
             exactFilters.put(key, value);
             return this;
         }
-        
+
         public DefaultFilter addFieldFilter(String field) {
             exactFilters.put("field", field);
             return this;
@@ -142,7 +141,7 @@ public class JmDictLoader {
 
         public boolean matches(Map<String, LinkedList<String>> itemMap) {
             boolean matches = true;
-            for (String key: exactFilters.keySet()) {
+            for (String key : exactFilters.keySet()) {
                 String filterValue = exactFilters.get(key);
                 LinkedList<String> itemProperty = itemMap.get(key);
                 if (itemProperty == null) {
@@ -157,7 +156,7 @@ public class JmDictLoader {
         private boolean matchesAny(LinkedList<String> itemProperty, String filterValue) {
             boolean isAny = false;
             for (String tag : itemProperty) {
-                isAny|=tag.contains(filterValue);
+                isAny |= tag.contains(filterValue);
             }
             return isAny;
         }

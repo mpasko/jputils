@@ -8,6 +8,7 @@ import org.jsoup.select.Elements;
 import org.mpasko.commons.Classifier;
 import org.mpasko.util.FormatterUtil;
 import org.mpasko.util.SimpleUtils;
+import org.mpasko.util.StringUtils;
 import org.mpasko.util.Util;
 
 
@@ -36,10 +37,10 @@ public class ParseGoetheDictionary
         StringBuilder all = new StringBuilder();
         StringBuilder withoutKanji = new StringBuilder();
         for (Element row : rows) {
-            String kana = SimpleUtils.clear(row.getElementsByClass("Stil46").first().text());
+            String kana = StringUtils.clear(row.getElementsByClass("Stil46").first().text());
             //System.out.println(kanjiElements.first().html());
-            String romaiji = SimpleUtils.clear(row.getElementsByClass("Stil39").first().text());
-            String english = SimpleUtils.clear(row.getElementsByClass("Stil36").first().text());
+            String romaiji = StringUtils.clear(row.getElementsByClass("Stil39").first().text());
+            String english = StringUtils.clear(row.getElementsByClass("Stil36").first().text());
             if (!Classifier.classify(kana).containsKanji()) {
                 withoutKanji.append(kana);
                 withoutKanji.append(" -");

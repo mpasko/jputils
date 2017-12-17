@@ -26,6 +26,7 @@ import org.mpasko.commons.KanjiDictionary;
 import org.mpasko.commons.KanjiEntry;
 import org.mpasko.util.NumericUtil;
 import org.mpasko.util.SimpleUtils;
+import org.mpasko.util.StringUtils;
 
 /**
  *
@@ -142,7 +143,7 @@ public class KanjiDictLoader {
 
     public void characters(XMLEvent event) {
         if (acceptable.contains(lastTag)) {
-            tagContent = SimpleUtils.clear(event.asCharacters().getData().trim());
+            tagContent = StringUtils.clear(event.asCharacters().getData().trim());
         }
     }
 

@@ -7,6 +7,7 @@ package org.mpasko.japanese.wordfilters;
 import java.util.LinkedList;
 import java.util.List;
 import org.mpasko.commons.DictEntry;
+import org.mpasko.console.DefaultConfig;
 import org.mpasko.dictionary.Dictionary;
 import org.mpasko.loadres.PopularDictionaries;
 import org.mpasko.util.Util;
@@ -40,7 +41,7 @@ public class KnownWordsFilter extends GenericFilter {
     }
 
     public void initialize() {
-        Dictionary exceptions = Dictionary.loadTripleDict("dictionaries/all.txt");
+        Dictionary exceptions = Dictionary.loadTripleDict(DefaultConfig.exceptions);
         Dictionary goethe = PopularDictionaries.loadGoetheDictionaries();
         addList(goethe, exceptions);
         System.out.println("Known filter initialized with goethe");
@@ -50,6 +51,7 @@ public class KnownWordsFilter extends GenericFilter {
         addList("dictionaries/songs_whitelist/agregate.txt", exceptions);
         addListWithoutTranslations("inputs/whitelist_furigana.txt");
         addListWithoutTranslations("inputs/whitelist_words.txt");
+        addList(DefaultConfig.processedManualWhitelist, exceptions);
     }
 
     private void addList(String filename, Dictionary exceptions) {

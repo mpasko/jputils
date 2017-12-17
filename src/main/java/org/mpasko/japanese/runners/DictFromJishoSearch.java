@@ -10,6 +10,7 @@ import org.mpasko.dictionary.Dictionary;
 import org.mpasko.commons.Furiganiser;
 import org.mpasko.loadres.JmDictLoader;
 import org.mpasko.util.SimpleUtils;
+import org.mpasko.util.StringUtils;
 import org.mpasko.util.Util;
 
 /**
@@ -26,7 +27,7 @@ public class DictFromJishoSearch {
         StringBuilder log = new StringBuilder();
         for (String word : trans.split("\n")){
             String processed = word;
-            processed = SimpleUtils.clear(processed);
+            processed = StringUtils.clear(processed);
             processed = furiganiser.furiganise(processed);
             try {
                 processed = SimpleUtils.hexToUtf(processed.replaceAll("%", ""));

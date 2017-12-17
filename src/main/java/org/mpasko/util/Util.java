@@ -14,6 +14,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -67,7 +68,6 @@ public class Util {
 //            array.add(val);
 //        }
 //    }
-
     public static String streamToString(InputStream in) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(in, "UTF-8"));
         StringBuilder out = new StringBuilder();
@@ -126,7 +126,6 @@ public class Util {
 //        }
 //        //return "";
 //    }
-
 //    public static String objectToJson(Object item) {
 //        try {
 //            //System.out.println(item.toString());
@@ -139,6 +138,17 @@ public class Util {
 //        }
 //        //return "";
 //    }
+    public static String loadFilesInDirectory(String stringPath) {
+        StringBuilder builder = new StringBuilder();
+        File[] files = new File(stringPath).listFiles();
+        Arrays.stream(files)
+                .map(path -> path.toPath())
+                .filter(Files::isRegularFile)
+                .forEach(content
+                        -> builder.append(loadFile(content.toAbsolutePath().toString()))
+                        .append("\n"));
+        return builder.toString();
+    }
 
     public static String loadFile(String filename) {
         FileInputStream stream = null;
@@ -167,21 +177,6 @@ public class Util {
         return result;
     }
 
-    public static double indexOfIgnoreCase(List<String> list, String item) {
-        int index = 0;
-        for (String listitem : list) {
-            if (listitem.equalsIgnoreCase(item)) {
-                return index;
-            }
-            ++index;
-        }
-        return -1;
-    }
-    
-    public static boolean containsIgnoreCase(List<String> list, String item) {
-        return indexOfIgnoreCase(list, item)>=0;
-    }
-
     public static void saveFile(String full_name, String content) {
         FileOutputStream fos = null;
         try {
@@ -191,13 +186,13 @@ public class Util {
             fos.flush();
             Util.stringToStream(content, fos);
         } catch (IOException ex) {
-            throw new RuntimeException("Error saving file: "+full_name, ex);
+            throw new RuntimeException("Error saving file: " + full_name, ex);
         } finally {
             if (fos != null) {
                 try {
-                   fos.close();
+                    fos.close();
                 } catch (IOException ex) {
-                    throw new RuntimeException("Error closing file stream: "+full_name, ex);
+                    throw new RuntimeException("Error closing file stream: " + full_name, ex);
                 }
             }
         }

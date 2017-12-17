@@ -4,6 +4,8 @@
  */
 package org.mpasko.commons;
 
+import org.mpasko.japanese.wordcomparison.SynonimeComparer;
+
 /**
  *
  * @author marcin
@@ -45,9 +47,11 @@ public class DictEntry {
         }
         return false;
     }
-    
+
     public boolean isColliding(DictEntry entry) {
-        return entry.kanji.contains(this.kanji)||this.kanji.contains(entry.kanji)||hasCommonMeaning(entry);
+        return entry.kanji.contains(this.kanji)
+                || this.kanji.contains(entry.kanji)
+                || new SynonimeComparer().areSimillar(entry, this);
     }
 
     @Override
@@ -93,26 +97,6 @@ public class DictEntry {
             if (Classifier.classify(k1).containsKanji()) {
                 for (char k2 : oppositeArray) {
                     if (k1 == k2) {
-                        return true;
-                    }
-                }
-            }
-        }
-        return false;
-    }
-
-    private boolean hasCommonMeaning(DictEntry entry) {
-        String operating1 = entry.english.replaceAll(",", " ");
-        String operating2 = this.english.replaceAll(",", " ");
-        String[] list1 = operating1.split(" ");
-        String[] list2 = operating2.split(" ");
-        if (list1.length>3 || list2.length>3) {
-            return false;
-        }
-        for (String item1 : list1) {
-            if (item1.length()>=3) {
-                for (String item2 : list2) {
-                    if (item1.equalsIgnoreCase(item2)) {
                         return true;
                     }
                 }

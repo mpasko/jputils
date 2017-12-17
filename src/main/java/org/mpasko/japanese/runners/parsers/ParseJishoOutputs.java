@@ -19,11 +19,16 @@ import org.jsoup.select.Elements;
 import org.mpasko.commons.Classifier;
 import org.mpasko.commons.DictEntry;
 import org.mpasko.dictionary.Dictionary;
+import org.mpasko.japanese.wordcomparison.AndComparer;
+import org.mpasko.japanese.wordcomparison.GrammaticalComparer;
+import org.mpasko.japanese.wordcomparison.SynonimeComparer;
+import org.mpasko.japanese.wordfilters.DuplicateFilter;
 import org.mpasko.japanese.wordfilters.KnownWordsFilter;
 import org.mpasko.loadres.JmDictLoader;
 import org.mpasko.loadres.JmDictLoader.DefaultFilter;
 import org.mpasko.util.LangUtils;
 import org.mpasko.util.SimpleUtils;
+import org.mpasko.util.StringUtils;
 import org.mpasko.util.Util;
 
 /**
@@ -63,19 +68,20 @@ public class ParseJishoOutputs {
             processSingleSong(filename, songName, dict, merged, plaintext);
         }
         Util.saveFile("texts/" + outputName + ".txt", plaintext.toString());
-        merged.write("dictionaries/" + outputName);
+        merged.write("dictionaries/" + outputName + ".txt");
     }
 
     private static void processSingleSong(String filename, String songName, Dictionary dict, Dictionary merged, StringBuilder plaintext) {
         try {
             final String rawText = loadRawText(filename);
+            final String english = Util.loadFile(filename.replace(".htm", ".txt"));
             //TreeMap<String, String> items = loadSpecifiedOutputs(filename);
             List<String> items = loadWordsInTheirNaturalForm(filename);
             Dictionary found = findAndFilterItemsFromDictionary(items, rawText, dict);
             merged.addAll(found);
             found.write("dictionaries/" + songName + ".txt");
             //GenerateExams.processTripleDict(dict_filename);
-            plaintext.append(formatSong(songName, rawText, found));
+            plaintext.append(formatSong(songName, rawText, found, english));
         } catch (Exception e) {
             throw new RuntimeException(String.format("Trouble processing song:%s", filename), e);
         }
@@ -85,14 +91,19 @@ public class ParseJishoOutputs {
         //ArrayList<Entry<String, String>> itemsOrdered = new ArrayList(items.entrySet());
         //itemsOrdered.sort(new TextPositionComparator(rawText));
         Dictionary found = findAllItems(items, dict);
+        final AndComparer duplicateRecognition = new AndComparer(
+                new GrammaticalComparer(),
+                new SynonimeComparer());
+        found = new DuplicateFilter(duplicateRecognition).filter(found);
         found = KnownWordsFilter.build().filter(found);
         return found;
     }
 
-    public static String formatSong(String song, final String rawText, Dictionary found) {
+    public static String formatSong(String song, final String rawText, Dictionary found, String english) {
         StringBuilder plaintext = new StringBuilder();
         plaintext.append(song.replace(".htm", "")).append("\n");
         plaintext.append(rawText).append("\n");
+        plaintext.append(english).append("\n");
         plaintext.append(found.toString()).append("\n\n");
         return plaintext.toString();
     }
@@ -116,7 +127,7 @@ public class ParseJishoOutputs {
         Elements words_html = doc.getElementById("zen_bar").getElementsByTag("li");
         LinkedList<String> items = new LinkedList<>();
         for (Element word_htm : words_html) {
-            String all = SimpleUtils.clear(locateFullElement(word_htm));
+            String all = StringUtils.clear(locateFullElement(word_htm));
             if (!isUnlinkedOrParticle(word_htm)) {
                 items.add(all);
             } else {
@@ -133,7 +144,7 @@ public class ParseJishoOutputs {
         TreeMap<String, String> items = new TreeMap<String, String>();
         for (Element word_htm : words_html) {
             String furigana = locateFuriganaElement(word_htm);
-            String all = SimpleUtils.clear(locateFullElement(word_htm));
+            String all = StringUtils.clear(locateFullElement(word_htm));
             String kana = all.replace(furigana, "");
             if (!isUnlinkedOrParticle(word_htm)) {
                 //System.out.println(kana+"\n");

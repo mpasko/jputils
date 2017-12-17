@@ -8,6 +8,7 @@ import org.jsoup.select.Elements;
 import org.mpasko.commons.Classifier;
 import org.mpasko.util.FormatterUtil;
 import org.mpasko.util.SimpleUtils;
+import org.mpasko.util.StringUtils;
 import org.mpasko.util.Util;
 
 public class ParseTanosDictionary {
@@ -32,11 +33,11 @@ public class ParseTanosDictionary {
         for (Element row : rows) {
             Elements cols = row.getElementsByTag("td");
             if (cols.size() > 0) {
-                String kana = SimpleUtils.clear(cols.get(0).text());
+                String kana = StringUtils.clear(cols.get(0).text());
                 //System.out.println(kanjiElements.first().html());
                 System.out.println(kana);
-                String romaiji = SimpleUtils.clear(cols.get(1).text());
-                String english = SimpleUtils.clear(cols.get(2).text());
+                String romaiji = StringUtils.clear(cols.get(1).text());
+                String english = StringUtils.clear(cols.get(2).text());
                 if (kana.trim().isEmpty()) {
                     withoutKanji.append(kana);
                     withoutKanji.append(" -");

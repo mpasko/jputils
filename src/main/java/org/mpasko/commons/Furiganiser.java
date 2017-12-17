@@ -37,7 +37,6 @@ public class Furiganiser {
         final String[] splitted = line.split("-");
         String from = splitted[1];
         String to = splitted[0];
-        operate = operate.replaceAll(from, to);
-        return operate;
+        return operate.replaceAll(from, to);
     }
 }
