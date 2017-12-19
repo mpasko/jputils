@@ -5,7 +5,6 @@
  */
 package org.mpasko.japanese.runners.runonce;
 
-import java.util.AbstractMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -17,6 +16,7 @@ import org.mpasko.japanese.wordcomparison.SamePhonetic;
 import org.mpasko.japanese.wordcomparison.StrictSynonimeComparer;
 import org.mpasko.japanese.wordfilters.DuplicateFilter;
 import org.mpasko.loadres.JmDictLoader;
+import org.mpasko.loadres.dictionaryFileLoader.LineSplitter;
 import org.mpasko.util.Util;
 
 /**
@@ -61,22 +61,7 @@ public class ReconstructWritingFromManualDict {
         final LinkedList<Map.Entry<String, String>> extracted = new LinkedList<>();
         for (String line : source.split("\n")) {
             if (line.length() > 1) {
-                extracted.addAll(parseEntryOfManual(line));
-            }
-        }
-        return extracted;
-    }
-
-    private static LinkedList<Map.Entry<String, String>> parseEntryOfManual(String source) {
-        final LinkedList<Map.Entry<String, String>> extracted = new LinkedList<>();
-        final String[] split = source.split("-");
-        String key = split[0];
-        if (split.length == 1) {
-            extracted.push(new AbstractMap.SimpleEntry<>(key.trim(), ""));
-        } else {
-            String values = split[1];
-            for (String value : values.split(",")) {
-                extracted.push(new AbstractMap.SimpleEntry<>(key.trim(), value.trim()));
+                extracted.addAll(LineSplitter.parseEntryOfManual(line));
             }
         }
         return extracted;

@@ -10,7 +10,8 @@ import java.util.List;
 import org.mpasko.commons.Classifier;
 import org.mpasko.commons.DictEntry;
 import org.mpasko.commons.Furiganiser;
-import org.mpasko.loadres.dictionaryFileLoader.LineSplitter;
+import org.mpasko.dictionary.formatters.DictionaryFormatter;
+import org.mpasko.dictionary.formatters.WritingChooser;
 import org.mpasko.util.LangUtils;
 import org.mpasko.util.Util;
 import org.mpasko.util.collectors.DictEntryCollector;
@@ -21,22 +22,11 @@ import org.mpasko.util.collectors.DictEntryCollector;
  */
 public class Dictionary {
 
-    public static Dictionary loadTripleDict(String filename) {
-        String content = Util.loadFile(filename);
-        Dictionary dict = new Dictionary();
-        LineSplitter splitter = new LineSplitter();
-        for (String line : content.split("\n")) {
-            String[] split = splitter.splitLine(line);
-            dict.put(split[0], split[1], split[2]);
-        }
-        return dict;
-    }
-
     private List<DictEntry> dict = new LinkedList<>();
     private MultipleIndexer<DictEntry> strictindex;
     private MultipleIndexer<DictEntry> kanjiindex;
     private MultipleIndexer<DictEntry> stripindex;
-    private MultipleIndexer<DictEntry> readindex;
+    private UniversalIndex readindex = new UniversalIndex(new WritingChooser(), this);
     private static Comparator<? super DictEntry> THE_SHORTEST = (d1, d2) -> d1.writing.length() - d2.writing.length();
 
     public void put(String kanji, String writing, String english) {
@@ -65,7 +55,7 @@ public class Dictionary {
             hit = kanjiindex.getBest(key, THE_SHORTEST);
         }
         if (hit == null) {
-            hit = readindex.getBest(value, THE_SHORTEST);
+            hit = readindex.findBest(new DictEntry(key, value, ""));
         }
         if (hit == null) {
             hit = stripindex.getBest(LangUtils.getOnlyPreInfix(key), THE_SHORTEST);
@@ -74,18 +64,12 @@ public class Dictionary {
     }
 
     public DictEntry findByReading(String value) {
-        if (readindex == null) {
-            createIndex();
-        }
-        return readindex.getBest(value, THE_SHORTEST);
+        return readindex.findBest(new DictEntry("", value, ""));
     }
 
     public LinkedList<DictEntry> findAllByReading(String value) {
         String furigana = new Furiganiser().furiganise(value);
-        if (readindex == null) {
-            createIndex();
-        }
-        return readindex.getAll(furigana);
+        return readindex.findAll(new DictEntry("", furigana, ""));
     }
 
     public LinkedList<DictEntry> findPhoneticWithMeaning(String key, String value) {
@@ -106,7 +90,6 @@ public class Dictionary {
         strictindex = new MultipleIndexer<>();
         kanjiindex = new MultipleIndexer<>();
         stripindex = new MultipleIndexer<>();
-        readindex = new MultipleIndexer<>();
         getDict().forEach((item) -> {
             if (Classifier.classify(item.kanji).containsJapanese()) {
                 //we dont like Crisps anumore :(
@@ -123,7 +106,7 @@ public class Dictionary {
         strictindex.put(item.kanji + item.writing, item);
         kanjiindex.put(item.kanji, item);
         stripindex.put(LangUtils.getOnlyPreInfix(item.kanji), item);
-        readindex.put(item.writing, item);
+        readindex.updateIndex(item);
     }
 
     public DictEntry findStrict(String key, String value) {
@@ -144,11 +127,7 @@ public class Dictionary {
 
     @Override
     public String toString() {
-        StringBuilder all = new StringBuilder();
-        for (DictEntry item : this.items()) {
-            all.append(item.toString()).append("\n");
-        }
-        return all.toString();
+        return DictionaryFormatter.buildStandardFormatter().format(this);
     }
 
     /**

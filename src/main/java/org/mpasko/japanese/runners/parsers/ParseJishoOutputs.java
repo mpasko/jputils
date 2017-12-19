@@ -91,13 +91,12 @@ public class ParseJishoOutputs {
         //ArrayList<Entry<String, String>> itemsOrdered = new ArrayList(items.entrySet());
         //itemsOrdered.sort(new TextPositionComparator(rawText));
         Dictionary found = findAllItems(items, dict);
-        final AndComparer duplicateRecognition = new AndComparer(
-                new GrammaticalComparer(),
-                new SynonimeComparer());
-        found = new DuplicateFilter(duplicateRecognition).filter(found);
+        DuplicateFilter duplicateFilter = DuplicateFilter.outputDictionaryDuplicateFilter();
+        found = duplicateFilter.filter(found);
         found = KnownWordsFilter.build().filter(found);
         return found;
     }
+
 
     public static String formatSong(String song, final String rawText, Dictionary found, String english) {
         StringBuilder plaintext = new StringBuilder();

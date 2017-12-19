@@ -5,7 +5,9 @@
  */
 package org.mpasko.loadres.dictionaryFileLoader;
 
-import org.mpasko.util.SimpleUtils;
+import java.util.AbstractMap;
+import java.util.LinkedList;
+import java.util.Map;
 import org.mpasko.util.StringUtils;
 
 /**
@@ -35,5 +37,20 @@ public class LineSplitter {
             }
         }
         return result.toString();
+    }
+
+    public static LinkedList<Map.Entry<String, String>> parseEntryOfManual(String source) {
+        final LinkedList<Map.Entry<String, String>> extracted = new LinkedList<>();
+        final String[] split = source.split("-");
+        String key = split[0];
+        if (split.length == 1) {
+            extracted.push(new AbstractMap.SimpleEntry<>(key.trim(), ""));
+        } else {
+            String values = split[1];
+            for (String value : values.split(",")) {
+                extracted.push(new AbstractMap.SimpleEntry<>(key.trim(), value.trim()));
+            }
+        }
+        return extracted;
     }
 }

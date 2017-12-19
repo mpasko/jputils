@@ -6,13 +6,13 @@
 package org.mpasko.console;
 
 import java.util.Arrays;
+import java.util.LinkedList;
 import org.apache.commons.cli.BasicParser;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
-import org.mpasko.japanese.runners.exams.GenerateExams;
-import org.mpasko.japanese.runners.parsers.ParseJishoOutputs;
+import org.mpasko.console.parametercase.*;
 
 /**
  *
@@ -22,6 +22,7 @@ public class CommandlineManager {
 
     private CommandLineParser parser = new BasicParser();
     private Options options = new Options();
+    private LinkedList<ParameterCaseVerifier> cases = new LinkedList<>();
 
     public void execute(String[] argv) {
         setupCommands();
@@ -29,19 +30,22 @@ public class CommandlineManager {
     }
 
     private void setupCommands() {
-        options.addOption("S", "songs", false, "Regenerate songs");
-        options.addOption("E", "exam", true, "Create Exam");
+        add(new ExamCase());
+        add(new SongsCase());
+        add(new DictionaryCase());
+        add(new WorkflowCase());
+        cases.forEach(param -> param.setup(options));
+    }
+
+    private void add(IParameterCase param) {
+        cases.add(new ParameterCaseVerifier(param));
     }
 
     private void executeCase(String[] argv) {
         try {
             CommandLine cmd = parser.parse(options, argv);
-            if (cmd.hasOption("songs")) {
-                ParseJishoOutputs.processAllSongs();
-            } else if (cmd.hasOption("exam")) {
-                String source = cmd.getOptionValue("exam");
-                GenerateExams.processTripleDict(source, null);
-            } else {
+            boolean anyMatched = cases.stream().anyMatch(param -> param.doJobIfNeeded(cmd));
+            if (!anyMatched) {
                 System.out.println(String.format("Unknown command: %s", Arrays.toString(argv)));
             }
         } catch (ParseException ex) {

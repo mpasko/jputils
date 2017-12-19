@@ -4,13 +4,8 @@
  */
 package org.mpasko.japanese.runners.exams;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
-import org.mpasko.commons.DictEntry;
-import org.mpasko.commons.DictSplitter;
 import org.mpasko.dictionary.Dictionary;
-import org.mpasko.quizgeneration.QuizFormatter;
+import org.mpasko.dictionary.DictionaryFileLoader;
 import org.mpasko.japanese.wordfilters.CompoundFilter;
 import org.mpasko.japanese.wordfilters.GenericFilter;
 import org.mpasko.japanese.wordfilters.GradeFilter;
@@ -20,7 +15,6 @@ import org.mpasko.japanese.wordfilters.OnlyKanjiFilter;
 import org.mpasko.loadres.JmDictLoader;
 import org.mpasko.loadres.PopularDictionaries;
 import org.mpasko.quizgeneration.DictionaryToQuiz;
-import org.mpasko.util.Randomation;
 import org.mpasko.util.Util;
 
 /**
@@ -108,7 +102,7 @@ public class GenerateExams {
 
     public static void processTripleDict(String filename, GenericFilter filter) {
         System.out.println(filename);
-        Dictionary dict = Dictionary.loadTripleDict(filename);
+        Dictionary dict = new DictionaryFileLoader().loadTripleDict(filename);
         if (filter != null) {
             dict = filter.filter(dict);
         }
@@ -120,7 +114,6 @@ public class GenerateExams {
     public static void processTripleDict(String filename) {
         processTripleDict(filename, new OnlyKanjiFilter());
     }
-
 
     private static String extractFilename(String filename) {
         String[] array = filename.split("/");

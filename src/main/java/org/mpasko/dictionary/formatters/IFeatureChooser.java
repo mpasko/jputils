@@ -3,19 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.mpasko.console.parametercase;
+package org.mpasko.dictionary.formatters;
+
+import org.mpasko.commons.DictEntry;
 
 /**
  *
  * @author marcin
  */
-public interface IParameterCase {
+public interface IFeatureChooser {
 
-    String name();
-
-    String description();
-
-    boolean hasParameter();
-
-    void doTheJob(String paramValue);
+    String choose(DictEntry entry);
 }

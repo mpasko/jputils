@@ -7,6 +7,7 @@ package org.mpasko.loadres;
 import java.util.Arrays;
 import java.util.List;
 import org.mpasko.dictionary.Dictionary;
+import org.mpasko.dictionary.DictionaryFileLoader;
 import org.mpasko.util.FormatterUtil;
 
 /**
@@ -21,7 +22,7 @@ public class PopularDictionaries {
             String alignedNumber = FormatterUtil.alignString(2, "0", String.valueOf(i));
             String filename = String.format("dictionaries/goethe/goethe%s.txt", alignedNumber);
             System.out.println(filename);
-            Dictionary dict = Dictionary.loadTripleDict(filename);
+            Dictionary dict = new DictionaryFileLoader().loadTripleDict(filename);
             mainDict.addAll(dict);
         }
         return mainDict;
@@ -33,7 +34,7 @@ public class PopularDictionaries {
         for (String field : fields) {
             String filename = String.format("dictionaries/fields/%s.txt", field);
             System.out.println(filename);
-            Dictionary dict = Dictionary.loadTripleDict(filename);
+            Dictionary dict = new DictionaryFileLoader().loadTripleDict(filename);
             mainDict.addAll(dict);
         }
         return mainDict;

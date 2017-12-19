@@ -5,7 +5,9 @@
  */
 package org.mpasko.util;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -48,5 +50,31 @@ public class StringUtils {
 
     public static int lengthDifference(String item1, String item2) {
         return Math.abs(item1.length() - item2.length());
+    }
+
+    public static String cutLast(String path, String element) {
+        if (path.endsWith(element)) {
+            return path.substring(0, path.length() - element.length());
+        } else {
+            return path;
+        }
+    }
+
+    public static String cutFirst(String path, String element) {
+        if (path.startsWith(element)) {
+            return path.substring(element.length(), path.length());
+        } else {
+            return path;
+        }
+    }
+
+    public static String joinPath(String... nodes) {
+        String result = Arrays
+                .stream(nodes)
+                .map(path -> path.replace("/", "\\"))
+                .map(path -> cutFirst(path, "\\"))
+                .map(path -> cutLast(path, "\\"))
+                .collect(Collectors.joining("\\"));
+        return result;
     }
 }
