@@ -1,0 +1,11 @@
+notatki:
+-po tyldzie można rozpoznać czy to jest counter: ～
+-końcówka jednak jest ważna bo można rozpoznać czasowniki/przymiotniki/etc
+
+TODO:
+1) przegenerować słowniki od nowa: pozbyć się '-' wewnątrz słówek bo to bruździ strasznie
+2) porobić filtry
+   -pojedyncze znaki kanji
+3) klasteryzacja: zbijamy wszystko(tzn. jlpt+goethe) do kupy i klasteryzujemy po podobieństwie (podobne kanji, podobne słówka zawarte w tłumaczeniu, obecność tyldy)
+4) przeparsować nowe piosenki
+5) crawlować zdania z goethe, wyszukiwać w tatoeba

@@ -1,0 +1,14 @@
+inputs/songs/*.txt
+inputs/songs/*.htm
+inputs/songs/*_pliki
+inputs/*.txt
+inputs/*.htm
+inputs/*_pliki
+*.db
+target
+interproducts
+exams
+texts
+dictionaries
+xml/*.xml
+xml/kanji
