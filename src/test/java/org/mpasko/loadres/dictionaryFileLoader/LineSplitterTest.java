@@ -49,6 +49,14 @@ public class LineSplitterTest {
         testGeneralCase("key explain - value", "key", "explain", "value");
     }
 
+    @Test
+    public void testSplitLineRegression() {
+        System.out.println("testSplitLineRegression");
+        testGeneralCase(" ", "", "", "");
+        testGeneralCase("", "", "", "");
+        testGeneralCase("-", "", "", "");
+    }
+
     private void testGeneralCase(String line, String... expectations) {
         System.out.println(String.format("case: %s", line));
         LineSplitter instance = new LineSplitter();

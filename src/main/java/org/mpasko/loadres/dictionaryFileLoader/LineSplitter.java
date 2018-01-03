@@ -19,6 +19,9 @@ public class LineSplitter {
     public String[] splitLine(String line) {
         String[] byDash = line.split("-");
         /* */
+        if (byDash.length == 0) {
+            return new String[]{"", "", ""};
+        }
         String en = StringUtils.clear(byDash[byDash.length - 1]);
         String jp = assembleAgain(byDash, 0, byDash.length - 2, " ");
         String[] bySpace = jp.split(" ");

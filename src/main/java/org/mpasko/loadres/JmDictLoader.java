@@ -33,6 +33,12 @@ public class JmDictLoader {
 
     private static List<String> acceptable = Arrays.asList("keb", "reb", "gloss", "field");
 
+    public static Dictionary loadDictionary() {
+        final DefaultFilter filter = new DefaultFilter();
+        Dictionary dict = new JmDictLoader().load(filter);
+        return dict;
+    }
+
     //private List<String> keb = new LinkedList<String>();
     //private List<String> reb = new LinkedList<String>();
     //private List<String> gloss = new LinkedList<String>();

@@ -51,6 +51,7 @@ public class FuriganiserTest {
         assertEquals("りゅうし", instance.furiganise("ryuushi"));
         assertEquals("きょうだい", instance.furiganise("kyoudai"));
         assertEquals("ひめい", instance.furiganise("himei"));
+        assertEquals("こっちょう", instance.furiganise("kocchou"));
     }
 
     @Test
@@ -64,6 +65,7 @@ public class FuriganiserTest {
         assertEquals("ryuushi", instance.romanize("りゅうし"));
         assertEquals("kyoudai", instance.romanize("きょうだい"));
         assertEquals("himei", instance.romanize("ひめい"));
+        assertEquals("kocchou", instance.romanize("こっちょう"));
     }
 
     @Test

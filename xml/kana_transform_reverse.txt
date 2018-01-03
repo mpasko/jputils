@@ -42,8 +42,8 @@ nu-ぬ
 ha-は
 he-へ
 ho-ほ
-hu-ふ
 fu-ふ
+hu-ふ
 ra-ら
 re-れ
 ri-り
@@ -100,6 +100,7 @@ gg-っg
 mm-っm
 jj-っj
 nn-っn
+cc-っc
 a-あ
 e-え
 i-い

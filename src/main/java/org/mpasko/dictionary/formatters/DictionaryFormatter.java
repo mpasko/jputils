@@ -7,6 +7,9 @@ package org.mpasko.dictionary.formatters;
 
 import org.mpasko.commons.DictEntry;
 import org.mpasko.dictionary.Dictionary;
+import org.mpasko.dictionary.formatters.complex.ListeningFormatter;
+import org.mpasko.dictionary.formatters.complex.ReadingFormatter;
+import org.mpasko.dictionary.formatters.complex.StandardFormatter;
 
 /**
  *
@@ -30,22 +33,16 @@ public class DictionaryFormatter {
 
     public static DictionaryFormatter buildStandardFormatter() {
         return new DictionaryFormatter(
-                new KeyValueChooser(
-                        new KanjiWritingChooser(),
-                        new MeaningChooser()));
+                new StandardFormatter());
     }
 
     public static DictionaryFormatter buildListeningFormatter() {
         return new DictionaryFormatter(
-                new KeyValueChooser(
-                        new WritingChooser(),
-                        new MeaningChooser()));
+                new ListeningFormatter());
     }
 
     public static DictionaryFormatter buildReadingFormatter() {
         return new DictionaryFormatter(
-                new KeyValueChooser(
-                        new KanjiChooser(),
-                        new RomajiWritingChooser()));
+                new ReadingFormatter());
     }
 }

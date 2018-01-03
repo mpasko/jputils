@@ -7,6 +7,8 @@ gg-っg
 mm-っm
 jj-っj
 nn-っn
+cc-っc
+bb-っb
 kyo-きょ
 gyo-ぎょ
 sho-しょ
@@ -15,6 +17,9 @@ cho-ちょ
 ryo-りょ
 nyo-にょ
 myo-みょ
+byo-びょ
+pyo-ぴょ
+hyo-ひょ
 kyu-きゅ
 gyu-ぎゅ
 shu-しゅ
@@ -23,6 +28,9 @@ chu-ちゅ
 ryu-りゅ
 nyu-にゅ
 myu-みゅ
+byu-びゅ
+pyu-ぴゅ
+hyu-ひゅ
 kya-きゃ
 gya-ぎゃ
 sha-しゃ
@@ -31,6 +39,9 @@ cha-ちゃ
 rya-りゃ
 nya-にゃ
 mya-みゃ
+bya-びゃ
+pya-ぴゃ
+hya-ひゃ
 ka-か
 ke-け
 ki-き
@@ -51,8 +62,8 @@ nu-ぬ
 ha-は
 he-へ
 ho-ほ
-hu-ふ
 fu-ふ
+hu-ふ
 ra-ら
 re-れ
 ri-り

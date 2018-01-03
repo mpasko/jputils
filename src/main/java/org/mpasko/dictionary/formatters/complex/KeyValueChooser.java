@@ -3,9 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.mpasko.dictionary.formatters;
+package org.mpasko.dictionary.formatters.complex;
 
 import org.mpasko.commons.DictEntry;
+import org.mpasko.dictionary.formatters.IFeatureChooser;
 
 /**
  *

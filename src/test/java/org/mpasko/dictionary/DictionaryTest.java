@@ -5,6 +5,7 @@
  */
 package org.mpasko.dictionary;
 
+import java.util.LinkedList;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -12,6 +13,11 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.mpasko.commons.DictEntry;
+import org.mpasko.dictionary.formatters.KanjiChooser;
+import org.mpasko.dictionary.formatters.MeaningChooser;
+import org.mpasko.dictionary.formatters.RomajiWritingChooser;
+import org.mpasko.dictionary.formatters.complex.ListeningFormatter;
+import testutils.DictionaryRepository;
 
 /**
  *
@@ -85,5 +91,47 @@ public class DictionaryTest {
         dict.put("一人", "ひとつおまえ", "one person");
         DictEntry result = dict.find("一人", "うぜい");
         Assert.assertEquals("ひとり", result.writing);
+    }
+
+    @Test
+    public void find_phonetic_using_feature_searcher() {
+        Dictionary dict = DictionaryRepository.threeHomonymes();
+        LinkedList<DictEntry> result = dict.findAllByFeature("tousaku", new RomajiWritingChooser());
+        Assert.assertEquals(2, result.size());
+    }
+
+    @Test
+    public void find_listening_using_feature_searcher() {
+        Dictionary dict = DictionaryRepository.threeHomonymes();
+        LinkedList<DictEntry> result = dict.findAllByFeature("とうさく-plagiarism", new ListeningFormatter());
+        Assert.assertEquals(1, result.size());
+        Assert.assertEquals("盗作", result.get(0).kanji);
+    }
+
+    @Test
+    public void find_feature_and_containing() {
+        Dictionary dict = DictionaryRepository.threeHomonymes();
+        LinkedList<DictEntry> result = dict.findKeysAndValuesContaining("tousaku",
+                "pervers",
+                new RomajiWritingChooser(),
+                new MeaningChooser());
+        Assert.assertEquals(1, result.size());
+        Assert.assertEquals("倒錯", result.get(0).kanji);
+    }
+
+    //@Test
+    public void technically() {
+        //Assert.assertEquals(true, "");
+    }
+
+    @Test
+    public void test_if_we_can_find_using_romaji_and_partial_kanji() {
+        Dictionary dict = DictionaryRepository.threeHomonymes();
+        LinkedList<DictEntry> result = dict.findKeysAndValuesContaining("adjunct word",
+                "語",
+                new MeaningChooser(),
+                new KanjiChooser());
+        Assert.assertEquals(1, result.size());
+        Assert.assertEquals("付加語", result.get(0).kanji);
     }
 }

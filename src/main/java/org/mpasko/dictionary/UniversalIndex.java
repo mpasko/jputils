@@ -28,28 +28,26 @@ public class UniversalIndex {
         this.dict = dict;
     }
 
-    private void createIndexWhenNeeded() {
+    public void createIndex() {
         if (index == null) {
-            createIndex();
+            createIndexWhenNeeded();
         }
     }
 
-    public void createIndex() {
+    private void createIndexWhenNeeded() {
         index = new MultipleIndexer<>();
         dict.items()
                 .stream()
-                .forEach(entry -> updateIndex(entry));
+                .forEach(entry -> updateIndexRaw(entry));
     }
 
     public void updateIndex(DictEntry entry) {
-        createIndexWhenNeeded();
-        index.put(feature.choose(entry), entry);
+        createIndex();
+        updateIndexRaw(entry);
     }
 
-    public DictEntry findBest(DictEntry entry, Comparator<? super DictEntry> comparator) {
-        createIndexWhenNeeded();
-        String key = feature.choose(entry);
-        return index.getBest(key, comparator);
+    private void updateIndexRaw(DictEntry entry) {
+        index.put(feature.choose(entry), entry);
     }
 
     public DictEntry findBest(DictEntry entry) {
@@ -57,7 +55,17 @@ public class UniversalIndex {
     }
 
     public LinkedList<DictEntry> findAll(DictEntry entry) {
-        createIndexWhenNeeded();
-        return index.getAll(feature.choose(entry));
+        return findAll(feature.choose(entry));
+    }
+
+    public DictEntry findBest(DictEntry entry, Comparator<? super DictEntry> comparator) {
+        createIndex();
+        String key = feature.choose(entry);
+        return index.getBest(key, comparator);
+    }
+
+    LinkedList<DictEntry> findAll(String line) {
+        createIndex();
+        return index.getAll(line);
     }
 }

@@ -5,12 +5,15 @@
 package org.mpasko.dictionary;
 
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import org.mpasko.commons.Classifier;
 import org.mpasko.commons.DictEntry;
 import org.mpasko.commons.Furiganiser;
 import org.mpasko.dictionary.formatters.DictionaryFormatter;
+import org.mpasko.dictionary.formatters.IFeatureChooser;
 import org.mpasko.dictionary.formatters.WritingChooser;
 import org.mpasko.util.LangUtils;
 import org.mpasko.util.Util;
@@ -26,6 +29,7 @@ public class Dictionary {
     private MultipleIndexer<DictEntry> strictindex;
     private MultipleIndexer<DictEntry> kanjiindex;
     private MultipleIndexer<DictEntry> stripindex;
+    private Map<String, UniversalIndex> indexByFeature = new HashMap<String, UniversalIndex>();
     private UniversalIndex readindex = new UniversalIndex(new WritingChooser(), this);
     private static Comparator<? super DictEntry> THE_SHORTEST = (d1, d2) -> d1.writing.length() - d2.writing.length();
 
@@ -67,6 +71,11 @@ public class Dictionary {
         return readindex.findBest(new DictEntry("", value, ""));
     }
 
+    public LinkedList<DictEntry> findAllByFeature(String value, IFeatureChooser feature) {
+        UniversalIndex index = createIndexIfNotExist(feature);
+        return index.findAll(value);
+    }
+
     public LinkedList<DictEntry> findAllByReading(String value) {
         String furigana = new Furiganiser().furiganise(value);
         return readindex.findAll(new DictEntry("", furigana, ""));
@@ -77,6 +86,14 @@ public class Dictionary {
         return foundPhonetical
                 .stream()
                 .filter(entry -> containsIgnoreCase(entry.english, value))
+                .collect(new DictEntryCollector());
+    }
+
+    public LinkedList<DictEntry> findKeysAndValuesContaining(String key, String value, IFeatureChooser keyChooser, IFeatureChooser valueChooser) {
+        LinkedList<DictEntry> foundExact = findAllByFeature(key, keyChooser);
+        return foundExact
+                .stream()
+                .filter(entry -> containsIgnoreCase(valueChooser.choose(entry), value))
                 .collect(new DictEntryCollector());
     }
 
@@ -93,9 +110,12 @@ public class Dictionary {
         getDict().forEach((item) -> {
             if (Classifier.classify(item.kanji).containsJapanese()) {
                 //we dont like Crisps anumore :(
-                updateIndex(item);
+                strictindex.put(item.kanji + item.writing, item);
+                kanjiindex.put(item.kanji, item);
+                stripindex.put(LangUtils.getOnlyPreInfix(item.kanji), item);
             }
         });
+        readindex.createIndex();
     }
 
     public void addAll(Dictionary dict) {
@@ -139,6 +159,16 @@ public class Dictionary {
 
     public void putAll(LinkedList<DictEntry> found) {
         found.stream().forEach(this::put);
+    }
+
+    private UniversalIndex createIndexIfNotExist(IFeatureChooser feature) {
+        String featureName = feature.getClass().getName();
+        UniversalIndex result = indexByFeature.get(featureName);
+        if (result == null) {
+            result = new UniversalIndex(feature, this);
+            indexByFeature.put(featureName, result);
+        }
+        return result;
     }
 
 }

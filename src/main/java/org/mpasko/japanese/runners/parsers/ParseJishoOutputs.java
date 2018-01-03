@@ -19,13 +19,9 @@ import org.jsoup.select.Elements;
 import org.mpasko.commons.Classifier;
 import org.mpasko.commons.DictEntry;
 import org.mpasko.dictionary.Dictionary;
-import org.mpasko.japanese.wordcomparison.AndComparer;
-import org.mpasko.japanese.wordcomparison.GrammaticalComparer;
-import org.mpasko.japanese.wordcomparison.SynonimeComparer;
 import org.mpasko.japanese.wordfilters.DuplicateFilter;
 import org.mpasko.japanese.wordfilters.KnownWordsFilter;
 import org.mpasko.loadres.JmDictLoader;
-import org.mpasko.loadres.JmDictLoader.DefaultFilter;
 import org.mpasko.util.LangUtils;
 import org.mpasko.util.SimpleUtils;
 import org.mpasko.util.StringUtils;
@@ -44,18 +40,12 @@ public class ParseJishoOutputs {
 
     public static void processAllSongs() {
         String baseDir = "inputs/songs/";
-        Dictionary dict = loadDIctionary();
+        Dictionary dict = JmDictLoader.loadDictionary();
         processSongsFrom(baseDir + "song_list.txt", baseDir, "all_songs", dict);
         for (String str : Arrays.asList(Util.loadFile(baseDir + "folderlist.txt").split("\n"))) {
             processSongsFrom(baseDir + str + "/song_list.txt", baseDir + str + "/", str + "_songs", dict);
         }
         //processSongsFrom(baseDir + "yousei_teikoku/song_list.txt", baseDir + "yousei_teikoku/", "yousei_teikoku_songs", dict);
-    }
-
-    public static Dictionary loadDIctionary() {
-        final DefaultFilter filter = new DefaultFilter();
-        Dictionary dict = new JmDictLoader().load(filter);
-        return dict;
     }
 
     public static void processSongsFrom(String listfile, String inputPath, String outputName, Dictionary dict) {
@@ -96,7 +86,6 @@ public class ParseJishoOutputs {
         found = KnownWordsFilter.build().filter(found);
         return found;
     }
-
 
     public static String formatSong(String song, final String rawText, Dictionary found, String english) {
         StringBuilder plaintext = new StringBuilder();

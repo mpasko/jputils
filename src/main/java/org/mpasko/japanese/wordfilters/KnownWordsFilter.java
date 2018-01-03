@@ -47,6 +47,7 @@ public class KnownWordsFilter extends GenericFilter {
         addList("dictionaries/jlptN5.txt", exceptions);
         addList("dictionaries/jlptN4.txt", exceptions);
         addList(DefaultConfig.whitelistFromSongs, exceptions);
+        addList(DefaultConfig.whitelistFromSongsNew, exceptions);
         addListWithoutTranslations("inputs/whitelist_furigana.txt");
         addListWithoutTranslations("inputs/whitelist_words.txt");
         addList(DefaultConfig.processedManualWhitelist, exceptions);

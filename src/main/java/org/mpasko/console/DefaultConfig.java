@@ -25,5 +25,10 @@ public class DefaultConfig {
             MapUtils.entry("texts", "improved_workflow\\words\\global_sources\\texts\\"));
     public static String listeningSources = "improved_workflow\\words\\listening\\source\\";
     public static String readingSources = "improved_workflow\\words\\reading\\source\\";
+    public static String listeningWhitelist = "improved_workflow\\words\\listening\\whitelists\\";
+    public static String readingWhitelist = "improved_workflow\\words\\reading\\whitelists\\";
+    public static String understandingWhitelist = "improved_workflow\\words\\understanding\\whitelists\\";
+    public static String understandingWhitelistFile = "reading_listening_merged";
+    public static String whitelistFromSongsNew = understandingWhitelist + understandingWhitelistFile + ".txt";
 
 }
