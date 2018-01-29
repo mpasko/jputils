@@ -59,9 +59,12 @@ public class UniversalIndex {
     }
 
     public DictEntry findBest(DictEntry entry, Comparator<? super DictEntry> comparator) {
+        return findBest(feature.choose(entry), comparator);
+    }
+
+    public DictEntry findBest(String value, Comparator<? super DictEntry> comparator) {
         createIndex();
-        String key = feature.choose(entry);
-        return index.getBest(key, comparator);
+        return index.getBest(value, comparator);
     }
 
     LinkedList<DictEntry> findAll(String line) {

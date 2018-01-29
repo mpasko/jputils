@@ -11,10 +11,10 @@ import org.mpasko.dictionary.Dictionary;
  *
  * @author marcin
  */
-public abstract class GenericFilter {
-    
+public abstract class GenericFilter implements IFilter {
+
     public static GenericFilter buildStandardFilter() {
-        final GradeFilter grade = GradeFilter.build(3,8,true);
+        final GradeFilter grade = GradeFilter.build(3, 8, true);
         final KnownWordsFilter known = KnownWordsFilter.build();
         return new CompoundFilter(grade).and(known);
     }
@@ -29,6 +29,6 @@ public abstract class GenericFilter {
         }
         return filtered;
     }
-    
+
     public abstract boolean itemMatches(DictEntry entry);
 }

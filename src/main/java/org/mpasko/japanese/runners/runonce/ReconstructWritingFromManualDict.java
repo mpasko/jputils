@@ -11,6 +11,7 @@ import java.util.Map;
 import org.mpasko.commons.DictEntry;
 import org.mpasko.console.DefaultConfig;
 import org.mpasko.dictionary.Dictionary;
+import org.mpasko.dictionary.DictionaryFileLoader;
 import org.mpasko.japanese.wordcomparison.OrComparer;
 import org.mpasko.japanese.wordcomparison.SamePhonetic;
 import org.mpasko.japanese.wordcomparison.StrictSynonimeComparer;
@@ -26,8 +27,8 @@ import org.mpasko.util.Util;
 public class ReconstructWritingFromManualDict {
 
     public static void main(String[] args) {
-        final String manualPaths = DefaultConfig.fromManualFilteredWhitelistDictionaries;
-        final String outputPaths = DefaultConfig.processedManualWhitelist;
+        final String manualPaths = DefaultConfig.workflowManualSources;
+        final String outputPaths = DefaultConfig.workflowManualProcessed;
         Dictionary dict = new ReconstructWritingFromManualDict().reconstruct(manualPaths);
         dict = new DuplicateFilter(new OrComparer(
                 new SamePhonetic(),
@@ -38,7 +39,7 @@ public class ReconstructWritingFromManualDict {
 
     public Dictionary reconstruct(String inputs) {
         Dictionary sourceDict = new JmDictLoader().load(new JmDictLoader.DefaultFilter());
-        List<Map.Entry<String, String>> manualDict = parseManualDict(Util.loadFilesInDirectory(inputs));
+        List<Map.Entry<String, String>> manualDict = DictionaryFileLoader.parseAsSimpleMap(Util.loadFilesInDirectory(inputs));
         System.out.println(String.format("Lines of data discovered: %s", manualDict.size()));
         return reconstructFrom(manualDict, sourceDict);
     }
@@ -57,13 +58,4 @@ public class ReconstructWritingFromManualDict {
         return dictionary;
     }
 
-    public static List<Map.Entry<String, String>> parseManualDict(String source) {
-        final LinkedList<Map.Entry<String, String>> extracted = new LinkedList<>();
-        for (String line : source.split("\n")) {
-            if (line.length() > 1) {
-                extracted.addAll(LineSplitter.parseEntryOfManual(line));
-            }
-        }
-        return extracted;
-    }
 }

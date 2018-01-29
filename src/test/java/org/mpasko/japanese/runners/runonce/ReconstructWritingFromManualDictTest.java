@@ -13,6 +13,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.mpasko.commons.DictEntry;
 import org.mpasko.dictionary.Dictionary;
+import org.mpasko.dictionary.DictionaryFileLoader;
 import testutils.DictionaryRepository;
 
 /**
@@ -36,7 +37,7 @@ public class ReconstructWritingFromManualDictTest {
     public void testParseManualDict() {
         System.out.println("parseManualDict");
         String source = "kesseki-absence,calculus,blood stone";
-        List<Entry<String, String>> result = ReconstructWritingFromManualDict.parseManualDict(source);
+        List<Entry<String, String>> result = DictionaryFileLoader.parseAsSimpleMap(source);
         Assert.assertEquals(3, result.size());
         for (Entry<String, String> entry : result) {
             Assert.assertEquals("kesseki", entry.getKey());
@@ -47,7 +48,7 @@ public class ReconstructWritingFromManualDictTest {
     public void testParseManualDict_should_handle_spaces_correctly() {
         System.out.println("parseManualDict");
         String source = "kesseki - absence, calculus, blood stone";
-        List<Entry<String, String>> result = ReconstructWritingFromManualDict.parseManualDict(source);
+        List<Entry<String, String>> result = DictionaryFileLoader.parseAsSimpleMap(source);
         Assert.assertEquals(3, result.size());
         for (Entry<String, String> entry : result) {
             Assert.assertEquals("kesseki", entry.getKey());
@@ -59,7 +60,7 @@ public class ReconstructWritingFromManualDictTest {
     public void when_empty_definitinon_should_mark_as_empty() {
         System.out.println("parseManualDict");
         String source = "kesseki";
-        List<Entry<String, String>> result = ReconstructWritingFromManualDict.parseManualDict(source);
+        List<Entry<String, String>> result = DictionaryFileLoader.parseAsSimpleMap(source);
         Assert.assertEquals(1, result.size());
         Assert.assertEquals("kesseki", result.get(0).getKey());
         Assert.assertEquals("", result.get(0).getValue());
@@ -70,7 +71,7 @@ public class ReconstructWritingFromManualDictTest {
         StringBuilder builder = new StringBuilder();
         builder.append("ふかご-adjunct word,infallability").append("\n");
         builder.append("とうさく-perversion,inversion,plagiarism").append("\n");
-        List<Entry<String, String>> manual = ReconstructWritingFromManualDict.parseManualDict(builder.toString());
+        List<Entry<String, String>> manual = DictionaryFileLoader.parseAsSimpleMap(builder.toString());
         Dictionary sourceDict = DictionaryRepository.threeHomonymes();
         ReconstructWritingFromManualDict testable = new ReconstructWritingFromManualDict();
         List<DictEntry> result = testable.reconstructFrom(manual, sourceDict).getDict();
@@ -82,7 +83,7 @@ public class ReconstructWritingFromManualDictTest {
         StringBuilder builder = new StringBuilder();
         builder.append("fukago - adjunct word, infallability").append("\n");
         builder.append("tousaku - perversion, inversion, plagiarism").append("\n");
-        List<Entry<String, String>> manual = ReconstructWritingFromManualDict.parseManualDict(builder.toString());
+        List<Entry<String, String>> manual = DictionaryFileLoader.parseAsSimpleMap(builder.toString());
         Dictionary sourceDict = DictionaryRepository.threeHomonymes();
         ReconstructWritingFromManualDict testable = new ReconstructWritingFromManualDict();
         List<DictEntry> result = testable.reconstructFrom(manual, sourceDict).getDict();

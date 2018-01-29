@@ -22,7 +22,10 @@ public class DefaultConfig {
             MapUtils.entry("songs1", "improved_workflow\\words\\global_sources\\songs1\\"),
             MapUtils.entry("songs2", "improved_workflow\\words\\global_sources\\songs2\\"),
             MapUtils.entry("songs3", "improved_workflow\\words\\global_sources\\songs3\\"),
-            MapUtils.entry("texts", "improved_workflow\\words\\global_sources\\texts\\"));
+            MapUtils.entry("texts", "improved_workflow\\words\\global_sources\\texts\\"),
+            MapUtils.entry("fields", "improved_workflow\\words\\global_sources\\fields\\"),
+            MapUtils.entry("manual_dic", "improved_workflow\\words\\global_sources\\manual_dic\\"),
+            MapUtils.entry("anime", "improved_workflow\\words\\global_sources\\anime\\"));
     public static String listeningSources = "improved_workflow\\words\\listening\\source\\";
     public static String readingSources = "improved_workflow\\words\\reading\\source\\";
     public static String listeningWhitelist = "improved_workflow\\words\\listening\\whitelists\\";
@@ -30,5 +33,8 @@ public class DefaultConfig {
     public static String understandingWhitelist = "improved_workflow\\words\\understanding\\whitelists\\";
     public static String understandingWhitelistFile = "reading_listening_merged";
     public static String whitelistFromSongsNew = understandingWhitelist + understandingWhitelistFile + ".txt";
+    public static String workflowManualSources = "improved_workflow\\words\\manual_dicts";
+    public static String workflowManualProcessed = "improved_workflow\\words\\global_sources\\manual_dic\\recovered_manual.txt";
+    public static String onyomiWhitelist = "improved_workflow\\kanji\\test_onyomi_whitelist.txt";
 
 }

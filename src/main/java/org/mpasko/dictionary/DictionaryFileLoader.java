@@ -5,6 +5,9 @@
  */
 package org.mpasko.dictionary;
 
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 import org.mpasko.loadres.dictionaryFileLoader.LineSplitter;
 import org.mpasko.util.Util;
 
@@ -13,6 +16,16 @@ import org.mpasko.util.Util;
  * @author marcin
  */
 public class DictionaryFileLoader {
+
+    public static List<Map.Entry<String, String>> parseAsSimpleMap(String source) {
+        final LinkedList<Map.Entry<String, String>> extracted = new LinkedList<>();
+        for (String line : source.split("\n")) {
+            if (line.length() > 1) {
+                extracted.addAll(LineSplitter.parseEntryOfManual(line));
+            }
+        }
+        return extracted;
+    }
 
     public Dictionary loadTripleDict(String filename) {
         String content = Util.loadFile(filename);

@@ -10,7 +10,9 @@ import org.mpasko.commons.DictEntry;
 import org.mpasko.console.DefaultConfig;
 import org.mpasko.dictionary.Dictionary;
 import org.mpasko.dictionary.DictionaryFileLoader;
-import org.mpasko.japanese.wordcomparison.SameKanji;
+import org.mpasko.dictionary.formatters.IFeatureChooser;
+import org.mpasko.dictionary.formatters.KanjiChooser;
+import org.mpasko.dictionary.formatters.WritingChooser;
 import org.mpasko.loadres.PopularDictionaries;
 import org.mpasko.util.Util;
 
@@ -27,6 +29,7 @@ public class KnownWordsFilter extends GenericFilter {
         filter.initialize();
         return filter;
     }
+    private Dictionary knownDictionary;
 
     @Override
     public boolean itemMatches(DictEntry entry) {
@@ -35,7 +38,23 @@ public class KnownWordsFilter extends GenericFilter {
             System.out.println(entry);
         }
          */
-        return !new ItemExistsInDictionary().exists(entry, knownWords, new SameKanji());
+        //return !new ItemExistsInDictionary().exists(entry, knownWords, new SameKanji());
+        if (wordCrossMatches(entry, new KanjiChooser(), new KanjiChooser())) {
+            return false;
+        }
+        if (wordCrossMatches(entry, new WritingChooser(), new KanjiChooser())) {
+            return false;
+        }
+        if (wordCrossMatches(entry, new KanjiChooser(), new WritingChooser())) {
+            return false;
+        }
+        return true;
+    }
+
+    private boolean wordCrossMatches(DictEntry entry, IFeatureChooser wordFeature, IFeatureChooser dictFeature) {
+        String pulledFromWord = wordFeature.choose(entry);
+        LinkedList<DictEntry> found = knownDictionary.findAllByFeature(pulledFromWord, dictFeature);
+        return !found.isEmpty();
     }
 
     public void initialize() {
@@ -51,6 +70,7 @@ public class KnownWordsFilter extends GenericFilter {
         addListWithoutTranslations("inputs/whitelist_furigana.txt");
         addListWithoutTranslations("inputs/whitelist_words.txt");
         addList(DefaultConfig.processedManualWhitelist, exceptions);
+        this.knownDictionary = new Dictionary(knownWords);
     }
 
     private void addList(String filename, Dictionary exceptions) {

@@ -14,6 +14,7 @@ import org.mpasko.commons.DictEntry;
 import org.mpasko.commons.Furiganiser;
 import org.mpasko.dictionary.formatters.DictionaryFormatter;
 import org.mpasko.dictionary.formatters.IFeatureChooser;
+import org.mpasko.dictionary.formatters.KanjiChooser;
 import org.mpasko.dictionary.formatters.WritingChooser;
 import org.mpasko.util.LangUtils;
 import org.mpasko.util.Util;
@@ -32,6 +33,14 @@ public class Dictionary {
     private Map<String, UniversalIndex> indexByFeature = new HashMap<String, UniversalIndex>();
     private UniversalIndex readindex = new UniversalIndex(new WritingChooser(), this);
     private static Comparator<? super DictEntry> THE_SHORTEST = (d1, d2) -> d1.writing.length() - d2.writing.length();
+
+    public Dictionary(List<DictEntry> initializeWith) {
+        this.putAll(new LinkedList<>(initializeWith));
+    }
+
+    public Dictionary() {
+
+    }
 
     public void put(String kanji, String writing, String english) {
         put(new DictEntry(kanji, writing, english));
@@ -97,6 +106,11 @@ public class Dictionary {
                 .collect(new DictEntryCollector());
     }
 
+    public DictEntry findShortestByFeature(String value, KanjiChooser feature) {
+        UniversalIndex index = createIndexIfNotExist(feature);
+        return index.findBest(value, UniversalIndex.THE_SHORTEST_WRITING);
+    }
+
     private boolean containsIgnoreCase(String bigger, String smaller) {
         final String smallerNormalized = smaller.toLowerCase();
         final String biggerNormalized = bigger.toLowerCase();
@@ -157,7 +171,7 @@ public class Dictionary {
         return dict;
     }
 
-    public void putAll(LinkedList<DictEntry> found) {
+    public void putAll(List<DictEntry> found) {
         found.stream().forEach(this::put);
     }
 

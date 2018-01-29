@@ -39,4 +39,8 @@ public class Furiganiser {
         String to = splitted[0];
         return operate.replaceAll(from, to);
     }
+
+    public String katakanaToHiragana(String fragment) {
+        return this.furiganise(this.romanize(fragment));
+    }
 }
