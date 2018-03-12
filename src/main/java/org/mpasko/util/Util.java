@@ -7,6 +7,7 @@ package org.mpasko.util;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileFilter;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -25,6 +26,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -148,6 +150,25 @@ public class Util {
                         -> builder.append(loadFile(content.toAbsolutePath().toString()))
                         .append("\n"));
         return builder.toString();
+    }
+
+    public static List<String> getSubdirectories(String path) {
+        return getSubitems(path, File::isDirectory);
+    }
+
+    public static List<String> getSubfiles(String basePath) {
+        return getSubitems(basePath, File::isFile);
+    }
+
+    private static List<String> getSubitems(String path, final FileFilter filter) throws RuntimeException {
+        File[] directories = new File(path).listFiles(filter);
+        if (directories == null) {
+            throw new RuntimeException("Invalid path: " + path);
+        }
+        List<String> list = Arrays.stream(directories)
+                .map(dir -> dir.getName())
+                .collect(Collectors.toList());
+        return list;
     }
 
     public static String loadFile(String filename) {

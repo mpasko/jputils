@@ -5,6 +5,7 @@
  */
 package org.mpasko.japanese.wordfilters.wordsplitter;
 
+import org.mpasko.commons.analizers.DictionarySplitter;
 import java.util.List;
 import static org.junit.Assert.assertEquals;
 import org.junit.Before;

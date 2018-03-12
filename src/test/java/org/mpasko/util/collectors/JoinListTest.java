@@ -42,7 +42,7 @@ public class JoinListTest {
     @Test
     public void testCollectsCorrectly() {
         System.out.println("testCollectsCorrectly");
-        JoinList instance = new JoinList();
+        JoinList<String> instance = new JoinList<>();
         LinkedList<ArrayList<String>> listsToMerge = new LinkedList<>();
         for (Integer i = 0; i < 10; ++i) {
             listsToMerge.add(new ArrayList<>(Arrays.asList(i.toString())));

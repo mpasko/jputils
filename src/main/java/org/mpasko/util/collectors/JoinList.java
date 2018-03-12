@@ -19,28 +19,28 @@ import java.util.stream.Collector;
  *
  * @author marcin
  */
-public class JoinList implements Collector<List<String>, LinkedList<String>, LinkedList<String>> {
+public class JoinList<T> implements Collector<List<T>, LinkedList<T>, LinkedList<T>> {
 
     public JoinList() {
     }
 
     @Override
-    public Supplier<LinkedList<String>> supplier() {
+    public Supplier<LinkedList<T>> supplier() {
         return LinkedList::new;
     }
 
     @Override
-    public BiConsumer<LinkedList<String>, List<String>> accumulator() {
+    public BiConsumer<LinkedList<T>, List<T>> accumulator() {
         return (a, b) -> merge(a, b);
     }
 
     @Override
-    public BinaryOperator<LinkedList<String>> combiner() {
+    public BinaryOperator<LinkedList<T>> combiner() {
         return (a, b) -> merge(a, b);
     }
 
     @Override
-    public Function<LinkedList<String>, LinkedList<String>> finisher() {
+    public Function<LinkedList<T>, LinkedList<T>> finisher() {
         return Function.identity();
     }
 
@@ -49,7 +49,7 @@ public class JoinList implements Collector<List<String>, LinkedList<String>, Lin
         return new TreeSet<>();
     }
 
-    private LinkedList<String> merge(LinkedList<String> a, List<String> b) {
+    private LinkedList<T> merge(LinkedList<T> a, List<T> b) {
         a.addAll(b);
         return a;
     }

@@ -77,7 +77,7 @@ public class ParseJishoOutputs {
         }
     }
 
-    private static Dictionary findAndFilterItemsFromDictionary(List<String> items, final String rawText, Dictionary dict) {
+    public static Dictionary findAndFilterItemsFromDictionary(List<String> items, final String rawText, Dictionary dict) {
         //ArrayList<Entry<String, String>> itemsOrdered = new ArrayList(items.entrySet());
         //itemsOrdered.sort(new TextPositionComparator(rawText));
         Dictionary found = findAllItems(items, dict);
@@ -197,7 +197,7 @@ public class ParseJishoOutputs {
         return k;
     }
 
-    private static String loadRawText(String filename) {
+    public static String loadRawText(String filename) {
         String entityString = Util.loadFile(filename);
         Document doc = Jsoup.parse(entityString);
         return doc.getElementById("keyword").attr("value");

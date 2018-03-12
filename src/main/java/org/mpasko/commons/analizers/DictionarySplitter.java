@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.mpasko.japanese.wordfilters.wordsplitter;
+package org.mpasko.commons.analizers;
 
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -12,7 +12,6 @@ import org.mpasko.commons.Classifier;
 import org.mpasko.commons.DictEntry;
 import org.mpasko.dictionary.Dictionary;
 import org.mpasko.dictionary.formatters.KanjiChooser;
-import org.mpasko.util.collectors.DictEntryCollector;
 
 /**
  *
@@ -23,11 +22,34 @@ public class DictionarySplitter implements ISplitter {
     private final Dictionary dictionary;
     private final String prefixes;
     private final String suffixes;
+    private final GrammarStemmer grammarStemmer = new GrammarStemmer();
+    private List<String> particles;
 
     public DictionarySplitter(Dictionary splitableDictionary, String prefixes, String suffixes) {
         this.dictionary = splitableDictionary;
         this.prefixes = prefixes;
         this.suffixes = suffixes;
+        seedParticles();
+    }
+
+    public List<DictEntry> splitText(String text) {
+        final String wordToSplit = removeAllCharsFrom(text, prefixes + suffixes);
+        int pivot = 0;
+        LinkedList<DictEntry> potentialResult = new LinkedList<>();
+        while (pivot < wordToSplit.length()) {
+            if (isParticle(wordToSplit.substring(pivot, pivot + 1))) {
+                pivot++;
+            }
+            DictEntry found = findInTheMiddle(wordToSplit, pivot);
+            if (found == null) {
+                //return potentialResult;
+                pivot++;
+            } else {
+                potentialResult.add(found);
+                pivot += found.kanji.length();
+            }
+        }
+        return potentialResult;
     }
 
     @Override
@@ -39,6 +61,7 @@ public class DictionarySplitter implements ISplitter {
             return Arrays.asList(word);
         }
         final String wordToSplit = removeAllCharsFrom(word.kanji, prefixes + suffixes);
+        /*
         if (wordToSplit.length() % 2 == 0) {
             LinkedList<DictEntry> potentialResult = splitEvenly(wordToSplit)
                     .stream()
@@ -48,10 +71,14 @@ public class DictionarySplitter implements ISplitter {
             if (potentialResult.size() == wordToSplit.length() / 2) {
                 return potentialResult;
             }
-        }
+        }*/
+        //TODO reuse splitText
         int pivot = 0;
         LinkedList<DictEntry> potentialResult = new LinkedList<>();
         while (pivot < wordToSplit.length()) {
+            if (isParticle(wordToSplit.substring(pivot, pivot + 1))) {
+                pivot++;
+            }
             DictEntry found = findInTheMiddle(wordToSplit, pivot);
             if (found == null) {
                 return Arrays.asList(word);
@@ -62,17 +89,24 @@ public class DictionarySplitter implements ISplitter {
         }
         return potentialResult;
     }
-    private static final int SPLIT_FROM = 2;
-    private static final int SPLIT_UP = 3;
+
+    private int splitFrom = 2;
+    private int splitUpTo = 3;
+
+    public DictionarySplitter setLimits(int from, int to) {
+        splitFrom = from;
+        splitUpTo = to;
+        return this;
+    }
 
     private DictEntry findInTheMiddle(String wordToSplit, int pivot) {
         DictEntry found = null;
         int rest = wordToSplit.length() - pivot;
-        if (rest < SPLIT_FROM) {
+        if (rest < splitFrom) {
             return null;
         }
-        int maxPossibleSplit = Math.min(rest, SPLIT_UP);
-        for (int acceptedLength = maxPossibleSplit; acceptedLength >= SPLIT_FROM; --acceptedLength) {
+        int maxPossibleSplit = Math.min(rest, splitUpTo);
+        for (int acceptedLength = maxPossibleSplit; acceptedLength >= splitFrom; --acceptedLength) {
             final String currentSplit = wordToSplit.substring(pivot, pivot + acceptedLength);
             found = findFor(currentSplit);
             if (found != null) {
@@ -100,7 +134,18 @@ public class DictionarySplitter implements ISplitter {
     }
 
     private DictEntry findFor(final String currentAnalyzed) {
-        return dictionary.findShortestByFeature(currentAnalyzed, new KanjiChooser());
+        final String wordToFind = grammarStemmer.stem(currentAnalyzed);
+        return dictionary.findShortestByFeature(wordToFind, new KanjiChooser());
+    }
+
+    private boolean isParticle(String fragment) {
+        return particles
+                .stream()
+                .anyMatch(particle -> fragment.equalsIgnoreCase(particle));
+    }
+
+    private void seedParticles() {
+        particles = Arrays.asList("は", "へ", "を", "の", "に", "と", "や", "で");
     }
 
 }

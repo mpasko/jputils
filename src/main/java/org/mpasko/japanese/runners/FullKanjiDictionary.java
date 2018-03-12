@@ -63,7 +63,7 @@ public class FullKanjiDictionary {
                 .stream()
                 .filter(t -> isNotInWhitelist(whitelist, t.character))
                 .map(t -> groupByOnyomi(t))
-                .collect(new JoinList());
+                .collect(new JoinList<String>());
         String formattedDict;
         formattedDict = entryList.stream()
                 .sorted(new FirstPartReverse())
