@@ -13,11 +13,24 @@ import org.mpasko.japanese.wordcomparison.IWordComparer;
  *
  * @author marcin
  */
-public class ItemExistsInDictionary {
+public class ItemExistsInDictionary extends GenericFilter {
 
-    public boolean exists(DictEntry item, List<DictEntry> dict, IWordComparer criteria) {
+    private final List<DictEntry> dict;
+    private final IWordComparer criteria;
+
+    public ItemExistsInDictionary(List<DictEntry> dict, IWordComparer criteria) {
+        this.dict = dict;
+        this.criteria = criteria;
+    }
+
+    public ItemExistsInDictionary(List<DictEntry> dict) {
+        this(dict, DuplicateFilter.standardDuplicateRecognition());
+    }
+
+    @Override
+    public boolean itemMatches(DictEntry entry) {
         return dict
                 .stream()
-                .anyMatch(previous -> criteria.areSimillar(previous, item));
+                .anyMatch(previous -> criteria.areSimillar(previous, entry));
     }
 }

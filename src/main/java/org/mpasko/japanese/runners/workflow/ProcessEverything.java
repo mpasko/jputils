@@ -5,6 +5,8 @@
  */
 package org.mpasko.japanese.runners.workflow;
 
+import java.util.Map;
+import java.util.stream.Collectors;
 import org.mpasko.console.DefaultConfig;
 import org.mpasko.dictionary.Dictionary;
 import org.mpasko.dictionary.DictionaryFileLoader;
@@ -36,9 +38,15 @@ public class ProcessEverything {
         mergeReadingAndListening();
     }
 
+    private Map<String, String> directoriesAsSelectedSources() {
+        return DataSources.getGlobalSourceList()
+                .stream()
+                .collect(Collectors.toMap(dir -> dir, dir -> DefaultConfig.globalSources + "\\" + dir + "\\"));
+    }
+
     private void generateReadingFromSelectedSources() {
         final DictionaryFormatter formatter = DictionaryFormatter.buildReadingFormatter();
-        DefaultConfig.selectedSources
+        directoriesAsSelectedSources()
                 .entrySet()
                 .stream()
                 .forEach((entry) -> generateWritingFromSelectedSource(entry.getKey(), entry.getValue(), formatter, DefaultConfig.readingSources));
@@ -50,7 +58,7 @@ public class ProcessEverything {
     }
 
     private void generateFromSelectedSourcesUsingFormatter(final DictionaryFormatter formatter, String outputDirectory) {
-        DefaultConfig.selectedSources
+        directoriesAsSelectedSources()
                 .entrySet()
                 .stream()
                 .forEach(entry

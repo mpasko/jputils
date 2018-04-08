@@ -27,17 +27,21 @@ public class DuplicateFilter extends GenericFilter {
 
     @Override
     public boolean itemMatches(DictEntry entry) {
-        boolean match = !new ItemExistsInDictionary().exists(entry, alreadyProcessed, comparer);
+        boolean match = !new ItemExistsInDictionary(alreadyProcessed, comparer).itemMatches(entry);
         alreadyProcessed.add(entry);
         return match;
     }
 
     public static DuplicateFilter outputDictionaryDuplicateFilter() {
-        final AndComparer duplicateRecognition = new AndComparer(
-                new GrammaticalComparer(),
-                new SynonimeComparer());
+        final AndComparer duplicateRecognition = standardDuplicateRecognition();
         final DuplicateFilter duplicateFilter = new DuplicateFilter(duplicateRecognition);
         return duplicateFilter;
+    }
+
+    public static AndComparer standardDuplicateRecognition() {
+        return new AndComparer(
+                new GrammaticalComparer(),
+                new SynonimeComparer());
     }
 
 }

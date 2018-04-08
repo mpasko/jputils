@@ -189,6 +189,14 @@ public class Util {
         }
     }
 
+    public static String tryLoadFile(String filename) {
+        try {
+            return loadFile(filename);
+        } catch (Exception e) {
+            return "";
+        }
+    }
+
     public static Map<String, Object> lowercaseKeys(Map<String, Object> event) {
         HashMap<String, Object> result = new HashMap<String, Object>();
         for (Entry<String, Object> entry : event.entrySet()) {
@@ -199,10 +207,11 @@ public class Util {
     }
 
     public static void saveFile(String full_name, String content) {
+        //String full_name = full_path.replaceAll("\\/", "\\");
         FileOutputStream fos = null;
         try {
             File file = new File(full_name);
-            file.getParentFile().mkdirs();
+            createPathIfNotExists(file);
             fos = new FileOutputStream(file);
             fos.flush();
             Util.stringToStream(content, fos);
@@ -216,6 +225,14 @@ public class Util {
                     throw new RuntimeException("Error closing file stream: " + full_name, ex);
                 }
             }
+        }
+    }
+
+    private static void createPathIfNotExists(File file) {
+        final File parentFile = file.getParentFile();
+        if (!parentFile.exists()) {
+            createPathIfNotExists(parentFile);
+            parentFile.mkdirs();
         }
     }
 

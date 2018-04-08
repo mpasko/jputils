@@ -7,7 +7,7 @@
                 <goal>org.codehaus.mojo:exec-maven-plugin:1.2:exec</goal>
             </goals>
             <properties>
-                <exec.args>-Dcom.pasko.test=works -Dexec.args="-Dcom.pasko.test=works" -classpath %classpath ${packageClassName} -Dfile.encoding=UTF-8 -Dexec.args="-Dcom.pasko.test=works"</exec.args>
+                <exec.args>-Dcom.pasko.test=works -Dexec.args="-Dcom.pasko.test=works" -classpath %classpath org.mpasko.web.StartWebserver -Dfile.encoding=UTF-8 -Dexec.args="-Dcom.pasko.test=works"</exec.args>
                 <exec.executable>java</exec.executable>
                 <exec.classpathScope>runtime</exec.classpathScope>
             </properties>

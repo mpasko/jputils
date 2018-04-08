@@ -77,4 +77,9 @@ public class StringUtils {
                 .collect(Collectors.joining("\\"));
         return result;
     }
+
+    public static String lastSegment(String source, String delimiter) {
+        String[] split = source.split(delimiter);
+        return split[split.length - 1];
+    }
 }

@@ -6,6 +6,7 @@
 package org.mpasko.japanese.runners.workflow;
 
 import java.util.List;
+import java.util.stream.Collectors;
 import org.mpasko.commons.DictEntry;
 import org.mpasko.commons.analizers.ReadingDecomposer;
 import org.mpasko.console.DefaultConfig;
@@ -31,7 +32,7 @@ public class DataSources {
 
     private Dictionary globalDictionary;
 
-    void init() {
+    public void init() {
         this.globalDictionary = JmDictLoader.loadDictionary();
     }
 
@@ -39,9 +40,9 @@ public class DataSources {
         Dictionary listening = reconstructListeningWhitelist();
         System.out.println("Listening reconstructed: " + listening.size());
         Dictionary speculation = loadWhitelistSpeculation();
-        System.out.println("Speculation reconstructed: " + listening.size());
+        System.out.println("Speculation reconstructed: " + speculation.size());
         Dictionary result = new Sum(listening, speculation).result();
-        System.out.println("Listening result reconstructed: " + listening.size());
+        System.out.println("Listening result reconstructed: " + result.size());
         return result;
     }
 
@@ -51,12 +52,18 @@ public class DataSources {
         return filter.filter(new Dictionary(speculation));
     }
 
-    private List<DictEntry> loadAllSources() {
-        List<DictEntry> speculation = DefaultConfig.selectedSources
-                .entrySet()
+    public static List<String> getGlobalSourceList() {
+        return Util.getSubdirectories(DefaultConfig.globalSources)
                 .stream()
-                .map(entry -> new DictionaryFileLoader()
-                .loadTripleDictFromFolder(entry.getValue()).items())
+                .filter(dir -> !dir.startsWith("_"))
+                .collect(Collectors.toList());
+    }
+
+    private List<DictEntry> loadAllSources() {
+        List<DictEntry> speculation = getGlobalSourceList()
+                .stream()
+                .map(dir -> new DictionaryFileLoader()
+                .loadTripleDictFromFolder(String.format("%s/%s", DefaultConfig.globalSources, dir)).items())
                 .reduce(ReadingDecomposer::mergeLists)
                 .get();
         return speculation;

@@ -6,11 +6,9 @@
 package org.mpasko.japanese.runners.workflow;
 
 import java.util.List;
-import java.util.stream.Collectors;
-import org.mpasko.commons.analizers.WordsExtractor;
 import org.mpasko.dictionary.Dictionary;
-import org.mpasko.japanese.runners.parsers.ParseJishoOutputs;
 import org.mpasko.loadres.JmDictLoader;
+import org.mpasko.util.StringUtils;
 import org.mpasko.util.Util;
 import org.mpasko.util.collectors.StringNewlineCollector;
 
@@ -48,31 +46,15 @@ public class ParseTexts {
     }
 
     private static String processSong(String base, String song) {
+        String category = StringUtils.lastSegment(base, "/");
         String filename = base + "/" + song;
         if (!filename.contains(".eng.txt")) {
-            final String title = "[" + song + "]";
-            String jap = Util.loadFile(filename);
-            String eng = Util.loadFile(filename.replaceAll(".txt", ".eng.txt"));
-            List<String> words = findWords(jap, full_dict);
-            Dictionary filtered = ParseJishoOutputs.findAndFilterItemsFromDictionary(words, jap, full_dict);
-            return new StringBuilder(title).append("\n")
-                    .append(jap).append("\n")
-                    .append(eng).append("\n")
-                    .append(filtered.toString())
-                    .toString();
+            return new SongLayout().process(song, filename, category, full_dict);
         }
         return "";
     }
 
-    private static List<String> findWords(String jap, Dictionary dict) {
-        return new WordsExtractor(dict)
-                .extractFromText(jap)
-                .stream()
-                .map(entry -> entry.kanji)
-                .collect(Collectors.toList());
-    }
-
-    private static void traverseDir(String base, String subdir, Subprocessor subprocessor) {
+    public static void traverseDir(String base, String subdir, Subprocessor subprocessor) {
         String basePath = base + "/" + subdir;
         Util.getSubdirectories(basePath)
                 .stream()
