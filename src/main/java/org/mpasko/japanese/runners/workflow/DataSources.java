@@ -32,8 +32,16 @@ public class DataSources {
 
     private Dictionary globalDictionary;
 
-    public void init() {
+    public DataSources() {
+        init();
+    }
+
+    private void init() {
         this.globalDictionary = JmDictLoader.loadDictionary();
+    }
+
+    public Dictionary getGlobalDict() {
+        return globalDictionary;
     }
 
     public Dictionary listeningWhitelist() {
@@ -70,27 +78,42 @@ public class DataSources {
     }
 
     private Dictionary reconstructListeningWhitelist() {
-        Dictionary listening = reconstruct(globalDictionary,
-                new WritingChooser(),
+        Dictionary listening = reconstructListening(DefaultConfig.listeningWhitelist);
+        return listening;
+    }
+
+    private Dictionary reconstructListening(final String listeningPath) {
+        Dictionary listening = reconstruct(new WritingChooser(),
                 new MeaningChooser(),
-                DefaultConfig.listeningWhitelist);
+                listeningPath);
+        return listening;
+    }
+
+    private Dictionary reconstructReading(final String readingPath) {
+        Dictionary listening = reconstruct(new KanjiChooser(),
+                new RomajiWritingChooser(),
+                readingPath);
         return listening;
     }
 
     public Dictionary readingWhitelist() {
-        Dictionary reading = reconstruct(globalDictionary,
-                new KanjiChooser(),
-                new RomajiWritingChooser(),
-                DefaultConfig.readingWhitelist);
+        Dictionary reading = reconstructReading(DefaultConfig.readingWhitelist);
         System.out.println("Reading reconstructed: " + reading.size());
         return reading;
     }
 
-    private Dictionary reconstruct(Dictionary fullDictionary,
-            IFeatureChooser exact,
+    public Dictionary readingBlacklist() {
+        return reconstructReading(DefaultConfig.readingBlacklist);
+    }
+
+    public Dictionary listeningBlacklist() {
+        return reconstructListening(DefaultConfig.listeningBlacklist);
+    }
+
+    private Dictionary reconstruct(IFeatureChooser exact,
             IFeatureChooser contain,
             String path) {
-        return new DictionaryReconstructor(fullDictionary, exact, contain)
+        return new DictionaryReconstructor(globalDictionary, exact, contain)
                 .reconstruct(Util.loadFilesInDirectory(path));
     }
 

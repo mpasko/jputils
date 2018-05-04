@@ -8,6 +8,10 @@ package org.mpasko.dictionary;
 import java.util.LinkedList;
 import org.mpasko.commons.DictEntry;
 import org.mpasko.dictionary.formatters.IFeatureChooser;
+import org.mpasko.dictionary.formatters.KanjiChooser;
+import org.mpasko.dictionary.formatters.MeaningChooser;
+import org.mpasko.dictionary.formatters.RomajiWritingChooser;
+import org.mpasko.dictionary.formatters.WritingChooser;
 import org.mpasko.util.Util;
 
 /**
@@ -26,6 +30,18 @@ public class DictionaryReconstructor {
         this.fullDictionary = fullDictionary;
         this.exactFeature = keyFeature;
         this.containingFeature = valueFeature;
+    }
+
+    public static DictionaryReconstructor StandardListeningReconstructor(Dictionary fullDictionary) {
+        return new DictionaryReconstructor(fullDictionary,
+                new WritingChooser(),
+                new MeaningChooser());
+    }
+
+    public static DictionaryReconstructor StandardReadingReconstructor(Dictionary fullDictionary) {
+        return new DictionaryReconstructor(fullDictionary,
+                new KanjiChooser(),
+                new RomajiWritingChooser());
     }
 
     public Dictionary reconstructFromFile(String filename) {

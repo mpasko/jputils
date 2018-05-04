@@ -32,7 +32,6 @@ public class ProcessEverything {
     }
 
     public void start() {
-        data.init();
         generateListeningFromSelectedSources();
         generateReadingFromSelectedSources();
         mergeReadingAndListening();

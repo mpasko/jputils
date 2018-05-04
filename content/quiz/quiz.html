@@ -1,0 +1,56 @@
+<section id="content-body">
+    <section>
+        <span style="color:green">{{ correctCount }}</span>
+         - 
+        <span style="color:red">{{ incorrectCount }}</span>
+         / {{ totalCount }}
+    </section>
+
+<div ng-if="!shouldFinish()">
+<section>
+    <h3>{{ current }}</h3>
+</section>
+
+<section>
+    <input type="text" id="meaning-input" placeholder="Type meaning" ng-model="meaning.text">
+    <button ng-click="next();">Next</button>
+    <br><br>
+</section>
+</div>
+
+<section>
+    <div ng-show="shouldFinish()">
+        Congrats! You asked all questions. Please save results!
+    </div>
+</section>
+
+
+<button ng-click="saveResults();">Save results</button>
+<button ng-click="agregateResults();">Agregate results</button>
+<button ng-click="cancel();">Cancel quiz</button>
+
+<section>
+    <table class="results" cellpadding="10">
+        <tbody><tr>
+            <td align="left">Word</td>
+            <td align="center">Expected</td>
+            <td align="center">Actual</td>
+            <td align="right">Revert</td>
+        </tr>
+
+        <tr ng-repeat="mistake in mistakes">
+            <td align="left">{{ mistake.word }}</td>
+            <td align="center">
+                <span style="color: green">{{ mistake.expected }}</span>
+            </td>
+            <td align="center">
+                <span style="color: red">{{ mistake.actual }}</span>
+            </td>
+            <td align="right">
+                <button ng-click="revertWord(mistake);">X</button>
+            </td>
+        </tr>
+    </tbody></table>
+
+</section>
+</section>

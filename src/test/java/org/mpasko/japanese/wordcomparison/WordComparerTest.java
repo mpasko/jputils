@@ -10,6 +10,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.mpasko.commons.DictEntry;
+import org.mpasko.japanese.wordfilters.DuplicateFilter;
 
 /**
  *
@@ -47,6 +48,7 @@ public class WordComparerTest {
         System.out.println("areSynonims");
         assertSynonims("", "", "to differ", "", "", "different", true);
         assertSynonims("", "", "exchange student", "", "", "exchanged students", true);
+        assertSynonims("", "", "we", "", "", "we", true);
     }
 
     @Test
@@ -54,6 +56,12 @@ public class WordComparerTest {
         System.out.println("areNoSynonims");
         assertSynonims("", "", "to differ", "", "", "to exchange", false);
         assertSynonims("", "", "to come", "", "", "to commute", false);
+    }
+
+    @Test
+    public void testDuplicateFilter() {
+        IWordComparer instance = DuplicateFilter.standardDuplicateRecognition();
+        assertAre("我々", "われわれ", "we", "我々", "われわれ", "we", instance, true);
     }
 
     private static void assertAreSimillarGrammatically(String kanji1, String writing1, String english1, String kanji2, String writing2, String english2, boolean expected) {

@@ -32,7 +32,6 @@ public class GenerateOnyomiWhitelist {
 
     public Dictionary loadWhitelist() {
         DataSources data = new DataSources();
-        data.init();
         Dictionary whitelist = data.listeningWhitelist();
         return whitelist;
     }

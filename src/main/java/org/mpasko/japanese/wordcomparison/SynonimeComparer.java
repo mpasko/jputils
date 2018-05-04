@@ -16,6 +16,9 @@ public class SynonimeComparer implements IWordComparer {
 
     @Override
     public boolean areSimillar(DictEntry entry1, DictEntry entry2) {
+        if (entry1.english.equalsIgnoreCase(entry2.english)) {
+            return true;
+        }
         String[] list1 = makeListFrom(entry1);
         String[] list2 = makeListFrom(entry2);
         /*
@@ -41,5 +44,4 @@ public class SynonimeComparer implements IWordComparer {
         String[] list1 = operating1.split(" ");
         return list1;
     }
-
 }

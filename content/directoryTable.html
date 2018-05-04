@@ -1,0 +1,27 @@
+<tr>
+    <td>
+        <button class="glyphicon glyphicon-chevron-right" 
+            ng-class="{'glyphicon-chevron-right' : !$ctrl.expanded, 'glyphicon-chevron-down' : $ctrl.expanded}"
+            ng-if="!!$ctrl.expand"
+            ng-click="$ctrl.expand($ctrl.dir);">
+        </button>
+        <span ng-hide="!!$ctrl.expand" style="width:50px; display:block; float:left;">&nbsp;</span>
+    </td>
+    <td>
+        <span>{{ $ctrl.dir }}</span>
+    </td>
+    <td>
+        <!--span ng-repeat="button in $ctrl.buttons">
+            <button class="btn btn-sm btn-default"
+                ng-click="$ctrl.makeExam($ctrl.depth, button.type, $ctrl.dir, button.source);">
+                run {{ button.type }} {{ button.source }} exam
+            </button>
+        </span-->
+    </td>
+    <td>
+        <button class="btn btn-sm btn-default" 
+            ng-click="$ctrl.previewCategory($ctrl.dir);">
+            preview
+        </button>
+    </td>
+</tr>
