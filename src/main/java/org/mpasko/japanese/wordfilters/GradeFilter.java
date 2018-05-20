@@ -5,12 +5,11 @@
 package org.mpasko.japanese.wordfilters;
 
 import org.mpasko.commons.DictEntry;
-import org.mpasko.dictionary.Dictionary;
 import org.mpasko.commons.KanjiDictionary;
 import org.mpasko.commons.KanjiEntry;
 import org.mpasko.loadres.KanjiDictLoader;
 import org.mpasko.loadres.KanjiDictLoader.Filter;
-import org.mpasko.util.Util;
+import org.mpasko.util.Filesystem;
 
 /**
  *
@@ -63,7 +62,7 @@ public class GradeFilter extends GenericFilter{
     }
     
     public void initializeFromBlackList() {
-        acceptedKanji = Util.loadFile(darklist_filename).replaceAll("\n", "");
+        acceptedKanji = Filesystem.loadFile(darklist_filename).replaceAll("\n", "");
     }
 
     @Override

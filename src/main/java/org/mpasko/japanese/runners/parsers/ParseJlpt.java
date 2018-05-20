@@ -5,10 +5,8 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import org.mpasko.util.SimpleUtils;
+import org.mpasko.util.Filesystem;
 import org.mpasko.util.StringUtils;
-import org.mpasko.util.Util;
-
 
 
 public class ParseJlpt
@@ -26,7 +24,7 @@ public class ParseJlpt
 
     private static void processLevel(String lvl) {
         String filePattern = "inputs/JLPT Level %s Vocabulary List.htm";
-        String entityString = Util.loadFile(String.format(filePattern, lvl));
+        String entityString = Filesystem.loadFile(String.format(filePattern, lvl));
         Document doc = Jsoup.parse(entityString);
         Element table = doc.getElementsByClass("biglistingTable").first();
         Elements rows = table.getElementsByTag("tr");
@@ -56,8 +54,8 @@ public class ParseJlpt
                 all.append("\n");
             }
         }
-        Util.saveFile(String.format("dictionaries/jlpt%s.txt", lvl), all.toString());
-        Util.saveFile(String.format("dictionaries/jlpt%s_withoutKanji.txt", lvl), withoutKanji.toString());
+        Filesystem.saveFile(String.format("dictionaries/jlpt%s.txt", lvl), all.toString());
+        Filesystem.saveFile(String.format("dictionaries/jlpt%s_withoutKanji.txt", lvl), withoutKanji.toString());
     }
 }
 

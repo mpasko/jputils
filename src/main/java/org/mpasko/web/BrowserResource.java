@@ -5,6 +5,8 @@
  */
 package org.mpasko.web;
 
+import org.mpasko.web.songanalysis.Presentation;
+
 import static spark.Spark.*;
 
 /**
@@ -17,12 +19,15 @@ public class BrowserResource {
     private static final String EXAM_CONTEXT = "/api/exam";
     private static final String FILE_CONTEXT = "/api/save";
     private static final String SEARCH_CONTEXT = "/api/search";
+    private static final String SONG_ANALYSIS = "/api/songs";
     private final ExamsCatalogue exams;
     private final FileSearcher search;
+    private final Presentation song;
 
     public BrowserResource() {
         exams = new ExamsCatalogue();
         search = new FileSearcher();
+        song = new Presentation();
         setupEndpoints();
     }
 
@@ -56,5 +61,8 @@ public class BrowserResource {
 
         get(SEARCH_CONTEXT + "/:id", (request, response)
                 -> search.search(request.params(":id")), new JsonTransformer());
+
+        get(SONG_ANALYSIS, (request, response)
+                -> song, new JsonTransformer());
     }
 }

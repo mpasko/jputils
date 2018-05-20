@@ -13,6 +13,9 @@ app.config(function ($routeProvider) {
     }).when('/search/:word', {
         templateUrl: 'searchResults.html',
         controller: 'searchController'
+    }).when('/songs', {
+        templateUrl: 'songsAnalysis.html',
+        controller: 'songsController'
     }).otherwise({
         redirectTo: '/browser'
     });
@@ -43,13 +46,17 @@ app.controller('DirectoryController', ['DirectoryService', '$scope', '$location'
     });
     $scope.currentItem = "";
     $scope.directories = [];
-    
-    $scope.readingUnprocessed = [];
-    $scope.listeningUnprocessed = [];
-    $scope.readingBlack = [];
-    $scope.listeningBlack = [];
-    $scope.readingWhite = [];
-    $scope.listeningWhite = [];
+
+    $scope.activities = ["reading", "listening"];
+    $scope.phases = ["unprocessed", "black", "white"];
+    $scope.data = {};
+    $scope.activities.forEach(function (activity) {
+        $scope.data[activity] = {};
+        $scope.phases.forEach(function (phase) {
+            $scope.data[activity][phase] = [];
+        });
+    });
+
     $scope.previewDepth = "";
     $scope.previewCategory = function (dir) {
         DirectoryService.getDetails(dir)
@@ -65,7 +72,7 @@ app.controller('DirectoryController', ['DirectoryService', '$scope', '$location'
     };
     function applyDetails (details) {
         Object.keys(details).forEach(function (key) {
-            $scope[key] = details[key];
+            $scope.data[key] = details[key];
         });
         generateSummary();
     }
@@ -95,7 +102,7 @@ app.controller('DirectoryController', ['DirectoryService', '$scope', '$location'
                 $scope.summary.push({
                     source: source,
                     type: type,
-                    size: $scope[type+source].length
+                    size: $scope.data[type][source.toLowerCase()].length
                 });
             });
         });
@@ -107,31 +114,4 @@ app.component('preview', {
         previewData:"="
     },
     templateUrl: "previewTemplate.html"
-});
-
-function directoryTableController($scope, $element, $attrs) {
-  var $ctrl = this;
-  $ctrl.types = ['reading', 'listening']; 
-  $ctrl.sources = ['unprocessed', 'black'];
-  $ctrl.buttons = [];
-  $ctrl.types.forEach(function(type) {
-      $ctrl.sources.forEach(function(source) {
-          $ctrl.buttons.push({type:type, source:source});
-      });
-  });
-}
-
-app.component('directoryTable', {
-    bindings: {
-        depth: "@",
-        dir: "=",
-        makeExam:"=",
-        previewCategory:"=",
-        expand:"=",
-        expanded:"="
-    },
-    replace: true,
-    transclude: true,
-    controller: directoryTableController,
-    templateUrl: "directoryTable.html"
 });

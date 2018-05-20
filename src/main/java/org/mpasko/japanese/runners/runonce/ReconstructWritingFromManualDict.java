@@ -17,8 +17,7 @@ import org.mpasko.japanese.wordcomparison.SamePhonetic;
 import org.mpasko.japanese.wordcomparison.StrictSynonimeComparer;
 import org.mpasko.japanese.wordfilters.DuplicateFilter;
 import org.mpasko.loadres.JmDictLoader;
-import org.mpasko.loadres.dictionaryFileLoader.LineSplitter;
-import org.mpasko.util.Util;
+import org.mpasko.util.Filesystem;
 
 /**
  *
@@ -39,7 +38,7 @@ public class ReconstructWritingFromManualDict {
 
     public Dictionary reconstruct(String inputs) {
         Dictionary sourceDict = new JmDictLoader().load(new JmDictLoader.DefaultFilter());
-        List<Map.Entry<String, String>> manualDict = DictionaryFileLoader.parseAsSimpleMap(Util.loadFilesInDirectory(inputs));
+        List<Map.Entry<String, String>> manualDict = DictionaryFileLoader.parseAsSimpleMap(Filesystem.loadFilesInDirectory(inputs));
         System.out.println(String.format("Lines of data discovered: %s", manualDict.size()));
         return reconstructFrom(manualDict, sourceDict);
     }

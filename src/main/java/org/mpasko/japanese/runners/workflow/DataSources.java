@@ -5,6 +5,7 @@
  */
 package org.mpasko.japanese.runners.workflow;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.mpasko.commons.DictEntry;
@@ -19,10 +20,9 @@ import org.mpasko.dictionary.formatters.MeaningChooser;
 import org.mpasko.dictionary.formatters.RomajiWritingChooser;
 import org.mpasko.dictionary.formatters.WritingChooser;
 import org.mpasko.dictionary.operations.Sum;
-import org.mpasko.japanese.wordfilters.InversionOf;
 import org.mpasko.japanese.wordfilters.OnyomiSpeculationFilter;
 import org.mpasko.loadres.JmDictLoader;
-import org.mpasko.util.Util;
+import org.mpasko.util.Filesystem;
 
 /**
  *
@@ -44,9 +44,9 @@ public class DataSources {
         return globalDictionary;
     }
 
-    public Dictionary listeningWhitelist() {
-        Dictionary listening = reconstructListeningWhitelist();
-        System.out.println("Listening reconstructed: " + listening.size());
+    public Dictionary readingWhitelist() {
+        Dictionary listening = reconstructReadingWhitelist();
+        System.out.println("Reading reconstructed: " + listening.size());
         Dictionary speculation = loadWhitelistSpeculation();
         System.out.println("Speculation reconstructed: " + speculation.size());
         Dictionary result = new Sum(listening, speculation).result();
@@ -56,12 +56,14 @@ public class DataSources {
 
     public Dictionary loadWhitelistSpeculation() {
         List<DictEntry> speculation = loadAllSources();
-        InversionOf filter = new InversionOf(OnyomiSpeculationFilter.initializeDefault());
-        return filter.filter(new Dictionary(speculation));
+
+        OnyomiSpeculationFilter defaultOnyomiFilter = OnyomiSpeculationFilter.initializeDefault();
+        //InversionOf filter = new InversionOf(defaultOnyomiFilter);
+        return defaultOnyomiFilter.filter(new Dictionary(speculation));
     }
 
     public static List<String> getGlobalSourceList() {
-        return Util.getSubdirectories(DefaultConfig.globalSources)
+        return Filesystem.getSubdirectories(DefaultConfig.globalSources)
                 .stream()
                 .filter(dir -> !dir.startsWith("_"))
                 .collect(Collectors.toList());
@@ -73,13 +75,12 @@ public class DataSources {
                 .map(dir -> new DictionaryFileLoader()
                 .loadTripleDictFromFolder(String.format("%s/%s", DefaultConfig.globalSources, dir)).items())
                 .reduce(ReadingDecomposer::mergeLists)
-                .get();
+                .orElseGet(() -> new LinkedList<DictEntry>());
         return speculation;
     }
 
-    private Dictionary reconstructListeningWhitelist() {
-        Dictionary listening = reconstructListening(DefaultConfig.listeningWhitelist);
-        return listening;
+    public Dictionary listeningWhitelist() {
+        return reconstructListening(DefaultConfig.listeningWhitelist);
     }
 
     private Dictionary reconstructListening(final String listeningPath) {
@@ -96,10 +97,8 @@ public class DataSources {
         return listening;
     }
 
-    public Dictionary readingWhitelist() {
-        Dictionary reading = reconstructReading(DefaultConfig.readingWhitelist);
-        System.out.println("Reading reconstructed: " + reading.size());
-        return reading;
+    private Dictionary reconstructReadingWhitelist() {
+        return reconstructReading(DefaultConfig.readingWhitelist);
     }
 
     public Dictionary readingBlacklist() {
@@ -114,7 +113,7 @@ public class DataSources {
             IFeatureChooser contain,
             String path) {
         return new DictionaryReconstructor(globalDictionary, exact, contain)
-                .reconstruct(Util.loadFilesInDirectory(path));
+                .reconstruct(Filesystem.loadFilesInDirectory(path));
     }
 
     Dictionary globalDictionary() {

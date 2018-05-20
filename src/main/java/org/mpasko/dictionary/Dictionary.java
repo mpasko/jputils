@@ -16,8 +16,8 @@ import org.mpasko.dictionary.formatters.DictionaryFormatter;
 import org.mpasko.dictionary.formatters.IFeatureChooser;
 import org.mpasko.dictionary.formatters.KanjiChooser;
 import org.mpasko.dictionary.formatters.WritingChooser;
+import org.mpasko.util.Filesystem;
 import org.mpasko.util.LangUtils;
-import org.mpasko.util.Util;
 import org.mpasko.util.collectors.DictEntryCollector;
 
 /**
@@ -156,7 +156,7 @@ public class Dictionary {
     }
 
     public void write(String filename) {
-        Util.saveFile(filename, toString());
+        Filesystem.saveFile(filename, toString());
     }
 
     @Override

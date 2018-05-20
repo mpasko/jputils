@@ -8,8 +8,8 @@ package org.mpasko.japanese.runners.workflow;
 import java.util.List;
 import org.mpasko.dictionary.Dictionary;
 import org.mpasko.loadres.JmDictLoader;
+import org.mpasko.util.Filesystem;
 import org.mpasko.util.StringUtils;
-import org.mpasko.util.Util;
 import org.mpasko.util.collectors.StringNewlineCollector;
 
 /**
@@ -35,14 +35,14 @@ public class ParseTexts {
 
     private static void processAlbum(String base, String album) {
         String basePath = base + "/" + album;
-        final List<String> subfiles = Util.getSubfiles(basePath);
+        final List<String> subfiles = Filesystem.getSubfiles(basePath);
         String mergedSongs = subfiles
                 .stream()
                 .map(path -> processSong(basePath, path))
                 .collect(new StringNewlineCollector());
         StringBuilder content = new StringBuilder(subfiles.toString());
         content.append("\n").append(mergedSongs);
-        Util.saveFile("texts/" + album + "_songs.txt", content.toString());
+        Filesystem.saveFile("texts/" + album + "_songs.txt", content.toString());
     }
 
     private static String processSong(String base, String song) {
@@ -56,7 +56,7 @@ public class ParseTexts {
 
     public static void traverseDir(String base, String subdir, Subprocessor subprocessor) {
         String basePath = base + "/" + subdir;
-        Util.getSubdirectories(basePath)
+        Filesystem.getSubdirectories(basePath)
                 .stream()
                 .forEach(path -> subprocessor.apply(basePath, path));
     }

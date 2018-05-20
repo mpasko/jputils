@@ -4,7 +4,7 @@
  */
 package chinese;
 
-import org.mpasko.util.Util;
+import org.mpasko.util.Filesystem;
 
 /**
  *
@@ -12,7 +12,7 @@ import org.mpasko.util.Util;
  */
 public class HanziDiff {
     public static void main(String[] args) {
-        String file = Util.loadFile("inputs/zh_differences.txt");
+        String file = Filesystem.loadFile("inputs/zh_differences.txt");
         for (String line : file.split("\n")) {
             String[] chars = line.split("-");
             String jp = chars[0];

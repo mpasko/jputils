@@ -20,7 +20,7 @@ public class Downloader {
 	public void download(String URL){
 		try {
 			BufferedInputStream bus = new BufferedInputStream(new URL(URL).openStream());
-			content = Util.streamToString(bus);
+			content = Filesystem.streamToString(bus);
 		} catch (IOException ex) {
 			Logger.getLogger(Downloader.class.getName()).log(Level.SEVERE, null, ex);
 		}

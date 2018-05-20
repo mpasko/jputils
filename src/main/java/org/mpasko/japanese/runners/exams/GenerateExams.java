@@ -15,7 +15,7 @@ import org.mpasko.japanese.wordfilters.OnlyKanjiFilter;
 import org.mpasko.loadres.JmDictLoader;
 import org.mpasko.loadres.PopularDictionaries;
 import org.mpasko.quizgeneration.DictionaryToQuiz;
-import org.mpasko.util.Util;
+import org.mpasko.util.Filesystem;
 
 /**
  *
@@ -62,7 +62,7 @@ public class GenerateExams {
     private static void processAllGoethe() {
         Dictionary mainDict = PopularDictionaries.loadGoetheDictionaries();
         String exam = DictionaryToQuiz.generateExam(mainDict);
-        Util.saveFile("dictionaries/goethe_withoutKanji.txt", exam);
+        Filesystem.saveFile("dictionaries/goethe_withoutKanji.txt", exam);
     }
 
     public static void jmdictExam() {

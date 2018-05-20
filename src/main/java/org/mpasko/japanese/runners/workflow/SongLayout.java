@@ -12,7 +12,7 @@ import org.mpasko.commons.analizers.WordsExtractor;
 import org.mpasko.console.DefaultConfig;
 import org.mpasko.dictionary.Dictionary;
 import org.mpasko.japanese.runners.parsers.ParseJishoOutputs;
-import org.mpasko.util.Util;
+import org.mpasko.util.Filesystem;
 
 /**
  *
@@ -21,10 +21,10 @@ import org.mpasko.util.Util;
 public class SongLayout {
 
     public String process(String song, String filename, String category, Dictionary full_dict) {
-        String jap = Util.loadFile(filename);
-        String eng = Util.tryLoadFile(filename.replaceAll(".txt", ".eng.txt"));
+        String jap = Filesystem.loadFile(filename);
+        String eng = Filesystem.tryLoadFile(filename.replaceAll(".txt", ".eng.txt"));
         final String dictionaryStringified = findAndFilterWords(jap, full_dict);
-        Util.saveFile(String.format(".\\%s\\%s\\%s", DefaultConfig.globalSources, category, song), dictionaryStringified);
+        Filesystem.saveFile(String.format("./%s/%s/%s", DefaultConfig.globalSources, category, song), dictionaryStringified);
         return generateChunked(song, jap, eng, full_dict);
     }
 

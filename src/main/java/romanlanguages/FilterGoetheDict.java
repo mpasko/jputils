@@ -4,16 +4,9 @@
  */
 package romanlanguages;
 
-import java.util.LinkedList;
-import java.util.List;
-import org.mpasko.commons.DictSplitter;
-import org.mpasko.dictionary.Dictionary;
-import org.mpasko.quizgeneration.QuizFormatter;
+import org.mpasko.util.Filesystem;
 import org.mpasko.util.FormatterUtil;
-import org.mpasko.util.SimpleUtils;
-import org.mpasko.util.Util;
 import romanlanguages.commons.SimpleDictionary;
-import romanlanguages.commons.SimpleEntry;
 import romanlanguages.filters.SimillarityFilter;
 
 /**
@@ -29,7 +22,7 @@ public class FilterGoetheDict {
             processDict(filename, dict);
         }
         dict = new SimillarityFilter().filter(dict);
-        Util.saveFile("dictionaries/goethe_italiano_filtered.txt", dict.toString());
+        Filesystem.saveFile("dictionaries/goethe_italiano_filtered.txt", dict.toString());
 //        QuizFormatter quiz = new QuizFormatter();
 //        for (SimpleEntry item : dict.items()) {
 //            List<String> answers = new LinkedList<String>();

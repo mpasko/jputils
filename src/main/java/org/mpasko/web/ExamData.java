@@ -18,59 +18,20 @@ import org.mpasko.japanese.wordfilters.ItemExistsInDictionary;
  */
 public class ExamData {
 
-    private final Dictionary examDict;
-    private final Dictionary listeningWhitelist;
-    private final Dictionary readingWhitelist;
-    private final Dictionary listeningBlacklist;
-    private final Dictionary readingBlacklist;
 
-    ExamData(Dictionary examDict,
-            Dictionary listeningBlacklist,
-            Dictionary readingBlacklist,
-            Dictionary listeningWhitelist,
-            Dictionary readingWhitelist) {
-        this.examDict = examDict;
-        this.listeningBlacklist = listeningBlacklist;
-        this.readingBlacklist = readingBlacklist;
-        this.listeningWhitelist = listeningWhitelist;
-        this.readingWhitelist = readingWhitelist;
+    private final ActivityData reading;
+    private final ActivityData listening;
+
+    ExamData(ActivityData reading, ActivityData listening) {
+        this.reading = reading;
+        this.listening = listening;
     }
 
-    public int getTotal() {
-        return examDict.size();
+    public ActivityData getReading() {
+        return reading;
     }
 
-    public List<DictEntry> getReadingBlack() {
-        return in(readingBlacklist).filter(examDict).getDict();
-    }
-
-    public List<DictEntry> getListeningBlack() {
-        return in(listeningBlacklist).filter(examDict).getDict();
-    }
-
-    public List<DictEntry> getListeningUnprocessed() {
-        final Dictionary notInWhite = notIn(listeningWhitelist).filter(examDict);
-        return notIn(listeningBlacklist).filter(notInWhite).getDict();
-    }
-
-    public List<DictEntry> getReadingUnprocessed() {
-        final Dictionary notInWhite = notIn(readingWhitelist).filter(examDict);
-        return notIn(readingBlacklist).filter(notInWhite).getDict();
-    }
-
-    public List<DictEntry> getReadingWhite() {
-        return in(readingWhitelist).filter(examDict).getDict();
-    }
-
-    public List<DictEntry> getListeningWhite() {
-        return in(listeningWhitelist).filter(examDict).getDict();
-    }
-
-    private GenericFilter notIn(Dictionary dict) {
-        return new InversionOf(in(dict));
-    }
-
-    private GenericFilter in(Dictionary dict) {
-        return new ItemExistsInDictionary(dict.getDict());
+    public ActivityData getListening() {
+        return listening;
     }
 }

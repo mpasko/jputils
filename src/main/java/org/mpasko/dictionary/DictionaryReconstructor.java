@@ -12,7 +12,7 @@ import org.mpasko.dictionary.formatters.KanjiChooser;
 import org.mpasko.dictionary.formatters.MeaningChooser;
 import org.mpasko.dictionary.formatters.RomajiWritingChooser;
 import org.mpasko.dictionary.formatters.WritingChooser;
-import org.mpasko.util.Util;
+import org.mpasko.util.Filesystem;
 
 /**
  *
@@ -45,7 +45,7 @@ public class DictionaryReconstructor {
     }
 
     public Dictionary reconstructFromFile(String filename) {
-        return reconstruct(Util.loadFile(filename));
+        return reconstruct(Filesystem.loadFile(filename));
     }
 
     public Dictionary reconstruct(String source) {

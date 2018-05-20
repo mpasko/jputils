@@ -4,7 +4,7 @@
  */
 package romanlanguages.filters;
 
-import org.mpasko.util.Util;
+import org.mpasko.util.Filesystem;
 import romanlanguages.commons.ItalianSteamer;
 import romanlanguages.commons.SimpleDictionary;
 import romanlanguages.commons.SimpleEntry;
@@ -21,7 +21,7 @@ public class SimillarityFilter {
     }
 
     private void saveLog() {
-        Util.saveFile("interproducts/filter_logs.txt", log.toString());
+        Filesystem.saveFile("interproducts/filter_logs.txt", log.toString());
     }
 
     private void log(String line) {

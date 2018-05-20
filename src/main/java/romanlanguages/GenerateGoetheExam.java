@@ -5,18 +5,12 @@
 package romanlanguages;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
-import org.mpasko.commons.DictSplitter;
-import org.mpasko.dictionary.Dictionary;
+
 import org.mpasko.quizgeneration.QuizFormatter;
-import org.mpasko.util.FormatterUtil;
-import org.mpasko.util.Randomation;
-import org.mpasko.util.SimpleUtils;
-import org.mpasko.util.Util;
+import org.mpasko.util.*;
 import romanlanguages.commons.SimpleDictionary;
 import romanlanguages.commons.SimpleEntry;
-import romanlanguages.filters.SimillarityFilter;
 
 /**
  *
@@ -52,6 +46,6 @@ public class GenerateGoetheExam {
             Randomation.shuffle(answers);
             quiz.appendQuestion(item.word, item.translation, answers);
         }
-        Util.saveFile("exams/"+name, quiz.toString());
+        Filesystem.saveFile("exams/"+name, quiz.toString());
     }
 }

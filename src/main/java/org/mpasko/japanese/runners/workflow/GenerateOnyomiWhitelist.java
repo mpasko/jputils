@@ -10,7 +10,7 @@ import java.util.Map;
 import org.mpasko.commons.analizers.ReadingDecomposer;
 import org.mpasko.console.DefaultConfig;
 import org.mpasko.dictionary.Dictionary;
-import org.mpasko.util.Util;
+import org.mpasko.util.Filesystem;
 
 /**
  *
@@ -27,7 +27,7 @@ public class GenerateOnyomiWhitelist {
         List<Map.Entry<String, String>> decomposed = ReadingDecomposer
                 .initializeWithDefaultDict()
                 .decompose(whitelist.getDict());
-        Util.saveFile(DefaultConfig.onyomiWhitelist, formatDecomposed(decomposed));
+        Filesystem.saveFile(DefaultConfig.onyomiWhitelist, formatDecomposed(decomposed));
     }
 
     public Dictionary loadWhitelist() {

@@ -9,7 +9,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import org.mpasko.loadres.dictionaryFileLoader.LineSplitter;
-import org.mpasko.util.Util;
+import org.mpasko.util.Filesystem;
 
 /**
  *
@@ -28,12 +28,12 @@ public class DictionaryFileLoader {
     }
 
     public Dictionary loadTripleDict(String filename) {
-        String content = Util.loadFile(filename);
+        String content = Filesystem.loadFile(filename);
         return loadTripleDictFromContent(content);
     }
 
     public Dictionary loadTripleDictFromFolder(String path) {
-        String content = Util.loadFilesInDirectory(path);
+        String content = Filesystem.loadFilesInDirectory(path);
         return loadTripleDictFromContent(content);
     }
 

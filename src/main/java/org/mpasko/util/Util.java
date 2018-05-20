@@ -4,18 +4,8 @@
  */
 package org.mpasko.util;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileFilter;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -26,7 +16,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
 
 /**
  *
@@ -63,32 +52,6 @@ public class Util {
         return b.toString();
     }
 
-//    public static void collectionIntoArray(Iterable<CellValue> mesh_cells, List<CellValue> array) {
-//        Iterator<CellValue> iter = mesh_cells.iterator();
-//        while (iter.hasNext()) {
-//            CellValue val = iter.next();
-//            array.add(val);
-//        }
-//    }
-    public static String streamToString(InputStream in) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(in, "UTF-8"));
-        StringBuilder out = new StringBuilder();
-        String line;
-        while ((line = br.readLine()) != null) {
-            out.append(line).append("\n");
-        }
-        return out.toString();
-    }
-
-    public static void stringToStream(String in, OutputStream out) throws IOException {
-        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(out, "UTF-8"));
-        for (String line : in.split("\n")) {
-            bw.write(line);
-            bw.newLine();
-        }
-        bw.close();
-    }
-
     public static void binaryToStream(String content, OutputStream fos) {
         try {
             fos.write(content.getBytes());
@@ -116,87 +79,6 @@ public class Util {
         return neg;
     }
 
-//    public static Input JsonToInput(String json) {
-//        try {
-//            //System.out.println(item.toString());
-//            ObjectMapper mapper = new ObjectMapper();
-//            mapper.enable(SerializationConfig.Feature.INDENT_OUTPUT);
-//            return mapper.readValue(json, Input.class);
-//        } catch (Throwable ex) {
-//            Logger.getLogger(Util.class.getName()).log(Level.SEVERE, null, ex);
-//            throw new RuntimeException(ex);
-//        }
-//        //return "";
-//    }
-//    public static String objectToJson(Object item) {
-//        try {
-//            //System.out.println(item.toString());
-//            ObjectMapper mapper = new ObjectMapper();
-//            mapper.enable(SerializationConfig.Feature.INDENT_OUTPUT);
-//            return mapper.writeValueAsString(item);
-//        } catch (Throwable ex) {
-//            Logger.getLogger(Util.class.getName()).log(Level.SEVERE, null, ex);
-//            throw new RuntimeException(ex);
-//        }
-//        //return "";
-//    }
-    public static String loadFilesInDirectory(String stringPath) {
-        StringBuilder builder = new StringBuilder();
-        File[] files = new File(stringPath).listFiles();
-        Arrays.stream(files)
-                .map(path -> path.toPath())
-                .filter(Files::isRegularFile)
-                .forEach(content
-                        -> builder.append(loadFile(content.toAbsolutePath().toString()))
-                        .append("\n"));
-        return builder.toString();
-    }
-
-    public static List<String> getSubdirectories(String path) {
-        return getSubitems(path, File::isDirectory);
-    }
-
-    public static List<String> getSubfiles(String basePath) {
-        return getSubitems(basePath, File::isFile);
-    }
-
-    private static List<String> getSubitems(String path, final FileFilter filter) throws RuntimeException {
-        File[] directories = new File(path).listFiles(filter);
-        if (directories == null) {
-            throw new RuntimeException("Invalid path: " + path);
-        }
-        List<String> list = Arrays.stream(directories)
-                .map(dir -> dir.getName())
-                .collect(Collectors.toList());
-        return list;
-    }
-
-    public static String loadFile(String filename) {
-        FileInputStream stream = null;
-        try {
-            stream = new FileInputStream(filename);
-            return Util.streamToString(stream);
-        } catch (IOException ex) {
-            throw new RuntimeException(ex);
-        } finally {
-            try {
-                if (stream != null) {
-                    stream.close();
-                }
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            }
-        }
-    }
-
-    public static String tryLoadFile(String filename) {
-        try {
-            return loadFile(filename);
-        } catch (Exception e) {
-            return "";
-        }
-    }
-
     public static Map<String, Object> lowercaseKeys(Map<String, Object> event) {
         HashMap<String, Object> result = new HashMap<String, Object>();
         for (Entry<String, Object> entry : event.entrySet()) {
@@ -204,36 +86,6 @@ public class Util {
             result.put(entry.getKey().toLowerCase(Locale.getDefault()), entry.getValue());
         }
         return result;
-    }
-
-    public static void saveFile(String full_name, String content) {
-        //String full_name = full_path.replaceAll("\\/", "\\");
-        FileOutputStream fos = null;
-        try {
-            File file = new File(full_name);
-            createPathIfNotExists(file);
-            fos = new FileOutputStream(file);
-            fos.flush();
-            Util.stringToStream(content, fos);
-        } catch (IOException ex) {
-            throw new RuntimeException("Error saving file: " + full_name, ex);
-        } finally {
-            if (fos != null) {
-                try {
-                    fos.close();
-                } catch (IOException ex) {
-                    throw new RuntimeException("Error closing file stream: " + full_name, ex);
-                }
-            }
-        }
-    }
-
-    private static void createPathIfNotExists(File file) {
-        final File parentFile = file.getParentFile();
-        if (!parentFile.exists()) {
-            createPathIfNotExists(parentFile);
-            parentFile.mkdirs();
-        }
     }
 
     public static String formatEventByKeyParams(List<String> keys, Map<String, Object> event) {

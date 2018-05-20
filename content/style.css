@@ -124,3 +124,15 @@ table.users tr:hover           { background: rgba(255,255,255,.1); }
 td,th {
     padding: 5px;
 }
+
+div.swimlane {
+    width: 48%;
+    float:left;
+    clear:none;
+}
+
+div.swimlane-container {
+    width: 100%;
+    float: none;
+    overflow: auto;
+}

@@ -7,14 +7,12 @@ package org.mpasko.japanese.wordfilters;
 import java.util.LinkedList;
 import java.util.List;
 import org.mpasko.commons.DictEntry;
-import org.mpasko.console.DefaultConfig;
 import org.mpasko.dictionary.Dictionary;
 import org.mpasko.dictionary.DictionaryFileLoader;
 import org.mpasko.dictionary.formatters.IFeatureChooser;
 import org.mpasko.dictionary.formatters.KanjiChooser;
 import org.mpasko.dictionary.formatters.WritingChooser;
-import org.mpasko.loadres.PopularDictionaries;
-import org.mpasko.util.Util;
+import org.mpasko.util.Filesystem;
 
 /**
  *
@@ -58,6 +56,7 @@ public class KnownWordsFilter extends GenericFilter {
     }
 
     public void initialize() {
+        /*
         Dictionary exceptions = new DictionaryFileLoader().loadTripleDict(DefaultConfig.exceptions);
         Dictionary goethe = PopularDictionaries.loadGoetheDictionaries();
         addList(goethe, exceptions);
@@ -70,6 +69,7 @@ public class KnownWordsFilter extends GenericFilter {
         addListWithoutTranslations("inputs/whitelist_furigana.txt");
         addListWithoutTranslations("inputs/whitelist_words.txt");
         addList(DefaultConfig.processedManualWhitelist, exceptions);
+        */
         this.knownDictionary = new Dictionary(knownWords);
     }
 
@@ -98,7 +98,7 @@ public class KnownWordsFilter extends GenericFilter {
     }
 
     private void addListWithoutTranslations(String filename) {
-        String content = Util.loadFile(filename);
+        String content = Filesystem.loadFile(filename);
         for (String line : content.split("\n")) {
             DictEntry item = new DictEntry(line, "none");
             knownWords.add(item);

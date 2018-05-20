@@ -1,16 +1,11 @@
 package org.mpasko.japanese.runners.parsers;
 
-import java.util.Arrays;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.mpasko.commons.Classifier;
-import org.mpasko.util.FormatterUtil;
-import org.mpasko.util.SimpleUtils;
-import org.mpasko.util.StringUtils;
-import org.mpasko.util.Util;
-
+import org.mpasko.util.*;
 
 
 public class ParseGoetheDictionary
@@ -30,7 +25,7 @@ public class ParseGoetheDictionary
     private static void processfile(String alignedNumber) {
         String filePattern = "inputs/www.goethe-verlag.com/book2/_VOCAB/EN/ENJA/%s.HTM";
         String filename = String.format(filePattern, alignedNumber);
-        String entityString = Util.loadFile(filename);
+        String entityString = Filesystem.loadFile(filename);
         Document doc = Jsoup.parse(entityString);
         Element table = doc.getElementsByTag("table").get(1);
         Elements rows = table.getElementsByTag("td");
@@ -56,8 +51,8 @@ public class ParseGoetheDictionary
             }
             System.out.println(kana);
         }
-        Util.saveFile(String.format("dictionaries/goethe%s.txt", alignedNumber), all.toString());
-        Util.saveFile(String.format("dictionaries/goethe%s_withoutKanji.txt", alignedNumber), withoutKanji.toString());
+        Filesystem.saveFile(String.format("dictionaries/goethe%s.txt", alignedNumber), all.toString());
+        Filesystem.saveFile(String.format("dictionaries/goethe%s_withoutKanji.txt", alignedNumber), withoutKanji.toString());
     }
 }
 

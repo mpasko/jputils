@@ -11,8 +11,8 @@ import java.util.stream.Collectors;
 import org.mpasko.commons.DictEntry;
 import org.mpasko.commons.DictSplitter;
 import org.mpasko.dictionary.Dictionary;
+import org.mpasko.util.Filesystem;
 import org.mpasko.util.Randomation;
-import org.mpasko.util.Util;
 
 /**
  *
@@ -26,11 +26,11 @@ public class DictionaryToQuiz {
             int cnt = 0;
             for (Dictionary part : parts) {
                 String exam = generateExam(part);
-                Util.saveFile(String.format("exams/%s_part%s.txt", keyword, ++cnt), exam);
+                Filesystem.saveFile(String.format("exams/%s_part%s.txt", keyword, ++cnt), exam);
             }
         } else {
             String exam = generateExam(dict);
-            Util.saveFile("exams/" + keyword + ".txt", exam);
+            Filesystem.saveFile("exams/" + keyword + ".txt", exam);
         }
     }
 

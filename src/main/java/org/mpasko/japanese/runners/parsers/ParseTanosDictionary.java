@@ -1,15 +1,10 @@
 package org.mpasko.japanese.runners.parsers;
 
-import java.util.Arrays;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import org.mpasko.commons.Classifier;
-import org.mpasko.util.FormatterUtil;
-import org.mpasko.util.SimpleUtils;
-import org.mpasko.util.StringUtils;
-import org.mpasko.util.Util;
+import org.mpasko.util.*;
 
 public class ParseTanosDictionary {
 
@@ -24,7 +19,7 @@ public class ParseTanosDictionary {
 
     private static void processfile() {
         String filename = "inputs/JLPT_N2_tanos.htm";
-        String entityString = Util.loadFile(filename);
+        String entityString = Filesystem.loadFile(filename);
         Document doc = Jsoup.parse(entityString);
         Element table = doc.getElementsByTag("table").get(1);
         Elements rows = table.getElementsByTag("tr");
@@ -53,7 +48,7 @@ public class ParseTanosDictionary {
                 }
             }
         }
-        Util.saveFile("dictionaries/n2_tanos.txt", all.toString());
-        Util.saveFile("dictionaries/n2_tanos_withoutKanji.txt", withoutKanji.toString());
+        Filesystem.saveFile("dictionaries/n2_tanos.txt", all.toString());
+        Filesystem.saveFile("dictionaries/n2_tanos_withoutKanji.txt", withoutKanji.toString());
     }
 }

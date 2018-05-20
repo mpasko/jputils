@@ -41,16 +41,10 @@
             </tr>
         </table>
     </div>
-    <h3>Reading unprocessed</h3>
-    <preview preview-data="readingUnprocessed"></preview>
-    <h3>Listening unprocessed</h3>
-    <preview preview-data="listeningUnprocessed"></preview>
-    <h3>Reading blacklist</h3>
-    <preview preview-data="readingBlack"></preview>
-    <h3>Listening blacklist</h3>
-    <preview preview-data="listeningBlack"></preview>
-    <h3>Reading whitelist</h3>
-    <preview preview-data="readingWhite"></preview>
-    <h3>Listening whitelist</h3>
-    <preview preview-data="listeningWhite"></preview>
+    <div ng-repeat="activity in activities">
+        <div ng-repeat="phase in phases">
+            <h3>{{activity}} {{phase}}</h3>
+            <preview preview-data="data[activity][phase]"></preview>
+        </div>
+    </div>
 </div>

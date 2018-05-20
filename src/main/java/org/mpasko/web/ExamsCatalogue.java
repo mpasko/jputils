@@ -21,7 +21,7 @@ import org.mpasko.dictionary.formatters.RomajiWritingChooser;
 import org.mpasko.dictionary.formatters.WritingChooser;
 import org.mpasko.japanese.runners.workflow.DataSources;
 import org.mpasko.japanese.runners.workflow.Remover;
-import org.mpasko.util.Util;
+import org.mpasko.util.Filesystem;
 
 /**
  *
@@ -41,19 +41,19 @@ class ExamsCatalogue {
 
     private void reloadDataSources() {
         dataSources = new DataSources();
-        listeningBlacklist = dataSources.readingBlacklist();
-        readingBlacklist = dataSources.listeningBlacklist();
-        listeningWhitelist = dataSources.listeningWhitelist();
+        readingBlacklist = dataSources.readingBlacklist();
+        listeningBlacklist = dataSources.listeningBlacklist();
         readingWhitelist = dataSources.readingWhitelist();
+        listeningWhitelist = dataSources.listeningWhitelist();
     }
 
     public List<String> getItems() {
-        List<String> directories = Util.getSubdirectories(DefaultConfig.globalSources);
+        List<String> directories = Filesystem.getSubdirectories(DefaultConfig.globalSources);
         return directories;
     }
 
     public List<String> getSubItems(String id) {
-        List<String> files = Util.getSubfiles(DefaultConfig.globalSources + "/" + id);
+        List<String> files = Filesystem.getSubfiles(DefaultConfig.globalSources + "/" + id);
         return files;
     }
 
@@ -76,11 +76,13 @@ class ExamsCatalogue {
     }
 
     private ExamData buildExamData(Dictionary dict) {
-        return new ExamData(dict, listeningBlacklist, readingBlacklist, listeningWhitelist, readingWhitelist);
+        ActivityData reading = new ActivityData(dict, readingBlacklist, readingWhitelist);
+        ActivityData listening = new ActivityData(dict, listeningBlacklist, listeningWhitelist);
+        return new ExamData(reading, listening);
     }
 
-    List<ExamItem> generateReadingExam(String params, String source) {
-        return switchSource(getDataAbout(params), "reading_" + source)
+    List<ExamItem> generateReadingExam(String params, String phase) {
+        return switchSource(getDataAbout(params), "reading", phase)
                 .stream()
                 .map(dict -> getReadingItem(dict))
                 .collect(Collectors.toList());
@@ -93,8 +95,8 @@ class ExamsCatalogue {
         return item;
     }
 
-    List<ExamItem> generateListeningExam(String params, String source) {
-        return switchSource(getDataAbout(params), "listening_" + source)
+    List<ExamItem> generateListeningExam(String params, String phase) {
+        return switchSource(getDataAbout(params), "listening", phase)
                 .stream()
                 .map(dict -> getListeningItem(dict))
                 .collect(Collectors.toList());
@@ -107,30 +109,43 @@ class ExamsCatalogue {
         return item;
     }
 
-    List<ExamItem> generateReadingSubExam(String params, String source) {
-        return switchSource(getDataAboutSubitem(params), "reading_" + source)
+    List<ExamItem> generateReadingSubExam(String params, String phase) {
+        return switchSource(getDataAboutSubitem(params), "reading", phase)
                 .stream()
                 .map(dict -> getReadingItem(dict))
                 .collect(Collectors.toList());
     }
 
-    List<ExamItem> generateListeningSubExam(String params, String source) {
-        return switchSource(getDataAboutSubitem(params), "listening_" + source)
+    List<ExamItem> generateListeningSubExam(String params, String phase) {
+        return switchSource(getDataAboutSubitem(params), "listening", phase)
                 .stream()
                 .map(dict -> getListeningItem(dict))
                 .collect(Collectors.toList());
     }
 
-    private List<DictEntry> switchSource(ExamData data, String source) {
-        switch (source.toLowerCase()) {
-            case "listening_unprocessed":
-                return data.getListeningUnprocessed();
-            case "reading_unprocessed":
-                return data.getReadingUnprocessed();
-            case "listening_black":
-                return data.getListeningBlack();
-            case "reading_black":
-                return data.getReadingBlack();
+    private List<DictEntry> switchSource(ExamData data, String activity, String phase) {
+        return switchPhase(switchActivity(data, activity), phase);
+    }
+
+    private ActivityData switchActivity(ExamData data, String activity) {
+        switch (activity.toLowerCase()) {
+            case "listening":
+                return data.getListening();
+            case "reading":
+                return data.getReading();
+            default:
+                return null;
+        }
+    }
+
+    private List<DictEntry> switchPhase(ActivityData activity, String phase) {
+        switch (phase.toLowerCase()) {
+            case "unprocessed":
+                return activity.getUnprocessed();
+            case "black":
+                return activity.getBlack();
+            case "white":
+                return activity.getWhite();
             default:
                 return null;
         }
@@ -138,7 +153,11 @@ class ExamsCatalogue {
 
     public String saveResults(String source, String type, String id, String content) {
         final Remover remover = new Remover(dataSources.getGlobalDict());
-        remover.removeRedundancy(oppositeOf(source), type, content);
+        try {
+            remover.removeRedundancy(oppositeOf(source), type, content);
+        }catch(RuntimeException ex){
+            System.out.println(ex.getMessage());
+        }
         return saveGeneric(Remover.switchSourcePath(source, type), id, content);
     }
 
@@ -152,7 +171,7 @@ class ExamsCatalogue {
 
     private String saveGeneric(String directory, String id, String content) {
         String filename = directory + id + formatTimestamp() + ".txt";
-        Util.saveFile(filename, content);
+        Filesystem.saveFile(filename, content);
         reloadDataSources();
         return "";
     }
@@ -165,9 +184,9 @@ class ExamsCatalogue {
     }
 
     private String findFileWithName(String root, String name) {
-        String containing = Util.getSubdirectories(root)
+        String containing = Filesystem.getSubdirectories(root)
                 .stream()
-                .filter(subdir -> Util.getSubfiles(root + "/" + subdir).contains(name))
+                .filter(subdir -> Filesystem.getSubfiles(root + "/" + subdir).contains(name))
                 .findFirst()
                 .get();
         return root + "/" + containing + "/" + name;

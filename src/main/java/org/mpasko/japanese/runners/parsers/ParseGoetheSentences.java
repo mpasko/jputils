@@ -1,14 +1,10 @@
 package org.mpasko.japanese.runners.parsers;
 
-import java.util.Arrays;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
-import org.mpasko.commons.Classifier;
+import org.mpasko.util.Filesystem;
 import org.mpasko.util.FormatterUtil;
-import org.mpasko.util.Util;
-
 
 
 public class ParseGoetheSentences
@@ -25,13 +21,13 @@ public class ParseGoetheSentences
             String alignedNumber = FormatterUtil.alignString(3, "0", String.valueOf(i+2));
             all.append(processfile(alignedNumber));
         }
-        Util.saveFile("texts/goethe_only_kanji.txt", all.toString());
+        Filesystem.saveFile("texts/goethe_only_kanji.txt", all.toString());
     }
 
     private static StringBuilder processfile(String alignedNumber) {
         String filePattern = "inputs/www.goethe-verlag.com/book2/EN/ENJA/ENJA%s.HTM";
         String filename = String.format(filePattern, alignedNumber);
-        String entityString = Util.loadFile(filename);
+        String entityString = Filesystem.loadFile(filename);
         Document doc = Jsoup.parse(entityString);
         StringBuilder all = new StringBuilder();
         for (int num=0; num<40; ++num) {

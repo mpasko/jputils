@@ -14,7 +14,7 @@ import org.mpasko.japanese.wordcomparison.StrictSynonimeComparer;
 import org.mpasko.japanese.wordfilters.GenericFilter;
 import org.mpasko.japanese.wordfilters.InversionOf;
 import org.mpasko.japanese.wordfilters.ItemExistsInDictionary;
-import org.mpasko.util.Util;
+import org.mpasko.util.Filesystem;
 
 /**
  *
@@ -30,7 +30,7 @@ public class Remover {
 
     public void removeRedundancy(String source, String type, String data) {
         String root_path = switchSourcePath(source, type);
-        Util.getSubfiles(root_path)
+        Filesystem.getSubfiles(root_path)
                 .stream()
                 .forEach(file -> removeInFile(root_path + file, type, data));
     }
@@ -55,12 +55,12 @@ public class Remover {
 
     private void removeInFile(String path, String type, String data) {
         DictionaryReconstructor reconstructor = switchReconstructor(type);
-        final String currentState = Util.loadFile(path);
+        final String currentState = Filesystem.loadFile(path);
         Dictionary toRemove = reconstructor.reconstruct(data);
         final String updatedState = Arrays.stream(currentState.split("\n"))
                 .filter(line -> lineShouldRemain(line, toRemove, reconstructor))
                 .collect(Collectors.joining("\n"));
-        Util.saveFile(path, updatedState);
+        Filesystem.saveFile(path, updatedState);
     }
 
     private DictionaryReconstructor switchReconstructor(String type) {

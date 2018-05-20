@@ -12,7 +12,7 @@ import org.mpasko.commons.analizers.ReadingDecomposer;
 import org.mpasko.console.DefaultConfig;
 import org.mpasko.dictionary.DictionaryFileLoader;
 import org.mpasko.dictionary.MultipleIndexer;
-import org.mpasko.util.Util;
+import org.mpasko.util.Filesystem;
 
 /**
  *
@@ -30,7 +30,7 @@ public class OnyomiSpeculationFilter extends GenericFilter {
     }
 
     public static OnyomiSpeculationFilter initializeDefault() {
-        final String fileContent = Util.loadFile(DefaultConfig.onyomiWhitelist);
+        final String fileContent = Filesystem.loadFile(DefaultConfig.onyomiWhitelist);
         final List<Map.Entry<String, String>> onyomiWhitelist = DictionaryFileLoader.parseAsSimpleMap(fileContent);
         final ReadingDecomposer decomposer = ReadingDecomposer.initializeWithDefaultDict();
         return new OnyomiSpeculationFilter(onyomiWhitelist, decomposer);

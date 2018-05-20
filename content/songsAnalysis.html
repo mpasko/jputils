@@ -1,0 +1,20 @@
+
+<div class="swimlane-container"
+        ng-repeat="set in classifications">
+    <hr style="{width:100%;}"/>
+    <h3>{{ set.artist }}</h3>
+    <div class="swimlane">
+         <div ng-repeat="song in set.lyrics">
+             <a href="{{song.path}}">{{ song.title }}</a>
+             <span style="{color: red;}"
+                ng-if="song.translation">
+                 translated
+             </span>
+         </div>
+    </div>
+    <div class="swimlane">
+         <div ng-repeat="song in set.audio">
+            {{ song.title }}
+         </div>
+    </div>
+</div>

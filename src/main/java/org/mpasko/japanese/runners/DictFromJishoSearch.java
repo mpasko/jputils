@@ -9,9 +9,9 @@ import org.mpasko.commons.DictEntry;
 import org.mpasko.dictionary.Dictionary;
 import org.mpasko.commons.Furiganiser;
 import org.mpasko.loadres.JmDictLoader;
+import org.mpasko.util.Filesystem;
 import org.mpasko.util.SimpleUtils;
 import org.mpasko.util.StringUtils;
-import org.mpasko.util.Util;
 
 /**
  *
@@ -22,7 +22,7 @@ public class DictFromJishoSearch {
         System.getProperties().setProperty("jdk.xml.entityExpansionLimit", "0");
         Dictionary full = new JmDictLoader().load(new JmDictLoader.DefaultFilter());
         Dictionary produced = new Dictionary();
-        String trans = Util.loadFile("inputs/jisho_searches.txt");
+        String trans = Filesystem.loadFile("inputs/jisho_searches.txt");
         final Furiganiser furiganiser = new Furiganiser();
         StringBuilder log = new StringBuilder();
         for (String word : trans.split("\n")){
@@ -40,7 +40,7 @@ public class DictFromJishoSearch {
                 produced.put(entry);
             }
         }
-        Util.saveFile("interproducts/jisho_srch_log.txt", log.toString());
+        Filesystem.saveFile("interproducts/jisho_srch_log.txt", log.toString());
         produced.write("dictionaries/from_jisho_searches.txt");
     }
 }

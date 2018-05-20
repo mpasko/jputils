@@ -10,7 +10,7 @@ import org.mpasko.commons.KanjiDictionary;
 import org.mpasko.japanese.kanjifilters.LoaderFilterByText;
 import org.mpasko.loadres.KanjiDictLoader;
 import org.mpasko.loadres.KanjiDictLoader.Filter;
-import org.mpasko.util.Util;
+import org.mpasko.util.Filesystem;
 
 /**
  *
@@ -37,11 +37,11 @@ public class KanjiListFromText {
     public static void songIntoKanjiDic(String name) {
         KanjiDictionary dictionary = loadChineseSong(name);
         String output = dictionary.format();
-        Util.saveFile(String.format("texts\\chinese_songs\\%s.txt", name), output);
+        Filesystem.saveFile(String.format("texts\\chinese_songs\\%s.txt", name), output);
     }
 
     public static KanjiDictionary loadChineseSong(String name) {
-        String text = Util.loadFile(String.format("inputs\\chinese_songs\\%s.txt", name));
+        String text = Filesystem.loadFile(String.format("inputs\\chinese_songs\\%s.txt", name));
         Filter filter = LoaderFilterByText.scanned(text).getInstance();
         KanjiDictionary dictionary = new KanjiDictLoader().load(filter);
         return dictionary;

@@ -16,8 +16,8 @@ import org.mpasko.japanese.wordfilters.DuplicateFilter;
 import org.mpasko.japanese.wordfilters.OnlyKanjiFilter;
 import org.mpasko.japanese.wordfilters.OnyomiSpeculationFilter;
 import org.mpasko.japanese.wordfilters.wordsplitter.SplittingFilter;
+import org.mpasko.util.Filesystem;
 import org.mpasko.util.StringUtils;
-import org.mpasko.util.Util;
 
 /**
  *
@@ -91,7 +91,7 @@ public class ProcessEverything {
         dict = DuplicateFilter.outputDictionaryDuplicateFilter().filter(dict);
         String content = formatter.format(dict);
         final String filename = String.format("%s.txt", StringUtils.joinPath(outputDirectory, category));
-        Util.saveFile(filename, content);
+        Filesystem.saveFile(filename, content);
     }
 
     private void mergeReadingAndListening() {

@@ -7,8 +7,8 @@ package romanlanguages.commons;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.TreeMap;
-import org.mpasko.util.LangUtils;
-import org.mpasko.util.Util;
+
+import org.mpasko.util.Filesystem;
 
 /**
  *
@@ -17,7 +17,7 @@ import org.mpasko.util.Util;
 public class SimpleDictionary {
 
     public static SimpleDictionary loadDict(String filename) {
-        String content = Util.loadFile(filename);
+        String content = Filesystem.loadFile(filename);
         SimpleDictionary dict = new SimpleDictionary();
         for (String line : content.split("\n")) {
             String[] byDash = line.split("-");
