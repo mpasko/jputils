@@ -24,7 +24,7 @@ public class ParseJlpt
 
     private static void processLevel(String lvl) {
         String filePattern = "inputs/JLPT Level %s Vocabulary List.htm";
-        String entityString = Filesystem.loadFile(String.format(filePattern, lvl));
+        String entityString = new Filesystem().loadFile(String.format(filePattern, lvl));
         Document doc = Jsoup.parse(entityString);
         Element table = doc.getElementsByClass("biglistingTable").first();
         Elements rows = table.getElementsByTag("tr");
@@ -54,8 +54,8 @@ public class ParseJlpt
                 all.append("\n");
             }
         }
-        Filesystem.saveFile(String.format("dictionaries/jlpt%s.txt", lvl), all.toString());
-        Filesystem.saveFile(String.format("dictionaries/jlpt%s_withoutKanji.txt", lvl), withoutKanji.toString());
+        new Filesystem().saveFile(String.format("dictionaries/jlpt%s.txt", lvl), all.toString());
+        new Filesystem().saveFile(String.format("dictionaries/jlpt%s_withoutKanji.txt", lvl), withoutKanji.toString());
     }
 }
 

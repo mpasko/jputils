@@ -6,9 +6,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Filesystem {
+public class Filesystem implements IFilesystem {
 
-    public static String streamToString(InputStream in) throws IOException {
+    public String streamToString(InputStream in) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(in, "UTF-8"));
         StringBuilder out = new StringBuilder();
         String line;
@@ -18,76 +18,91 @@ public class Filesystem {
         return out.toString();
     }
 
-    public static void stringToStream(String in, OutputStream out) throws IOException {
-            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(out, "UTF-8"));
-            for (String line : in.split("\n")) {
-                bw.write(line);
-                bw.newLine();
-            }
-            bw.close();
+    public void stringToStream(String in, OutputStream out) throws IOException {
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(out, "UTF-8"));
+        for (String line : in.split("\n")) {
+            bw.write(line);
+            bw.newLine();
         }
+        bw.close();
+    }
 
-        public static String loadFilesInDirectory(String stringPath) {
-            StringBuilder builder = new StringBuilder();
-            File[] files = new File(stringPath).listFiles();
-            if(files == null) {
-                return "";
-            }
-            Arrays.stream(files)
-                    .map(path -> path.toPath())
-                    .filter(Files::isRegularFile)
-                    .forEach(content
-                            -> builder.append(loadFile(content.toAbsolutePath().toString()))
-                            .append("\n"));
-            return builder.toString();
+    private List<String> getSubitems(String path, final FileFilter filter) throws RuntimeException {
+        File[] directories = new File(path).listFiles(filter);
+        if (directories == null) {
+            throw new RuntimeException("Invalid path: " + path);
         }
+        List<String> list = Arrays.stream(directories)
+            .map(dir -> dir.getName())
+            .collect(Collectors.toList());
+        return list;
+    }
 
-    public static List<String> getSubdirectories(String path) {
-            return getSubitems(path, File::isDirectory);
+    private void createPathIfNotExists(File file) {
+        final File parentFile = file.getParentFile();
+        if (parentFile!= null && !parentFile.exists()) {
+            createPathIfNotExists(parentFile);
+            parentFile.mkdirs();
         }
+    }
 
-    public static List<String> getSubfiles(String basePath) {
-            return getSubitems(basePath, File::isFile);
+
+    @Override
+    public String loadFilesInDirectory(String stringPath) {
+        StringBuilder builder = new StringBuilder();
+        File[] files = new File(stringPath).listFiles();
+        if(files == null) {
+            return "";
         }
+        Arrays.stream(files)
+                .map(path -> path.toPath())
+                .filter(Files::isRegularFile)
+                .forEach(content
+                        -> builder.append(loadFile(content.toAbsolutePath().toString()))
+                        .append("\n"));
+        return builder.toString();
+    }
 
-    private static List<String> getSubitems(String path, final FileFilter filter) throws RuntimeException {
-            File[] directories = new File(path).listFiles(filter);
-            if (directories == null) {
-                throw new RuntimeException("Invalid path: " + path);
-            }
-            List<String> list = Arrays.stream(directories)
-                    .map(dir -> dir.getName())
-                    .collect(Collectors.toList());
-            return list;
-        }
+    @Override
+    public List<String> getSubdirectories(String path) {
+        return getSubitems(path, File::isDirectory);
+    }
 
-    public static String loadFile(String filename) {
-            FileInputStream stream = null;
+    @Override
+    public List<String> getSubfiles(String basePath) {
+        return getSubitems(basePath, File::isFile);
+    }
+
+    @Override
+    public String loadFile(String filename) {
+        FileInputStream stream = null;
+        try {
+            stream = new FileInputStream(filename);
+            return streamToString(stream);
+        } catch (IOException ex) {
+            throw new RuntimeException(ex);
+        } finally {
             try {
-                stream = new FileInputStream(filename);
-                return streamToString(stream);
+                if (stream != null) {
+                    stream.close();
+                }
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
-            } finally {
-                try {
-                    if (stream != null) {
-                        stream.close();
-                    }
-                } catch (IOException ex) {
-                    throw new RuntimeException(ex);
-                }
             }
         }
+    }
 
-    public static String tryLoadFile(String filename) {
-            try {
-                return loadFile(filename);
-            } catch (Exception e) {
-                return "";
-            }
+    @Override
+    public String tryLoadFile(String filename) {
+        try {
+            return loadFile(filename);
+        } catch (Exception e) {
+            return "";
         }
+    }
 
-    public static void saveFile(String full_name, String content) {
+    @Override
+    public void saveFile(String full_name, String content) {
         //String full_name = full_path.replaceAll("\\/", "\\");
         FileOutputStream fos = null;
         try {
@@ -106,14 +121,6 @@ public class Filesystem {
                     throw new RuntimeException("Error closing file stream: " + full_name, ex);
                 }
             }
-        }
-    }
-
-    private static void createPathIfNotExists(File file) {
-        final File parentFile = file.getParentFile();
-        if (parentFile!= null && !parentFile.exists()) {
-            createPathIfNotExists(parentFile);
-            parentFile.mkdirs();
         }
     }
 }

@@ -38,7 +38,7 @@ public class ReconstructWritingFromManualDict {
 
     public Dictionary reconstruct(String inputs) {
         Dictionary sourceDict = new JmDictLoader().load(new JmDictLoader.DefaultFilter());
-        List<Map.Entry<String, String>> manualDict = DictionaryFileLoader.parseAsSimpleMap(Filesystem.loadFilesInDirectory(inputs));
+        List<Map.Entry<String, String>> manualDict = DictionaryFileLoader.parseAsSimpleMap(new Filesystem().loadFilesInDirectory(inputs));
         System.out.println(String.format("Lines of data discovered: %s", manualDict.size()));
         return reconstructFrom(manualDict, sourceDict);
     }

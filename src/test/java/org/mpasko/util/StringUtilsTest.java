@@ -31,9 +31,9 @@ public class StringUtilsTest {
     public void testJoinPath() {
         System.out.println("joinPath");
         String result = StringUtils.joinPath("node1", "node2\\", "node3\\", "\\node4");
-        assertEquals("node1\\node2\\node3\\node4", result);
+        assertEquals("node1/node2/node3/node4", result);
         String result2 = StringUtils.joinPath("node1", "node2/", "node3/", "/node4");
-        assertEquals("node1\\node2\\node3\\node4", result2);
+        assertEquals("node1/node2/node3/node4", result2);
     }
 
 }

@@ -21,10 +21,10 @@ import org.mpasko.util.Filesystem;
 public class SongLayout {
 
     public String process(String song, String filename, String category, Dictionary full_dict) {
-        String jap = Filesystem.loadFile(filename);
-        String eng = Filesystem.tryLoadFile(filename.replaceAll(".txt", ".eng.txt"));
+        String jap = new Filesystem().loadFile(filename);
+        String eng = new Filesystem().tryLoadFile(filename.replaceAll(".txt", ".eng.txt"));
         final String dictionaryStringified = findAndFilterWords(jap, full_dict);
-        Filesystem.saveFile(String.format("./%s/%s/%s", DefaultConfig.globalSources, category, song), dictionaryStringified);
+        new Filesystem().saveFile(String.format("./%s/%s/%s", DefaultConfig.globalSources, category, song), dictionaryStringified);
         return generateChunked(song, jap, eng, full_dict);
     }
 

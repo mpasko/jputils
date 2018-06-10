@@ -21,13 +21,13 @@ public class ParseGoetheSentences
             String alignedNumber = FormatterUtil.alignString(3, "0", String.valueOf(i+2));
             all.append(processfile(alignedNumber));
         }
-        Filesystem.saveFile("texts/goethe_only_kanji.txt", all.toString());
+        new Filesystem().saveFile("texts/goethe_only_kanji.txt", all.toString());
     }
 
     private static StringBuilder processfile(String alignedNumber) {
         String filePattern = "inputs/www.goethe-verlag.com/book2/EN/ENJA/ENJA%s.HTM";
         String filename = String.format(filePattern, alignedNumber);
-        String entityString = Filesystem.loadFile(filename);
+        String entityString = new Filesystem().loadFile(filename);
         Document doc = Jsoup.parse(entityString);
         StringBuilder all = new StringBuilder();
         for (int num=0; num<40; ++num) {

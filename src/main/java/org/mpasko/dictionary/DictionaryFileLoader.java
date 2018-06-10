@@ -28,12 +28,12 @@ public class DictionaryFileLoader {
     }
 
     public Dictionary loadTripleDict(String filename) {
-        String content = Filesystem.loadFile(filename);
+        String content = new Filesystem().loadFile(filename);
         return loadTripleDictFromContent(content);
     }
 
     public Dictionary loadTripleDictFromFolder(String path) {
-        String content = Filesystem.loadFilesInDirectory(path);
+        String content = new Filesystem().loadFilesInDirectory(path);
         return loadTripleDictFromContent(content);
     }
 

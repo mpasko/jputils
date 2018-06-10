@@ -25,7 +25,7 @@ public class ParseGoetheDictionary
     private static void processfile(String alignedNumber) {
         String filePattern = "inputs/www.goethe-verlag.com/book2/_VOCAB/EN/ENJA/%s.HTM";
         String filename = String.format(filePattern, alignedNumber);
-        String entityString = Filesystem.loadFile(filename);
+        String entityString = new Filesystem().loadFile(filename);
         Document doc = Jsoup.parse(entityString);
         Element table = doc.getElementsByTag("table").get(1);
         Elements rows = table.getElementsByTag("td");
@@ -51,8 +51,8 @@ public class ParseGoetheDictionary
             }
             System.out.println(kana);
         }
-        Filesystem.saveFile(String.format("dictionaries/goethe%s.txt", alignedNumber), all.toString());
-        Filesystem.saveFile(String.format("dictionaries/goethe%s_withoutKanji.txt", alignedNumber), withoutKanji.toString());
+        new Filesystem().saveFile(String.format("dictionaries/goethe%s.txt", alignedNumber), all.toString());
+        new Filesystem().saveFile(String.format("dictionaries/goethe%s_withoutKanji.txt", alignedNumber), withoutKanji.toString());
     }
 }
 

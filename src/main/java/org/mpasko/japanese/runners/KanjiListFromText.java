@@ -37,11 +37,11 @@ public class KanjiListFromText {
     public static void songIntoKanjiDic(String name) {
         KanjiDictionary dictionary = loadChineseSong(name);
         String output = dictionary.format();
-        Filesystem.saveFile(String.format("texts\\chinese_songs\\%s.txt", name), output);
+        new Filesystem().saveFile(String.format("texts\\chinese_songs\\%s.txt", name), output);
     }
 
     public static KanjiDictionary loadChineseSong(String name) {
-        String text = Filesystem.loadFile(String.format("inputs\\chinese_songs\\%s.txt", name));
+        String text = new Filesystem().loadFile(String.format("inputs\\chinese_songs\\%s.txt", name));
         Filter filter = LoaderFilterByText.scanned(text).getInstance();
         KanjiDictionary dictionary = new KanjiDictLoader().load(filter);
         return dictionary;

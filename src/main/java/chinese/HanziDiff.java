@@ -12,7 +12,7 @@ import org.mpasko.util.Filesystem;
  */
 public class HanziDiff {
     public static void main(String[] args) {
-        String file = Filesystem.loadFile("inputs/zh_differences.txt");
+        String file = new Filesystem().loadFile("inputs/zh_differences.txt");
         for (String line : file.split("\n")) {
             String[] chars = line.split("-");
             String jp = chars[0];

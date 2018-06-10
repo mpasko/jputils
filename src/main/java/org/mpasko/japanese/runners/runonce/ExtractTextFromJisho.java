@@ -24,14 +24,14 @@ public class ExtractTextFromJisho {
     public static void processAllSongs() {
         String baseDir = "inputs/songs/";
         //processSongsFrom("other", baseDir + "song_list.txt", baseDir);
-        for (String str : Arrays.asList(Filesystem.loadFile(baseDir + "folderlist.txt").split("\n"))) {
+        for (String str : Arrays.asList(new Filesystem().loadFile(baseDir + "folderlist.txt").split("\n"))) {
             processSongsFrom(str, baseDir);
         }
     }
 
     private static void processSongsFrom(String album, String basePath) {
         String listfile = basePath + album + "/song_list.txt";
-        List<String> songs = Arrays.asList(Filesystem.loadFile(listfile).split("\n"));
+        List<String> songs = Arrays.asList(new Filesystem().loadFile(listfile).split("\n"));
         for (String songName : songs) {
             String filename = basePath + album + "/" + songName;
             processSingleSong(album, filename, songName);
@@ -40,8 +40,8 @@ public class ExtractTextFromJisho {
 
     private static void processSingleSong(String album, String filename, String songName) {
         final String rawText = loadRawText(filename);
-        final String english = Filesystem.loadFile(filename.replace(".htm", ".txt"));
-        Filesystem.saveFile("improved_workflow/texts/songs/" + album + "/" + songName + ".txt", rawText);
-        Filesystem.saveFile("improved_workflow/texts/songs/" + album + "/" + songName + ".eng.txt", english);
+        final String english = new Filesystem().loadFile(filename.replace(".htm", ".txt"));
+        new Filesystem().saveFile("improved_workflow/texts/songs/" + album + "/" + songName + ".txt", rawText);
+        new Filesystem().saveFile("improved_workflow/texts/songs/" + album + "/" + songName + ".eng.txt", english);
     }
 }

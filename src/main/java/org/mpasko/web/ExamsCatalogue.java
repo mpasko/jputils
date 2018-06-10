@@ -20,6 +20,7 @@ import org.mpasko.dictionary.formatters.MeaningChooser;
 import org.mpasko.dictionary.formatters.RomajiWritingChooser;
 import org.mpasko.dictionary.formatters.WritingChooser;
 import org.mpasko.japanese.runners.workflow.DataSources;
+import org.mpasko.japanese.runners.workflow.GenerateOnyomiWhitelist;
 import org.mpasko.japanese.runners.workflow.Remover;
 import org.mpasko.util.Filesystem;
 
@@ -40,6 +41,7 @@ class ExamsCatalogue {
     }
 
     private void reloadDataSources() {
+        new GenerateOnyomiWhitelist().start();
         dataSources = new DataSources();
         readingBlacklist = dataSources.readingBlacklist();
         listeningBlacklist = dataSources.listeningBlacklist();
@@ -48,12 +50,12 @@ class ExamsCatalogue {
     }
 
     public List<String> getItems() {
-        List<String> directories = Filesystem.getSubdirectories(DefaultConfig.globalSources);
+        List<String> directories = new Filesystem().getSubdirectories(DefaultConfig.globalSources);
         return directories;
     }
 
     public List<String> getSubItems(String id) {
-        List<String> files = Filesystem.getSubfiles(DefaultConfig.globalSources + "/" + id);
+        List<String> files = new Filesystem().getSubfiles(DefaultConfig.globalSources + "/" + id);
         return files;
     }
 
@@ -171,7 +173,7 @@ class ExamsCatalogue {
 
     private String saveGeneric(String directory, String id, String content) {
         String filename = directory + id + formatTimestamp() + ".txt";
-        Filesystem.saveFile(filename, content);
+        new Filesystem().saveFile(filename, content);
         reloadDataSources();
         return "";
     }
@@ -184,9 +186,9 @@ class ExamsCatalogue {
     }
 
     private String findFileWithName(String root, String name) {
-        String containing = Filesystem.getSubdirectories(root)
+        String containing = new Filesystem().getSubdirectories(root)
                 .stream()
-                .filter(subdir -> Filesystem.getSubfiles(root + "/" + subdir).contains(name))
+                .filter(subdir -> new Filesystem().getSubfiles(root + "/" + subdir).contains(name))
                 .findFirst()
                 .get();
         return root + "/" + containing + "/" + name;

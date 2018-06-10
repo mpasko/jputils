@@ -39,14 +39,14 @@ public class ParseJishoOutputs {
         String baseDir = "inputs/songs/";
         Dictionary dict = JmDictLoader.loadDictionary();
         processSongsFrom(baseDir + "song_list.txt", baseDir, "all_songs", dict);
-        for (String str : Arrays.asList(Filesystem.loadFile(baseDir + "folderlist.txt").split("\n"))) {
+        for (String str : Arrays.asList(new Filesystem().loadFile(baseDir + "folderlist.txt").split("\n"))) {
             processSongsFrom(baseDir + str + "/song_list.txt", baseDir + str + "/", str + "_songs", dict);
         }
         //processSongsFrom(baseDir + "yousei_teikoku/song_list.txt", baseDir + "yousei_teikoku/", "yousei_teikoku_songs", dict);
     }
 
     public static void processSongsFrom(String listfile, String inputPath, String outputName, Dictionary dict) {
-        List<String> songs = Arrays.asList(Filesystem.loadFile(listfile).split("\n"));
+        List<String> songs = Arrays.asList(new Filesystem().loadFile(listfile).split("\n"));
         Dictionary merged = new Dictionary();
         StringBuilder plaintext = new StringBuilder();
         plaintext.append(songs.toString()).append("\n");
@@ -54,14 +54,14 @@ public class ParseJishoOutputs {
             String filename = String.format(inputPath + "%s", songName);
             processSingleSong(filename, songName, dict, merged, plaintext);
         }
-        Filesystem.saveFile("texts/" + outputName + ".txt", plaintext.toString());
+        new Filesystem().saveFile("texts/" + outputName + ".txt", plaintext.toString());
         merged.write("dictionaries/" + outputName + ".txt");
     }
 
     private static void processSingleSong(String filename, String songName, Dictionary dict, Dictionary merged, StringBuilder plaintext) {
         try {
             final String rawText = loadRawText(filename);
-            final String english = Filesystem.loadFile(filename.replace(".htm", ".txt"));
+            final String english = new Filesystem().loadFile(filename.replace(".htm", ".txt"));
             //TreeMap<String, String> items = loadSpecifiedOutputs(filename);
             List<String> items = loadWordsInTheirNaturalForm(filename);
             Dictionary found = findAndFilterItemsFromDictionary(items, rawText, dict);
@@ -107,7 +107,7 @@ public class ParseJishoOutputs {
     }
 
     public static List<String> loadWordsInTheirNaturalForm(String filename) {
-        String entityString = Filesystem.loadFile(filename);
+        String entityString = new Filesystem().loadFile(filename);
         Document doc = Jsoup.parse(entityString);
         Elements words_html = doc.getElementById("zen_bar").getElementsByTag("li");
         LinkedList<String> items = new LinkedList<>();
@@ -123,7 +123,7 @@ public class ParseJishoOutputs {
     }
 
     public static TreeMap<String, String> loadSpecifiedOutputs(String filename) {
-        String entityString = Filesystem.loadFile(filename);
+        String entityString = new Filesystem().loadFile(filename);
         Document doc = Jsoup.parse(entityString);
         Elements words_html = doc.getElementById("zen_bar").getElementsByTag("li");
         TreeMap<String, String> items = new TreeMap<String, String>();
@@ -195,7 +195,7 @@ public class ParseJishoOutputs {
     }
 
     public static String loadRawText(String filename) {
-        String entityString = Filesystem.loadFile(filename);
+        String entityString = new Filesystem().loadFile(filename);
         Document doc = Jsoup.parse(entityString);
         return doc.getElementById("keyword").attr("value");
     }

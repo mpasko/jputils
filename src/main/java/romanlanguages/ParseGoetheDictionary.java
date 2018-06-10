@@ -24,7 +24,7 @@ public class ParseGoetheDictionary
     private static void processfile(String alignedNumber) {
         String filePattern = "inputs/www.goethe-verlag.com/book2/_VOCAB/IT/ITEN/%s.HTM";
         String filename = String.format(filePattern, alignedNumber);
-        String entityString = Filesystem.loadFile(filename);
+        String entityString = new Filesystem().loadFile(filename);
         Document doc = Jsoup.parse(entityString);
         Element table = doc.getElementsByTag("table").get(1);
         Elements rows = table.getElementsByTag("td");
@@ -39,7 +39,7 @@ public class ParseGoetheDictionary
             dictionary.append("\n");
             System.out.println(word);
         }
-        Filesystem.saveFile(String.format("dictionaries/goethe%s_italiano.txt", alignedNumber), dictionary.toString());
+        new Filesystem().saveFile(String.format("dictionaries/goethe%s_italiano.txt", alignedNumber), dictionary.toString());
     }
 }
 

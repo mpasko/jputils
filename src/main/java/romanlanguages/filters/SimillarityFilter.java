@@ -21,7 +21,7 @@ public class SimillarityFilter {
     }
 
     private void saveLog() {
-        Filesystem.saveFile("interproducts/filter_logs.txt", log.toString());
+        new Filesystem().saveFile("interproducts/filter_logs.txt", log.toString());
     }
 
     private void log(String line) {

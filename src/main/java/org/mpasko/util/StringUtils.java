@@ -71,10 +71,10 @@ public class StringUtils {
     public static String joinPath(String... nodes) {
         String result = Arrays
                 .stream(nodes)
-                .map(path -> path.replace("/", "\\"))
-                .map(path -> cutFirst(path, "\\"))
-                .map(path -> cutLast(path, "\\"))
-                .collect(Collectors.joining("\\"));
+                .map(path -> path.replace("\\", "/"))
+                .map(path -> cutFirst(path, "/"))
+                .map(path -> cutLast(path, "/"))
+                .collect(Collectors.joining("/"));
         return result;
     }
 

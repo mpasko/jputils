@@ -45,7 +45,7 @@ public class DictionaryReconstructor {
     }
 
     public Dictionary reconstructFromFile(String filename) {
-        return reconstruct(Filesystem.loadFile(filename));
+        return reconstruct(new Filesystem().loadFile(filename));
     }
 
     public Dictionary reconstruct(String source) {

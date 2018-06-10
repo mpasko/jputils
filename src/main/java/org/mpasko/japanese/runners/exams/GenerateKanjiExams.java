@@ -44,7 +44,7 @@ public class GenerateKanjiExams {
         filter.gradeTo = gradeTo;
         KanjiDictionary dict = new KanjiDictLoader().load(filter);
         String filename = "exams/kanji_grade"+gradeFrom+"-"+gradeTo+".txt";
-        Filesystem.saveFile(filename, generateKanjiExam(dict).toString());
+        new Filesystem().saveFile(filename, generateKanjiExam(dict).toString());
     }
     
     public static void generateExamForDict(Dictionary wordDict, String name) {
@@ -54,13 +54,13 @@ public class GenerateKanjiExams {
         KanjiDictionary dict = new KanjiDictLoader().load(filter);
         dict = new DictFilter(wordDict).filter(dict);
         String filename = "exams/kanji_from_dict_"+name+".txt";
-        Filesystem.saveFile(filename, generateKanjiExam(dict).toString());
+        new Filesystem().saveFile(filename, generateKanjiExam(dict).toString());
     }
     
     public static void generateExamForChineseSong(String name) {
         KanjiDictionary dict = KanjiListFromText.loadChineseSong(name);
         String filename = "exams/kanji_chinese_song_"+name+".txt";
-        Filesystem.saveFile(filename, generateKanjiExam(dict).toString());
+        new Filesystem().saveFile(filename, generateKanjiExam(dict).toString());
     }
 
     public static QuizFormatter generateKanjiExam(KanjiDictionary dict) {

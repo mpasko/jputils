@@ -17,7 +17,7 @@ import org.mpasko.util.Filesystem;
 public class SimpleDictionary {
 
     public static SimpleDictionary loadDict(String filename) {
-        String content = Filesystem.loadFile(filename);
+        String content = new Filesystem().loadFile(filename);
         SimpleDictionary dict = new SimpleDictionary();
         for (String line : content.split("\n")) {
             String[] byDash = line.split("-");

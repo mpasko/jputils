@@ -46,6 +46,6 @@ public class GenerateGoetheExam {
             Randomation.shuffle(answers);
             quiz.appendQuestion(item.word, item.translation, answers);
         }
-        Filesystem.saveFile("exams/"+name, quiz.toString());
+        new Filesystem().saveFile("exams/"+name, quiz.toString());
     }
 }

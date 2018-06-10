@@ -33,10 +33,10 @@ public class FileSearcher {
     }
 
     private void searchRecursivelyInFolder(String query, String root, Map<String, String> results) {
-        Filesystem.getSubfiles(root)
+        new Filesystem().getSubfiles(root)
                 .stream()
                 .forEach(file -> searchInFile(query, root + "/" + file, results));
-        List<String> subdirPaths = Filesystem.getSubdirectories(root)
+        List<String> subdirPaths = new Filesystem().getSubdirectories(root)
                 .stream()
                 .map(subdir -> root + "/" + subdir)
                 .collect(Collectors.toList());
@@ -45,7 +45,7 @@ public class FileSearcher {
 
     private void searchInFile(String query, String path, Map<String, String> results) {
         System.out.println("Searching in: " + path);
-        String content = Filesystem.loadFile(path);
+        String content = new Filesystem().loadFile(path);
         Stream.of(content.split("\n"))
                 .filter(compared -> compared.contains(query))
                 .forEach(matched -> results.put(path, matched));

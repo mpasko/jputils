@@ -35,14 +35,14 @@ public class ParseTexts {
 
     private static void processAlbum(String base, String album) {
         String basePath = base + "/" + album;
-        final List<String> subfiles = Filesystem.getSubfiles(basePath);
+        final List<String> subfiles = new Filesystem().getSubfiles(basePath);
         String mergedSongs = subfiles
                 .stream()
                 .map(path -> processSong(basePath, path))
                 .collect(new StringNewlineCollector());
         StringBuilder content = new StringBuilder(subfiles.toString());
         content.append("\n").append(mergedSongs);
-        Filesystem.saveFile("texts/" + album + "_songs.txt", content.toString());
+        new Filesystem().saveFile("texts/" + album + "_songs.txt", content.toString());
     }
 
     private static String processSong(String base, String song) {
@@ -56,7 +56,7 @@ public class ParseTexts {
 
     public static void traverseDir(String base, String subdir, Subprocessor subprocessor) {
         String basePath = base + "/" + subdir;
-        Filesystem.getSubdirectories(basePath)
+        new Filesystem().getSubdirectories(basePath)
                 .stream()
                 .forEach(path -> subprocessor.apply(basePath, path));
     }

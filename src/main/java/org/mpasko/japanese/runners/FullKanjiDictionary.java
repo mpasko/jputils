@@ -32,20 +32,20 @@ public class FullKanjiDictionary {
         final int from = 5;
         final int to = 8;
         String formattedDict = generateKanjiDictByGradesCHaracterOnMeaning(from, to);
-        Filesystem.saveFile("dictionaries\\kanjidict\\grades_" + from + "_" + to + ".txt", formattedDict);
+        new Filesystem().saveFile("dictionaries\\kanjidict\\grades_" + from + "_" + to + ".txt", formattedDict);
     }
 
     private static void generateOnCharacterMeaningDictionary() {
         final int from = 3;
         final int to = 8;
         String formattedDict = generateKanjiDictByGradesOnCharacter(from, to);
-        Filesystem.saveFile("dictionaries\\kanjidict\\on_grades_" + from + "_" + to + ".txt", formattedDict);
+        new Filesystem().saveFile("dictionaries\\kanjidict\\on_grades_" + from + "_" + to + ".txt", formattedDict);
     }
 
     private static String generateKanjiDictByGradesCHaracterOnMeaning(final int from, final int to) {
         KanjiDictionary dict = loadKanjiByGrade(from, to);
         String formattedDict;
-        String whitelist = Filesystem.loadFile("inputs/phonetic_compounds/phonetic_compounds.txt");
+        String whitelist = new Filesystem().loadFile("inputs/phonetic_compounds/phonetic_compounds.txt");
         formattedDict = dict.getItems()
                 .stream()
                 .filter(t -> isNotInWhitelist(whitelist, t.character))
@@ -58,7 +58,7 @@ public class FullKanjiDictionary {
     private static String generateKanjiDictByGradesOnCharacter(final int from, final int to) {
         KanjiDictionary dict = loadKanjiByGrade(from, to);
         LinkedList<String> entryList;
-        String whitelist = Filesystem.loadFile("inputs/phonetic_compounds/phonetic_compounds.txt");
+        String whitelist = new Filesystem().loadFile("inputs/phonetic_compounds/phonetic_compounds.txt");
         entryList = dict.getItems()
                 .stream()
                 .filter(t -> isNotInWhitelist(whitelist, t.character))

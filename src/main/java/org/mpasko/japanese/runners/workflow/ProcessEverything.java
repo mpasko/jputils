@@ -32,15 +32,15 @@ public class ProcessEverything {
     }
 
     public void start() {
-        generateListeningFromSelectedSources();
-        generateReadingFromSelectedSources();
+        //generateListeningFromSelectedSources();
+        //generateReadingFromSelectedSources();
         mergeReadingAndListening();
     }
 
     private Map<String, String> directoriesAsSelectedSources() {
         return DataSources.getGlobalSourceList()
                 .stream()
-                .collect(Collectors.toMap(dir -> dir, dir -> DefaultConfig.globalSources + "\\" + dir + "\\"));
+                .collect(Collectors.toMap(dir -> dir, dir -> DefaultConfig.globalSources + "/" + dir + "/"));
     }
 
     private void generateReadingFromSelectedSources() {
@@ -91,7 +91,7 @@ public class ProcessEverything {
         dict = DuplicateFilter.outputDictionaryDuplicateFilter().filter(dict);
         String content = formatter.format(dict);
         final String filename = String.format("%s.txt", StringUtils.joinPath(outputDirectory, category));
-        Filesystem.saveFile(filename, content);
+        new Filesystem().saveFile(filename, content);
     }
 
     private void mergeReadingAndListening() {
@@ -99,6 +99,6 @@ public class ProcessEverything {
         Dictionary listening = data.listeningWhitelist();
         Dictionary commonPart = new Product(reading, listening).result();
         System.out.println("Common part: " + commonPart.size());
-        saveAs(commonPart, DictionaryFormatter.buildStandardFormatter(), DefaultConfig.understandingWhitelist, "reading_listening_merged");
+        saveAs(commonPart, DictionaryFormatter.buildStandardFormatter(), DefaultConfig.understandingWhitelist, DefaultConfig.understandingWhitelistFile);
     }
 }

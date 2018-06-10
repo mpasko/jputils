@@ -63,7 +63,7 @@ public class DataSources {
     }
 
     public static List<String> getGlobalSourceList() {
-        return Filesystem.getSubdirectories(DefaultConfig.globalSources)
+        return new Filesystem().getSubdirectories(DefaultConfig.globalSources)
                 .stream()
                 .filter(dir -> !dir.startsWith("_"))
                 .collect(Collectors.toList());
@@ -113,7 +113,7 @@ public class DataSources {
             IFeatureChooser contain,
             String path) {
         return new DictionaryReconstructor(globalDictionary, exact, contain)
-                .reconstruct(Filesystem.loadFilesInDirectory(path));
+                .reconstruct(new Filesystem().loadFilesInDirectory(path));
     }
 
     Dictionary globalDictionary() {

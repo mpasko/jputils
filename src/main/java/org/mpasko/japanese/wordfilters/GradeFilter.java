@@ -62,7 +62,7 @@ public class GradeFilter extends GenericFilter{
     }
     
     public void initializeFromBlackList() {
-        acceptedKanji = Filesystem.loadFile(darklist_filename).replaceAll("\n", "");
+        acceptedKanji = new Filesystem().loadFile(darklist_filename).replaceAll("\n", "");
     }
 
     @Override

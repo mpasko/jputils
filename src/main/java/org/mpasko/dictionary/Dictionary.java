@@ -156,7 +156,7 @@ public class Dictionary {
     }
 
     public void write(String filename) {
-        Filesystem.saveFile(filename, toString());
+        new Filesystem().saveFile(filename, toString());
     }
 
     @Override

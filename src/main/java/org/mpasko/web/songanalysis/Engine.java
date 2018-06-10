@@ -7,9 +7,9 @@ import java.util.*;
 public class Engine {
     public List<SongData> identifySongs(String root_path, List<String> artists, List<String> english_blacklist) {
         LinkedList<SongData> songDatas = new LinkedList<>();
-        List<String> subdirs = Filesystem.getSubdirectories(root_path);
+        List<String> subdirs = new Filesystem().getSubdirectories(root_path);
         for(String subdir : subdirs) {
-            Filesystem.getSubfiles(root_path+"/"+subdir)
+            new Filesystem().getSubfiles(root_path+"/"+subdir)
                     .stream()
                     .filter(file -> isNotEnglish(file, english_blacklist))
                     .forEach(file -> songDatas.add(new SongData(subdir, file, artists)));

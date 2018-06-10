@@ -30,7 +30,7 @@ public class OnyomiSpeculationFilter extends GenericFilter {
     }
 
     public static OnyomiSpeculationFilter initializeDefault() {
-        final String fileContent = Filesystem.loadFile(DefaultConfig.onyomiWhitelist);
+        final String fileContent = new Filesystem().loadFile(DefaultConfig.onyomiWhitelist);
         final List<Map.Entry<String, String>> onyomiWhitelist = DictionaryFileLoader.parseAsSimpleMap(fileContent);
         final ReadingDecomposer decomposer = ReadingDecomposer.initializeWithDefaultDict();
         return new OnyomiSpeculationFilter(onyomiWhitelist, decomposer);

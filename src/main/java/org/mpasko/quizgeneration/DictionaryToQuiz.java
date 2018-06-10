@@ -26,11 +26,11 @@ public class DictionaryToQuiz {
             int cnt = 0;
             for (Dictionary part : parts) {
                 String exam = generateExam(part);
-                Filesystem.saveFile(String.format("exams/%s_part%s.txt", keyword, ++cnt), exam);
+                new Filesystem().saveFile(String.format("exams/%s_part%s.txt", keyword, ++cnt), exam);
             }
         } else {
             String exam = generateExam(dict);
-            Filesystem.saveFile("exams/" + keyword + ".txt", exam);
+            new Filesystem().saveFile("exams/" + keyword + ".txt", exam);
         }
     }
 

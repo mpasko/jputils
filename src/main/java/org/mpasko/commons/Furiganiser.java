@@ -15,7 +15,7 @@ public class Furiganiser {
 
     public String furiganise(String in) {
         String operate = in;
-        String trans = Filesystem.loadFile("xml/kana_transform.txt");
+        String trans = new Filesystem().loadFile("xml/kana_transform.txt");
         for (String line : trans.split("\n")) {
             String from = line.split("-")[0];
             String to = line.split("-")[1];
@@ -26,7 +26,7 @@ public class Furiganiser {
 
     public String romanize(String in) {
         String operate = in;
-        String trans = Filesystem.loadFile("xml/kana_transform_reverse.txt");
+        String trans = new Filesystem().loadFile("xml/kana_transform_reverse.txt");
         for (String line : trans.split("\n")) {
             operate = romanizeUsingLine(line, operate);
         }

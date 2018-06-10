@@ -19,7 +19,7 @@ public class ParseTanosDictionary {
 
     private static void processfile() {
         String filename = "inputs/JLPT_N2_tanos.htm";
-        String entityString = Filesystem.loadFile(filename);
+        String entityString = new Filesystem().loadFile(filename);
         Document doc = Jsoup.parse(entityString);
         Element table = doc.getElementsByTag("table").get(1);
         Elements rows = table.getElementsByTag("tr");
@@ -48,7 +48,7 @@ public class ParseTanosDictionary {
                 }
             }
         }
-        Filesystem.saveFile("dictionaries/n2_tanos.txt", all.toString());
-        Filesystem.saveFile("dictionaries/n2_tanos_withoutKanji.txt", withoutKanji.toString());
+        new Filesystem().saveFile("dictionaries/n2_tanos.txt", all.toString());
+        new Filesystem().saveFile("dictionaries/n2_tanos_withoutKanji.txt", withoutKanji.toString());
     }
 }

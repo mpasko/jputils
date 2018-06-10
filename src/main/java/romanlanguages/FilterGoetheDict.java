@@ -22,7 +22,7 @@ public class FilterGoetheDict {
             processDict(filename, dict);
         }
         dict = new SimillarityFilter().filter(dict);
-        Filesystem.saveFile("dictionaries/goethe_italiano_filtered.txt", dict.toString());
+        new Filesystem().saveFile("dictionaries/goethe_italiano_filtered.txt", dict.toString());
 //        QuizFormatter quiz = new QuizFormatter();
 //        for (SimpleEntry item : dict.items()) {
 //            List<String> answers = new LinkedList<String>();
