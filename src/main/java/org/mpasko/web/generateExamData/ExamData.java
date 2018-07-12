@@ -3,14 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.mpasko.web;
+package org.mpasko.web.generateExamData;
 
-import java.util.List;
-import org.mpasko.commons.DictEntry;
-import org.mpasko.dictionary.Dictionary;
-import org.mpasko.japanese.wordfilters.GenericFilter;
-import org.mpasko.japanese.wordfilters.InversionOf;
-import org.mpasko.japanese.wordfilters.ItemExistsInDictionary;
+import org.mpasko.web.generateExamData.ActivityData;
 
 /**
  *

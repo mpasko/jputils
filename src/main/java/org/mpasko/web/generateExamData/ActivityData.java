@@ -1,4 +1,4 @@
-package org.mpasko.web;
+package org.mpasko.web.generateExamData;
 
 import org.mpasko.commons.DictEntry;
 import org.mpasko.dictionary.Dictionary;

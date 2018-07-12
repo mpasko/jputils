@@ -20,8 +20,8 @@ public class ResultSaver {
     public String saveResults(String type, String id, ResultData content) {
         final Remover remover = new Remover(data.dataSources.getGlobalDict());
         try {
-            remover.removeRedundancy("black", type, content.getTotal());
-            remover.removeRedundancy("white", type, content.getTotal());
+            remover.removeRedundancy("black", type, content.correct);
+            remover.removeRedundancy("white", type, content.incorrect);
         }catch(RuntimeException ex){
             System.out.println(ex.getMessage());
         }
