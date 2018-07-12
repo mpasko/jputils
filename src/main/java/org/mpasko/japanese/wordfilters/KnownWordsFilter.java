@@ -57,14 +57,14 @@ public class KnownWordsFilter extends GenericFilter {
     }
 
     public void initialize() {
+        addList("dictionaries/jlptN5.txt", new Dictionary());
+        addList("dictionaries/jlptN4.txt", new Dictionary());
         /*
         Dictionary exceptions = new DictionaryFileLoader().loadTripleDict(DefaultConfig.exceptions);
         Dictionary goethe = PopularDictionaries.loadGoetheDictionaries();
         addList(goethe, exceptions);
         System.out.println("Known filter initialized with goethe");
         addList("dictionaries/some_songs.txt", exceptions);
-        addList("dictionaries/jlptN5.txt", exceptions);
-        addList("dictionaries/jlptN4.txt", exceptions);
         addList(DefaultConfig.whitelistFromSongs, exceptions);
         addList(DefaultConfig.whitelistFromSongsNew, exceptions);
         addListWithoutTranslations("inputs/whitelist_furigana.txt");

@@ -5,6 +5,8 @@
  */
 package org.mpasko.web;
 
+import org.mpasko.web.examResults.ResultResource;
+import org.mpasko.web.server.JsonTransformer;
 import org.mpasko.web.songanalysis.Presentation;
 
 import static spark.Spark.*;
@@ -17,7 +19,6 @@ public class BrowserResource {
 
     private static final String BROWSER_CONTEXT = "/api/browser";
     private static final String EXAM_CONTEXT = "/api/exam";
-    private static final String FILE_CONTEXT = "/api/save";
     private static final String SEARCH_CONTEXT = "/api/search";
     private static final String SONG_ANALYSIS = "/api/songs";
     private final ExamsCatalogue exams;
@@ -25,10 +26,12 @@ public class BrowserResource {
     private final Presentation song;
 
     public BrowserResource() {
-        exams = new ExamsCatalogue();
+        DataSourceCache data = new DataSourceCache();
+        exams = new ExamsCatalogue(data);
         search = new FileSearcher();
         song = new Presentation();
         setupEndpoints();
+        new ResultResource(data).setupEndpoints();
     }
 
     private void setupEndpoints() {
@@ -55,9 +58,6 @@ public class BrowserResource {
 
         get(EXAM_CONTEXT + "/subitem/listening/:id/:source", "application/json", (request, response)
                 -> exams.generateListeningSubExam(request.params(":id"), request.params(":source")), new JsonTransformer());
-
-        put(FILE_CONTEXT + "/:source/:type/:id", (request, response)
-                -> exams.saveResults(request.params(":source"), request.params(":type"), request.params(":id"), request.body()));
 
         get(SEARCH_CONTEXT + "/:id", (request, response)
                 -> search.search(request.params(":id")), new JsonTransformer());

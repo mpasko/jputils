@@ -1,7 +1,7 @@
 <table>
 <tr ng-repeat="item in $ctrl.previewData">
-    <td><a ui-sref="search/{{ item.kanji }}">{{ item.kanji }}</a> </td>
-    <td><a ui-sref="search/{{ item.writing }}">{{ item.writing }}</a> </td>
+    <td><a href="#!/search/{{ item.kanji }}" target="_blank">{{ item.kanji }}</a> </td>
+    <td><a href="#!/search/{{ item.writing }}" target="_blank">{{ item.writing }}</a> </td>
     <td>{{ item.english }} </td>
 </tr>
 </table>

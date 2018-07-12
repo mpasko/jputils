@@ -4,8 +4,11 @@ app.service('QuizService', ['$http', '$q', function ($http, $q){
     };
     
     this.saveResults = function(type, name, black, white) {
-        $http.put('api/save/black/'+type+'/'+name, black);
-        $http.put('api/save/white/'+type+'/'+name, white);
+        const results = {
+            correct: white,
+            incorrect: black
+        };
+        $http.put('api/save-results/'+type+'/'+name, results);
     };
 }]);
 
@@ -64,8 +67,7 @@ app.controller('QuizController', ['$scope', '$routeParams', 'QuizService', '$loc
     
     document.onkeypress = function(e){
         if (e.which == 13){
-            $scope.next();
-            $scope.$apply();
+            $scope.$apply(() => {$scope.next();});
         }
     };
     
@@ -75,7 +77,9 @@ app.controller('QuizController', ['$scope', '$routeParams', 'QuizService', '$loc
         $scope.correctCount = stats.correct;
         $scope.totalCount = stats.total;
         $scope.mistakes = convertFromNode(nodeService.getResults());
-        $scope.current = nodeService.getCurrentWord();
+        if (!nodeService.shouldFinish()) {
+            $scope.current = nodeService.getCurrentWord();
+        }
     };
     
     function convertToNode(data) {

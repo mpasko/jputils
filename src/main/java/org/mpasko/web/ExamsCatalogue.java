@@ -30,23 +30,9 @@ import org.mpasko.util.Filesystem;
  */
 class ExamsCatalogue {
 
-    private Dictionary listeningWhitelist;
-    private Dictionary readingWhitelist;
-    private Dictionary listeningBlacklist;
-    private Dictionary readingBlacklist;
-    private DataSources dataSources;
-
-    public ExamsCatalogue() {
-        reloadDataSources();
-    }
-
-    private void reloadDataSources() {
-        new GenerateOnyomiWhitelist().start();
-        dataSources = new DataSources();
-        readingBlacklist = dataSources.readingBlacklist();
-        listeningBlacklist = dataSources.listeningBlacklist();
-        readingWhitelist = dataSources.readingWhitelist();
-        listeningWhitelist = dataSources.listeningWhitelist();
+    private DataSourceCache data;
+    public ExamsCatalogue(DataSourceCache data) {
+        this.data = data;
     }
 
     public List<String> getItems() {
@@ -78,8 +64,8 @@ class ExamsCatalogue {
     }
 
     private ExamData buildExamData(Dictionary dict) {
-        ActivityData reading = new ActivityData(dict, readingBlacklist, readingWhitelist);
-        ActivityData listening = new ActivityData(dict, listeningBlacklist, listeningWhitelist);
+        ActivityData reading = new ActivityData(dict, data.readingBlacklist, data.readingWhitelist);
+        ActivityData listening = new ActivityData(dict, data.listeningBlacklist, data.listeningWhitelist);
         return new ExamData(reading, listening);
     }
 
@@ -153,8 +139,10 @@ class ExamsCatalogue {
         }
     }
 
+    /* *x/
+    @Deprecated
     public String saveResults(String source, String type, String id, String content) {
-        final Remover remover = new Remover(dataSources.getGlobalDict());
+        final Remover remover = new Remover(data.dataSources.getGlobalDict());
         try {
             remover.removeRedundancy(oppositeOf(source), type, content);
         }catch(RuntimeException ex){
@@ -174,16 +162,16 @@ class ExamsCatalogue {
     private String saveGeneric(String directory, String id, String content) {
         String filename = directory + id + formatTimestamp() + ".txt";
         new Filesystem().saveFile(filename, content);
-        reloadDataSources();
+        data.reloadDataSources();
         return "";
     }
-
     private String formatTimestamp() {
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HHmmss");
         Date today = Calendar.getInstance().getTime();
         String reportDate = df.format(today);
         return reportDate;
     }
+    /* */
 
     private String findFileWithName(String root, String name) {
         String containing = new Filesystem().getSubdirectories(root)

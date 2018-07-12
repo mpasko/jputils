@@ -3,7 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.mpasko.web;
+package org.mpasko.web.server;
+
+import org.mpasko.web.BrowserResource;
 
 import static spark.Spark.*;
 
