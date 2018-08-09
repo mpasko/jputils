@@ -8,6 +8,6 @@ function searchController($scope, $location) {
 }
 
 app.component('search', {
-    templateUrl: "searchTemplate.html",
+    templateUrl: "search/searchTemplate.html",
     controller: searchController
 });

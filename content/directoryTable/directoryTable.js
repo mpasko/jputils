@@ -22,5 +22,5 @@ app.component('directoryTable', {
     replace: true,
     transclude: true,
     controller: directoryTableController,
-    templateUrl: "directoryTable.html"
+    templateUrl: "directoryTable/directoryTable.html"
 });

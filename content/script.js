@@ -9,12 +9,12 @@ app.config(function ($routeProvider) {
         templateUrl: 'quiz/quiz.html',
         controller: 'QuizController'
     }).when('/test', {
-        template: '<div>haha benis!</div>'
+        template: '<div>haha benis!<br /><img src="https://ih0.redbubble.net/image.96844221.7537/mp,550x550,gloss,ffffff,t.3.jpg" /></div>'
     }).when('/search/:word', {
-        templateUrl: 'searchResults.html',
+        templateUrl: 'search/searchResults.html',
         controller: 'searchController'
     }).when('/songs', {
-        templateUrl: 'songsAnalysis.html',
+        templateUrl: 'songsAnalysis/songsAnalysis.html',
         controller: 'songsController'
     }).otherwise({
         redirectTo: '/browser'
@@ -109,9 +109,3 @@ app.controller('DirectoryController', ['DirectoryService', '$scope', '$location'
     }
 }]);
 
-app.component('preview', {
-    bindings: {
-        previewData:"="
-    },
-    templateUrl: "previewTemplate.html"
-});
