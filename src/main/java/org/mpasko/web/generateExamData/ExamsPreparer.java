@@ -38,22 +38,22 @@ class ExamsPreparer {
     }
 
     List<ExamItem> generateExam(String params, String activity, String phase) {
-        return switchSource(getDataAbout(params), activity, phase)
-                .stream()
-                .map(dict -> getItemByActivity(dict, activity))
-                .collect(Collectors.toList());
+        return generateExamFromData(getDataAbout(params), activity, phase);
     }
 
     List<ExamItem> generateSubExam(String params, String activity, String phase) {
-        return switchSource(getDataAboutSubitem(params), activity, phase)
-                .stream()
-                .map(dict -> getItemByActivity(dict, activity))
-                .collect(Collectors.toList());
+        return generateExamFromData(getDataAboutSubitem(params), activity, phase);
     }
 
     public ExamData getDataAbout(String id) {
         Dictionary dict = new DictionaryFileLoader()
                 .loadTripleDictFromFolder(DefaultConfig.globalSources + "/" + id);
+        return buildExamData(dict);
+    }
+
+    private ExamData getDataAboutSubitem(String params) {
+        String path = findFileWithName(DefaultConfig.globalSources, params);
+        Dictionary dict = new DictionaryFileLoader().loadTripleDict(path);
         return buildExamData(dict);
     }
 
@@ -63,12 +63,6 @@ class ExamsPreparer {
         return new ExamData(reading, listening);
     }
 
-    private ExamData getDataAboutSubitem(String params) {
-        String path = findFileWithName(DefaultConfig.globalSources, params);
-        Dictionary dict = new DictionaryFileLoader().loadTripleDict(path);
-        return buildExamData(dict);
-    }
-
     private String findFileWithName(String root, String name) {
         String containing = new Filesystem().getSubdirectories(root)
                 .stream()
@@ -76,6 +70,13 @@ class ExamsPreparer {
                 .findFirst()
                 .get();
         return root + "/" + containing + "/" + name;
+    }
+
+    private List<ExamItem> generateExamFromData(ExamData data, String activity, String phase) {
+        return switchSource(data, activity, phase)
+                .stream()
+                .map(dict -> getItemByActivity(dict, activity))
+                .collect(Collectors.toList());
     }
 
     private ExamItem getItemByActivity(DictEntry dict, String activity) {

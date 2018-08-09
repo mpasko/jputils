@@ -18,6 +18,7 @@ import org.mpasko.dictionary.formatters.KanjiChooser;
 import org.mpasko.dictionary.formatters.WritingChooser;
 import org.mpasko.util.Filesystem;
 import org.mpasko.util.LangUtils;
+import org.mpasko.util.StringUtils;
 import org.mpasko.util.collectors.DictEntryCollector;
 
 /**
@@ -94,7 +95,7 @@ public class Dictionary {
         LinkedList<DictEntry> foundPhonetical = findAllByReading(key);
         return foundPhonetical
                 .stream()
-                .filter(entry -> containsIgnoreCase(entry.english, value))
+                .filter(entry -> containsNormalized(entry.english, value))
                 .collect(new DictEntryCollector());
     }
 
@@ -102,7 +103,7 @@ public class Dictionary {
         LinkedList<DictEntry> foundExact = findAllByFeature(key, keyChooser);
         return foundExact
                 .stream()
-                .filter(entry -> containsIgnoreCase(valueChooser.choose(entry), value))
+                .filter(entry -> containsNormalized(valueChooser.choose(entry), value))
                 .collect(new DictEntryCollector());
     }
 
@@ -111,9 +112,9 @@ public class Dictionary {
         return index.findBest(value, UniversalIndex.THE_SHORTEST_WRITING);
     }
 
-    private boolean containsIgnoreCase(String bigger, String smaller) {
-        final String smallerNormalized = smaller.toLowerCase();
-        final String biggerNormalized = bigger.toLowerCase();
+    private boolean containsNormalized(String bigger, String smaller) {
+        final String smallerNormalized = StringUtils.clear(smaller);
+        final String biggerNormalized = StringUtils.clear(bigger);
         return biggerNormalized.contains(smallerNormalized);
     }
 

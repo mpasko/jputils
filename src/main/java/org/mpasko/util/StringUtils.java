@@ -34,9 +34,17 @@ public class StringUtils {
         return indexOfIgnoreCase(list, item) >= 0;
     }
 
+    private static String replaceAllInto(String source, String into, String... chars) {
+        String charsRemoved = source;
+        for (String sequence : chars) {
+            charsRemoved = charsRemoved.replaceAll(sequence, into);
+        }
+        return charsRemoved;
+    }
+
     public static String clear(String string) {
-        String charsRemoved = string.replaceAll("-", "").replaceAll("\n", "").replaceAll("\r", "");
-        String comasUnified = charsRemoved.replaceAll(";", ",").replaceAll(", ", ",");
+        String charsRemoved = replaceAllInto(string, "", "-", "\n", "\r", "'");
+        String comasUnified = replaceAllInto(charsRemoved, ",", ";", ", ");
         return comasUnified.trim().toLowerCase();
     }
 
