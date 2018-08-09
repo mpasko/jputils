@@ -12,3 +12,7 @@ texts
 dictionaries
 xml/*.xml
 xml/kanji
+.idea/*
+improved_workflow/*
+inputs/animetranscripts.wikispaces.com/
+
