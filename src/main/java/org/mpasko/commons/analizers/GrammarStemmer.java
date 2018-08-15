@@ -22,10 +22,12 @@ public class GrammarStemmer {
 
     private void initialize() {
         register("んたい", "");
-        register("たい", "");
+        register("たい", "る");
         register("でした", "");
         register("です", "");
         register("せん", "す");
+        register("きます", "く");
+        register("ります", "る");
         register("き", "く");
         register("っこう", "く");
         register("って", "る");
@@ -36,8 +38,6 @@ public class GrammarStemmer {
         register("れる", "る");
         register("える", "る");
         register("ける", "く");
-        register("きます", "く");
-        register("ります", "る");
         transformIntoU("ま", "み", "め", "も", "か", "き", "け", "こ");
         transformIntoU("さ", "し", "せ", "そ", "ら", "り", "れ", "ろ");
     }

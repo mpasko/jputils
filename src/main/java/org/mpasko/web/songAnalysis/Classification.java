@@ -1,4 +1,4 @@
-package org.mpasko.web.songanalysis;
+package org.mpasko.web.songAnalysis;
 
 import java.util.LinkedList;
 import java.util.List;

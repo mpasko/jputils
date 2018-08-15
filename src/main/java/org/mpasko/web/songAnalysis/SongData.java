@@ -1,4 +1,4 @@
-package org.mpasko.web.songanalysis;
+package org.mpasko.web.songAnalysis;
 
 import java.util.Arrays;
 import java.util.List;

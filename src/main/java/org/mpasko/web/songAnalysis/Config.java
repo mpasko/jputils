@@ -1,6 +1,4 @@
-package org.mpasko.web.songanalysis;
-
-import org.mpasko.console.DefaultConfig;
+package org.mpasko.web.songAnalysis;
 
 import java.util.Arrays;
 import java.util.List;

@@ -7,8 +7,9 @@ package org.mpasko.web;
 
 import org.mpasko.web.examResults.ResultResource;
 import org.mpasko.web.generateExamData.ExamDataResource;
+import org.mpasko.web.preview.PreviewResource;
 import org.mpasko.web.server.JsonTransformer;
-import org.mpasko.web.songanalysis.Presentation;
+import org.mpasko.web.songAnalysis.Presentation;
 
 import static spark.Spark.*;
 
@@ -33,6 +34,7 @@ public class BrowserResource {
         setupEndpoints();
         new ResultResource(data).setupEndpoints();
         new ExamDataResource(data).setupEndpoints();
+        new PreviewResource(data).setupEndpoints();
     }
 
     private void setupEndpoints() {
