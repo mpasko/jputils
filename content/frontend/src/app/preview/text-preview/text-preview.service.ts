@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
-const fileContentUrl = '/api.v2/preview/file';
+const fileContentUrl = '/api.v2/textpreview/file';
 
 export interface IPreviewService {
   getPreview(id):Observable<string>;

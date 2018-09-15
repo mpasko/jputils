@@ -1,15 +1,14 @@
-package org.mpasko.web.preview.treeGeneratorTests;
+package org.mpasko.web.textpreview.treeGeneratorTests;
 
 import mocks.filesystemMocks.*;
 import org.junit.Assert;
 import org.junit.Test;
 import org.mpasko.fileTreeModel.Leaf;
 import org.mpasko.fileTreeModel.Node;
-import org.mpasko.web.preview.TreeGenerator;
+import org.mpasko.web.textpreview.TreeGenerator;
 import testutils.ListUtils;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class generateTests {
 

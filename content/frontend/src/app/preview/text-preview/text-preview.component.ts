@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { PreviewService } from '../preview.service';
+import { PreviewService } from './text-preview.service';
 
 @Component({
   selector: 'app-preview',

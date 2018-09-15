@@ -10,6 +10,7 @@ import { MainComponent } from './main/main.component';
 import { WordsPreviewComponent } from './preview/words-preview/words-preview.component';
 import { TextPreviewComponent } from './preview/text-preview/text-preview.component';
 import { MenuPaneComponent } from './menu-pane/menu-pane.component';
+import { WordItemComponent } from './preview/words-preview/word-item/word-item.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { MenuPaneComponent } from './menu-pane/menu-pane.component';
     MainComponent,
     WordsPreviewComponent,
     TextPreviewComponent,
-    MenuPaneComponent
+    MenuPaneComponent,
+    WordItemComponent
   ],
   imports: [
     BrowserModule,

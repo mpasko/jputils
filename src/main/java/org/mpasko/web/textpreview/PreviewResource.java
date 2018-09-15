@@ -1,4 +1,4 @@
-package org.mpasko.web.preview;
+package org.mpasko.web.textpreview;
 
 import org.mpasko.console.DefaultConfig;
 import org.mpasko.dictionary.Dictionary;
@@ -8,7 +8,7 @@ import org.mpasko.web.server.JsonTransformer;
 import static spark.Spark.get;
 
 public class PreviewResource {
-    private static final String PREVIEW_CONTEXT = "/api.v2/preview";
+    private static final String PREVIEW_CONTEXT = "/api.v2/textpreview";
     private FileIdMap idCache;
     private Dictionary dict;
 

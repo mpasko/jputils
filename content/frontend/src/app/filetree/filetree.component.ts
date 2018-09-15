@@ -39,7 +39,7 @@ export class FiletreeComponent implements OnInit {
     if (event.node.children === undefined) {
       const site = this.routerUtil.getCurrentUri();
       console.log(site, event.node.data.name);
-      this.router.navigate(['textpreview', event.node.data.name]);
+      this.router.navigate(['wordspreview', event.node.data.name]);
     }
   }
 

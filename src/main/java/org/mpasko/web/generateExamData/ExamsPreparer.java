@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
  *
  * @author marcin
  */
-class ExamsPreparer {
+public class ExamsPreparer {
 
     private DataSourceCache data;
     public ExamsPreparer(DataSourceCache data) {
@@ -51,7 +51,16 @@ class ExamsPreparer {
         return buildExamData(dict);
     }
 
-    private ExamData getDataAboutSubitem(String params) {
+    public ExamData getDataByPath(String path) {
+        System.out.println(path);
+        Dictionary dict = new DictionaryFileLoader()
+                .loadTripleDict(path);
+        System.out.println(dict.items().size());
+        return buildExamData(dict);
+    }
+
+    public ExamData getDataAboutSubitem(String params) {
+        System.out.println(params);
         String path = findFileWithName(DefaultConfig.globalSources, params);
         Dictionary dict = new DictionaryFileLoader().loadTripleDict(path);
         return buildExamData(dict);

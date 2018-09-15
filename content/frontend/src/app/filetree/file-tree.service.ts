@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-const fileTreeUrl = '/api.v2/preview/dir';
+const fileTreeUrl = '/api.v2/textpreview/dir';
 
 @Injectable({
   providedIn: 'root'

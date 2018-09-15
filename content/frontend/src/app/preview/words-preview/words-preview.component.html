@@ -1,3 +1,27 @@
-<p>
-  words-preview works!
-</p>
+
+<div>
+  <h3>Summary:</h3>
+  <table>
+    <tr *ngFor="let mode of summary">
+      <td>{{ mode.type }} {{ mode.source }}</td>
+      <td>
+        <span class="badge badge-danger">{{ mode.size }}</span>
+      </td>
+      <td>
+        <!--
+        <button class="btn btn-sm btn-default"
+                ng-click="makeExam(previewDepth, mode.type, currentItem, mode.source);">
+                -->
+        <button>
+          Run exam
+        </button>
+      </td>
+    </tr>
+  </table>
+</div>
+<div *ngFor="let activity of activities">
+  <div *ngFor="let phase of phases">
+    <h3>{{activity}} {{phase}}</h3>
+    <app-word-item [words]="getWordsOf(activity,phase)"></app-word-item>
+  </div>
+</div>

@@ -7,9 +7,10 @@ package org.mpasko.web;
 
 import org.mpasko.web.examResults.ResultResource;
 import org.mpasko.web.generateExamData.ExamDataResource;
-import org.mpasko.web.preview.PreviewResource;
+import org.mpasko.web.textpreview.PreviewResource;
 import org.mpasko.web.server.JsonTransformer;
 import org.mpasko.web.songAnalysis.Presentation;
+import org.mpasko.web.wordspreview.WordsPreviewResource;
 
 import static spark.Spark.*;
 
@@ -35,6 +36,7 @@ public class BrowserResource {
         new ResultResource(data).setupEndpoints();
         new ExamDataResource(data).setupEndpoints();
         new PreviewResource(data).setupEndpoints();
+        new WordsPreviewResource(data).setupEndpoints();
     }
 
     private void setupEndpoints() {

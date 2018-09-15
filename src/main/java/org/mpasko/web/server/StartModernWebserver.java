@@ -22,7 +22,12 @@ public class StartModernWebserver {
         externalStaticFileLocation("content/frontend/dist/frontend");
         new BrowserResource();
 
-        get("preview/*", (request, response)->{
+        get("textpreview/*", (request, response)->{
+            response.redirect("/");
+            return "";
+        });
+
+        get("wordspreview/*", (request, response)->{
             response.redirect("/");
             return "";
         });

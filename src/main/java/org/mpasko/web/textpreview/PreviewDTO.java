@@ -1,4 +1,4 @@
-package org.mpasko.web.preview;
+package org.mpasko.web.textpreview;
 
 import org.mpasko.dictionary.Dictionary;
 import org.mpasko.japanese.runners.workflow.SongLayout;

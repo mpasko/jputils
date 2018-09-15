@@ -1,4 +1,4 @@
-package org.mpasko.web.preview;
+package org.mpasko.web.textpreview;
 
 import org.mpasko.fileTreeModel.Leaf;
 import org.mpasko.fileTreeModel.Node;
