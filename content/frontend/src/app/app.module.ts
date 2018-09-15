@@ -6,14 +6,18 @@ import { RoutingModule } from './routing/routing.module';
 
 import { AppComponent } from './app.component';
 import { FiletreeModule } from './filetree/filetree.module';
-import { PreviewComponent } from './preview/preview.component';
 import { MainComponent } from './main/main.component';
+import { WordsPreviewComponent } from './preview/words-preview/words-preview.component';
+import { TextPreviewComponent } from './preview/text-preview/text-preview.component';
+import { MenuPaneComponent } from './menu-pane/menu-pane.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    PreviewComponent,
-    MainComponent
+    MainComponent,
+    WordsPreviewComponent,
+    TextPreviewComponent,
+    MenuPaneComponent
   ],
   imports: [
     BrowserModule,

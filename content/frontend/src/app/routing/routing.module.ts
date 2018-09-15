@@ -2,13 +2,26 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes }  from '@angular/router';
 
-import { PreviewComponent } from '../preview/preview.component';
+import { TextPreviewComponent } from '../preview/text-preview/text-preview.component';
+import { WordsPreviewComponent } from '../preview/words-preview/words-preview.component';
 import { MainComponent } from '../main/main.component';
 
 const routes = [
   {
-    path: 'preview/:id', // :id means that id will be a URL parameter
-    component: PreviewComponent
+    path: 'textpreview/:id', // :id means that id will be a URL parameter
+    component: TextPreviewComponent
+  },
+  {
+    path: 'textpreview',
+    component: TextPreviewComponent
+  },
+  {
+    path: 'wordspreview/:id',
+    component: WordsPreviewComponent
+  },
+  {
+    path: 'wordspreview',
+    component: WordsPreviewComponent
   },
   {
     path: 'main',

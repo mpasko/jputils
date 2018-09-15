@@ -1,29 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { FileTreeService } from '../file-tree.service';
+import { RouterUtilService } from '../routing/router-extractor.service';
+import { FileTreeService } from './file-tree.service';
 
+const mergeSafe = (array1, array2) => (array1 || []).concat(array2 || []);
 
 function processData(data, enumerator) {
   enumerator.value++;
-  const mergeSafe = (array1, array2) => (array1 || []).concat(array2 || []);
   const children = mergeSafe(data['subnodes'], data['subleafs'])
     .map(array => processData(array, enumerator));
-  const name = data.name || 'root';
-  var transformed;
-  if (children.length > 0) {
-    transformed = {
-      id : enumerator.value,
-      name,
-      children
-    };
-  } else {
-    transformed = {
-      id : enumerator.value,
-      name
-    };
-  }
-  return transformed;
+  return {
+    id : enumerator.value,
+    name : data.name || 'root',
+    children : (children.length == 0 ? undefined : children)
+  };
 }
 
 @Component({
@@ -37,6 +28,7 @@ export class FiletreeComponent implements OnInit {
   public options;
 
   constructor(private router : Router,
+              private routerUtil : RouterUtilService,
               private filetreeservice : FileTreeService) {
     this.nodes = [ //id,name,children
       ];
@@ -45,7 +37,9 @@ export class FiletreeComponent implements OnInit {
 
   onFocus(event) {
     if (event.node.children === undefined) {
-      this.router.navigate(['/preview', event.node.data.name]);
+      const site = this.routerUtil.getCurrentUri();
+      console.log(site, event.node.data.name);
+      this.router.navigate(['textpreview', event.node.data.name]);
     }
   }
 
