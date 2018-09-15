@@ -17,10 +17,8 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.mpasko.commons.Classifier;
-import org.mpasko.commons.DictEntry;
 import org.mpasko.dictionary.Dictionary;
-import org.mpasko.japanese.wordfilters.DuplicateFilter;
-import org.mpasko.japanese.wordfilters.KnownWordsFilter;
+import org.mpasko.japanese.wordfilters.compound.ExtractorFilter;
 import org.mpasko.loadres.JmDictLoader;
 import org.mpasko.util.*;
 
@@ -64,7 +62,7 @@ public class ParseJishoOutputs {
             final String english = new Filesystem().loadFile(filename.replace(".htm", ".txt"));
             //TreeMap<String, String> items = loadSpecifiedOutputs(filename);
             List<String> items = loadWordsInTheirNaturalForm(filename);
-            Dictionary found = findAndFilterItemsFromDictionary(items, rawText, dict);
+            Dictionary found = ExtractorFilter.findAndFilterItemsFromDictionary(items, rawText, dict);
             merged.addAll(found);
             found.write("dictionaries/" + songName + ".txt");
             //GenerateExams.processTripleDict(dict_filename);
@@ -74,16 +72,6 @@ public class ParseJishoOutputs {
         }
     }
 
-    public static Dictionary findAndFilterItemsFromDictionary(List<String> items, final String rawText, Dictionary dict) {
-        //ArrayList<Entry<String, String>> itemsOrdered = new ArrayList(items.entrySet());
-        //itemsOrdered.sort(new TextPositionComparator(rawText));
-        Dictionary found = findAllItems(items, dict);
-        DuplicateFilter duplicateFilter = DuplicateFilter.outputDictionaryDuplicateFilter();
-        found = duplicateFilter.filter(found);
-        found = KnownWordsFilter.build().filter(found);
-        return found;
-    }
-
     public static String formatSong(String song, final String rawText, Dictionary found, String english) {
         StringBuilder plaintext = new StringBuilder();
         plaintext.append(song.replace(".htm", "")).append("\n");
@@ -91,19 +79,6 @@ public class ParseJishoOutputs {
         plaintext.append(english).append("\n");
         plaintext.append(found.toString()).append("\n\n");
         return plaintext.toString();
-    }
-
-    public static Dictionary findAllItems(List<String> itemsOrdered, Dictionary dict) {
-        Dictionary found = new Dictionary();
-        for (String pair : itemsOrdered) {
-            DictEntry item = dict.find(pair, pair);
-            if ((item != null)) {
-                found.put(item.kanji, item.writing, SimpleUtils.limitComas(item.english));
-            } else {
-                System.out.println(pair + " -not found in dict!");
-            }
-        }
-        return found;
     }
 
     public static List<String> loadWordsInTheirNaturalForm(String filename) {

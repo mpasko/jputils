@@ -25,9 +25,12 @@ public class Config {
             "ling tosite sigure");
     public String lyrics_path = "./improved_workflow/texts/songs";
     public String audio_path = "/mnt/data/repo/Music/nihongo";
-    public List<String> english_songs = Arrays.asList("unhappy refrain", "scarlet story", "the beast",
+    public List<String> english_songs = Arrays.asList("unhappy refrain", "scarlet story",
+            "the beast", "glowenglish version", "last refrain",
             "go to west", "silver sky", "complicated", "neophobia", "nightcore silence",
             "guilty crown bios", "layers mod", "owari no seraph",
-            "god of ink", " keep on keping", "perfect time", "release my soul", "blessing departures", "breathless",
-            "out of control", "through my blood", "glowenglish version", "last refrain");
+            "brave_the_ocean", "hill_of_sorrow", "breath", "cage",
+            "god of ink", " keep on keping", "perfect time", "release my soul",
+            "blessing departures", "breathless", "into_the_sky", "warcry",
+            "out of control", "through my blood");
 }

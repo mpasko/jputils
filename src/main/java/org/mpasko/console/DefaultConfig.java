@@ -39,5 +39,6 @@ public class DefaultConfig {
     public static String globalSources = "improved_workflow/words/global_sources";
     public static String workflowManualProcessed = globalSources + "/manual_dic/recovered_manual.txt";
     public static String onyomiWhitelist = "improved_workflow/kanji/test_onyomi_whitelist.txt";
+    public static String sources = "improved_workflow/texts";
 
 }

@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 import org.mpasko.commons.analizers.WordsExtractor;
 import org.mpasko.console.DefaultConfig;
 import org.mpasko.dictionary.Dictionary;
-import org.mpasko.japanese.runners.parsers.ParseJishoOutputs;
+import org.mpasko.japanese.wordfilters.compound.ExtractorFilter;
 import org.mpasko.util.Filesystem;
 
 /**
@@ -22,9 +22,14 @@ public class SongLayout {
 
     public String process(String song, String filename, String category, Dictionary full_dict) {
         String jap = new Filesystem().loadFile(filename);
-        String eng = new Filesystem().tryLoadFile(filename.replaceAll(".txt", ".eng.txt"));
         final String dictionaryStringified = findAndFilterWords(jap, full_dict);
         new Filesystem().saveFile(String.format("./%s/%s/%s", DefaultConfig.globalSources, category, song), dictionaryStringified);
+        return dryProcess(song, filename, full_dict);
+    }
+
+    public String dryProcess(String song, String filename, Dictionary full_dict) {
+        String jap = new Filesystem().loadFile(filename);
+        String eng = new Filesystem().tryLoadFile(filename.replaceAll(".txt", ".eng.txt"));
         return generateChunked(song, jap, eng, full_dict);
     }
 
@@ -38,7 +43,7 @@ public class SongLayout {
 
     private String findAndFilterWords(String sourceText, Dictionary full_dict) {
         List<String> words = findWords(sourceText, full_dict);
-        Dictionary filtered = ParseJishoOutputs.findAndFilterItemsFromDictionary(words, sourceText, full_dict);
+        Dictionary filtered = ExtractorFilter.findAndFilterItemsFromDictionary(words, sourceText, full_dict);
         return filtered.toString();
     }
 

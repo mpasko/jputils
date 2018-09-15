@@ -16,7 +16,7 @@ import static spark.Spark.*;
 public class StartWebserver {
 
     public static void main(String args[]) {
-        setPort(8080);
+        setPort(8081);
         externalStaticFileLocation("content");
         new BrowserResource();
     }

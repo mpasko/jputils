@@ -9,6 +9,7 @@ import org.mpasko.web.BrowserResource;
 
 import static spark.Spark.externalStaticFileLocation;
 import static spark.Spark.setPort;
+import static spark.Spark.*;
 
 /**
  *
@@ -20,5 +21,10 @@ public class StartModernWebserver {
         setPort(8080);
         externalStaticFileLocation("content/frontend/dist/frontend");
         new BrowserResource();
+
+        get("preview/*", (request, response)->{
+            response.redirect("/");
+            return "";
+        });
     }
 }
