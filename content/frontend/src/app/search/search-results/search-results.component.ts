@@ -25,7 +25,6 @@ export class SearchResultsComponent implements OnInit {
       const query =  params['params'].query;
       this.service.search(query)
       .subscribe(results => {
-        console.log(results);
         this.results = convertResultIntoView(results);
       });
     });

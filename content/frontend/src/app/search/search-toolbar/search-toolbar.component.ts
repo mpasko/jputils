@@ -20,7 +20,6 @@ export class SearchToolbarComponent implements OnInit {
   }
 
   public performSearch(event) {
-    console.log('searching',this.query);
     this.router.navigate(['search', this.query]);
   }
 }
