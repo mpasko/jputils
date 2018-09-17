@@ -4,6 +4,7 @@ import { RouterModule, Routes }  from '@angular/router';
 
 import { TextPreviewComponent } from '../preview/text-preview/text-preview.component';
 import { WordsPreviewComponent } from '../preview/words-preview/words-preview.component';
+import { SearchResultsComponent } from '../search/search-results/search-results.component';
 import { MainComponent } from '../main/main.component';
 
 const routes = [
@@ -22,6 +23,10 @@ const routes = [
   {
     path: 'wordspreview',
     component: WordsPreviewComponent
+  },
+  {
+    path: 'search/:query',
+    component: SearchResultsComponent
   },
   {
     path: 'main',

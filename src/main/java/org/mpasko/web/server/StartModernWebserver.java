@@ -7,6 +7,8 @@ package org.mpasko.web.server;
 
 import org.mpasko.web.BrowserResource;
 
+import java.util.Arrays;
+
 import static spark.Spark.externalStaticFileLocation;
 import static spark.Spark.setPort;
 import static spark.Spark.*;
@@ -22,12 +24,17 @@ public class StartModernWebserver {
         externalStaticFileLocation("content/frontend/dist/frontend");
         new BrowserResource();
 
-        get("textpreview/*", (request, response)->{
-            response.redirect("/");
-            return "";
-        });
+        Arrays.asList(
+            "textpreview/*",
+            "wordspreview/*",
+            "main",
+            "search/*"
+        ).stream()
+        .forEach(item -> addToIgnoreList(item));
+    }
 
-        get("wordspreview/*", (request, response)->{
+    private static void addToIgnoreList(String route) {
+        get(route, (request, response)->{
             response.redirect("/");
             return "";
         });

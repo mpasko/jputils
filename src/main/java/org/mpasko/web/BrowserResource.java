@@ -37,6 +37,7 @@ public class BrowserResource {
         new ExamDataResource(data).setupEndpoints();
         new PreviewResource(data).setupEndpoints();
         new WordsPreviewResource(data).setupEndpoints();
+        new SearchResource().setupEndpoints();
     }
 
     private void setupEndpoints() {

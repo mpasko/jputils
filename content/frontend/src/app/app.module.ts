@@ -11,6 +11,8 @@ import { WordsPreviewComponent } from './preview/words-preview/words-preview.com
 import { TextPreviewComponent } from './preview/text-preview/text-preview.component';
 import { MenuPaneComponent } from './menu-pane/menu-pane.component';
 import { WordItemComponent } from './preview/words-preview/word-item/word-item.component';
+import { SearchToolbarComponent } from './search/search-toolbar/search-toolbar.component';
+import { SearchResultsComponent } from './search/search-results/search-results.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +21,9 @@ import { WordItemComponent } from './preview/words-preview/word-item/word-item.c
     WordsPreviewComponent,
     TextPreviewComponent,
     MenuPaneComponent,
-    WordItemComponent
+    WordItemComponent,
+    SearchToolbarComponent,
+    SearchResultsComponent
   ],
   imports: [
     BrowserModule,
