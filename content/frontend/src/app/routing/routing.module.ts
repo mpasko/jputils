@@ -29,12 +29,8 @@ const routes = [
     component: SearchResultsComponent
   },
   {
-    path: 'main',
-    component: MainComponent
-  },
-  {
     path: '',
-    redirectTo: '/main',
+    redirectTo: '/wordspreview',
     pathMatch: 'full' //for redirectios this parameter is mandatory
   }
 ];

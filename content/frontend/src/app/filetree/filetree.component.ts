@@ -37,8 +37,11 @@ export class FiletreeComponent implements OnInit {
 
   onFocus(event) {
     if (event.node.children === undefined) {
-      const site = this.routerUtil.getCurrentUri();
-      this.router.navigate(['wordspreview', event.node.data.name]);
+      let site = this.routerUtil.getCurrentUri();
+      if (site.indexOf('main')>=0) {
+        site = 'wordspreview';
+      }
+      this.router.navigate([site, event.node.data.name]);
     }
   }
 

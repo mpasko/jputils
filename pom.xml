@@ -42,7 +42,6 @@
                         <jdk.xml.entity-expansion-limit>0</jdk.xml.entity-expansion-limit>
                         <com.pasko.test>it works!</com.pasko.test>
                     </systemPropertyVariables>
-                    <encoding>UTF-8</encoding>
                 </configuration>
             </plugin>
             <plugin>
@@ -135,6 +134,11 @@
             <groupId>com.sparkjava</groupId>
             <artifactId>spark-core</artifactId>
             <version>2.7.2</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sparkjava</groupId>
+            <artifactId>spark-template-thymeleaf</artifactId>
+            <version>2.7.1</version>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
