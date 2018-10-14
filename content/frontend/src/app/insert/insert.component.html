@@ -1,3 +1,9 @@
-<textarea [(ngModel)]="japanese"></textarea>
-<textarea [(ngModel)]="english"></textarea>
-<button (click)="save($event)">Save</button>
+<div>
+  <button (click)="save($event)">Save</button>
+  <input type="text" [(ngModel)]="directory">
+  <input type="text" [(ngModel)]="name">
+</div>
+<div>
+  <textarea [(ngModel)]="data.japanese"></textarea>
+  <textarea [(ngModel)]="data.english"></textarea>
+</div>

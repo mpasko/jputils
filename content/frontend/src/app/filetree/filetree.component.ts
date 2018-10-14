@@ -14,7 +14,8 @@ import { TreeNode } from 'angular-tree-component';
 })
 export class FiletreeComponent implements OnInit {
 
-  @ViewChild('treeComponent') treeComponent;
+  @ViewChild('treeComponent')
+  public treeComponent;
   public nodes;
   public options;
 
@@ -23,7 +24,9 @@ export class FiletreeComponent implements OnInit {
               private fileTreeService: FileTreeService,
               private processor: ProcessorService) {
     this.nodes = [];
-    this.options = {};
+    this.options = {
+      isExpandedField: 'expanded'
+    };
   }
 
   routeToSelected(node) {
@@ -49,10 +52,16 @@ export class FiletreeComponent implements OnInit {
     }
   }
 
+  setNewData(data: FileTree) {
+    this.nodes = this.processor.process(data);
+    console.log(this.treeComponent);
+    this.treeComponent.treeModel.expandAll();
+  }
+
   ngOnInit() {
     this.fileTreeService
       .getStructure()
-      .subscribe((data) => this.nodes = this.processor.process(data as FileTree));
+      .subscribe(this.setNewData.bind(this));
   }
 
 }

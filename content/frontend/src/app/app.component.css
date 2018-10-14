@@ -1,1 +1,9 @@
+.vertical {
+  float: right;
+  width: 69%;
+}
 
+.tree {
+  float: left;
+  width: 30%;
+}

@@ -10,9 +10,7 @@ import org.thymeleaf.templateresolver.FileTemplateResolver;
 import spark.ModelAndView;
 import spark.template.thymeleaf.ThymeleafTemplateEngine;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 import static spark.Spark.externalStaticFileLocation;
 import static spark.Spark.setPort;
@@ -29,15 +27,20 @@ public class StartModernWebserver {
         externalStaticFileLocation("content/frontend/dist/frontend");
         new BrowserResource();
 
-        Arrays.asList(
+        addParameters(Arrays.asList(
             "textpreview",
             "wordspreview",
-            "textpreview/*",
-            "wordspreview/*",
+            "insert",
             "main",
-            "search/*"
-        ).stream()
+            "search"
+        )).stream()
         .forEach(item -> addStaticRoute(item));
+    }
+
+    private static List<String> addParameters(List<String> routes) {
+        LinkedList<String> expanded = new LinkedList<>(routes);
+        routes.stream().forEach(item -> expanded.add(item+"/*"));
+        return expanded;
     }
 
     private static void addStaticRoute(String route) {

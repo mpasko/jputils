@@ -12,8 +12,8 @@ public class PreviewResource {
     private FileIdMap idCache;
     private Dictionary dict;
 
-    public PreviewResource(DataSourceCache data) {
-        idCache = FileIdMap.generateDefault(DefaultConfig.sources);
+    public PreviewResource(DataSourceCache data, FileIdMap sourceIds) {
+        this.idCache = sourceIds;
         dict = data.dataSources.getGlobalDict();
     }
 

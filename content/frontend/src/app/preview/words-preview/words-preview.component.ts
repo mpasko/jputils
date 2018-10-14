@@ -26,8 +26,10 @@ export class WordsPreviewComponent implements OnInit {
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
       const id =  params['params'].id;
-      this.preview.getPreview(id)
+      if (id) {
+        this.preview.getPreview(id)
         .subscribe(data => this.data = data);
+      }
     });
   }
 

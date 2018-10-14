@@ -24,22 +24,27 @@ export class RouterUtilService {
     this.router = router;
   }
 
-  getCurrentUri(): string {
+  getCurrentUri(): String {
     return this.router.routerState.snapshot.url;
   }
 
-  getSubSite(): string {
+  extract(index): String {
     const uri = this.getCurrentUri();
     console.log(`Extractor: uri = ${uri}`);
-    const subSite = extractParameter(uri, 0);
-    const expectedRoutes = ['textpreview', 'wordspreview'];
+    const parameter = extractParameter(uri, index);
+    return parameter;
+  }
+
+  getSubSite(): String {
+    const subSite = this.extract(0);
+    const expectedRoutes = ['textpreview', 'wordspreview', 'insert', 'search'];
     const contains = expectedRoutes.some(route => subSite.indexOf(route)>=0)
     const subSiteOrDefault = contains ? subSite : expectedRoutes[0];
     console.log(`Extractor: subSite = ${subSite}`);
     return subSiteOrDefault;
   }
 
-  getResourceId(): string {
+  getResourceId(): String {
     return extractParameter(this.getCurrentUri(), 1);
   }
 }

@@ -6,10 +6,11 @@ import { TextPreviewComponent } from '../preview/text-preview/text-preview.compo
 import { WordsPreviewComponent } from '../preview/words-preview/words-preview.component';
 import { SearchResultsComponent } from '../search/search-results/search-results.component';
 import { MainComponent } from '../main/main.component';
+import { InsertComponent } from '../insert/insert.component';
 
 const routes = [
   {
-    path: 'textpreview/:id', // :id means that id will be a URL parameter
+    path: 'textpreview/:id',
     component: TextPreviewComponent
   },
   {
@@ -23,6 +24,14 @@ const routes = [
   {
     path: 'wordspreview',
     component: WordsPreviewComponent
+  },
+  {
+    path: 'insert/:id',
+    component: InsertComponent
+  },
+  {
+    path: 'insert',
+    component: InsertComponent
   },
   {
     path: 'search/:query',

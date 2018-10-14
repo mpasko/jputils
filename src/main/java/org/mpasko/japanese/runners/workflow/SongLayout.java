@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
 import org.mpasko.commons.analizers.WordsExtractor;
 import org.mpasko.console.DefaultConfig;
 import org.mpasko.dictionary.Dictionary;
+import org.mpasko.editor.Asset;
 import org.mpasko.japanese.wordfilters.compound.ExtractorFilter;
 import org.mpasko.util.Filesystem;
 
@@ -28,9 +29,7 @@ public class SongLayout {
     }
 
     public String dryProcess(String song, String filename, Dictionary full_dict) {
-        String jap = new Filesystem().loadFile(filename);
-        String eng = new Filesystem().tryLoadFile(filename.replaceAll(".txt", ".eng.txt"));
-        return generateChunked(song, jap, eng, full_dict);
+        return generateChunked(song, Asset.load(filename), full_dict);
     }
 
     private static List<String> findWords(String jap, Dictionary dict) {
@@ -47,12 +46,12 @@ public class SongLayout {
         return filtered.toString();
     }
 
-    private String generateChunked(String title, String sourceText, String translation, Dictionary global_dict) {
+    private String generateChunked(String title, Asset source, Dictionary global_dict) {
         StringBuilder result = new StringBuilder("[" + title + "]").append("\n");
-        for (String chunk : splitEvenly(sourceText)) {
+        for (String chunk : splitEvenly(source.japanese)) {
             result.append(formatChunk(chunk, global_dict)).append("\n");
         }
-        result.append(translation).append("\n");
+        result.append(source.english).append("\n");
         return result.toString();
     }
 
