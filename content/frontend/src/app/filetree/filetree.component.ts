@@ -1,21 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { RouterUtilService } from '../routing/router-extractor.service';
 import { FileTreeService } from './file-tree.service';
-
-const mergeSafe = (array1, array2) => (array1 || []).concat(array2 || []);
-
-function processData(data, enumerator) {
-  enumerator.value++;
-  const children = mergeSafe(data['subnodes'], data['subleafs'])
-    .map(array => processData(array, enumerator));
-  return {
-    id : enumerator.value,
-    name : data.name || 'root',
-    children : (children.length == 0 ? undefined : children)
-  };
-}
+import { ProcessorService } from './processor.service.js';
+import { FileTree } from './file-tree.type';
+import { TreeNode } from 'angular-tree-component';
 
 @Component({
   selector: 'app-filetree',
@@ -24,31 +14,45 @@ function processData(data, enumerator) {
 })
 export class FiletreeComponent implements OnInit {
 
+  @ViewChild('treeComponent') treeComponent;
   public nodes;
   public options;
 
-  constructor(private router : Router,
-              private routerUtil : RouterUtilService,
-              private filetreeservice : FileTreeService) {
-    this.nodes = [ //id,name,children
-      ];
+  constructor(private router: Router,
+              private routerUtil: RouterUtilService,
+              private fileTreeService: FileTreeService,
+              private processor: ProcessorService) {
+    this.nodes = [];
     this.options = {};
   }
 
-  onFocus(event) {
+  routeToSelected(node) {
+    let site = this.routerUtil.getSubSite();
+    if (site.indexOf('main')>=0) {
+      site = 'wordspreview';
+    }
+    console.log('Routing to:', site, node.data.name);
+    this.router.navigate([site, node.data.name]);
+  }
+
+  onActivate(event) {
     if (event.node.children === undefined) {
-      let site = this.routerUtil.getCurrentUri();
-      if (site.indexOf('main')>=0) {
-        site = 'wordspreview';
-      }
-      this.router.navigate([site, event.node.data.name]);
+      this.routeToSelected(event.node);
+    } else {
+      event.node.expand();
+    }
+  }
+
+  onDeactivate(event) {
+    if (event.node.children !== undefined) {
+      //event.node.collapse();
     }
   }
 
   ngOnInit() {
-    this.filetreeservice
+    this.fileTreeService
       .getStructure()
-      .subscribe((data) => this.nodes = [processData(data, {value: 0})]);
+      .subscribe((data) => this.nodes = this.processor.process(data as FileTree));
   }
 
 }

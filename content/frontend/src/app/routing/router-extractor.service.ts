@@ -21,7 +21,6 @@ export class RouterUtilService {
   router: Router;
 
   constructor(router : Router) {
-    console.log('injecting:', router);
     this.router = router;
   }
 
@@ -30,10 +29,14 @@ export class RouterUtilService {
   }
 
   getSubSite(): string {
-    const subSite = extractParameter(this.getCurrentUri(), 0);
+    const uri = this.getCurrentUri();
+    console.log(`Extractor: uri = ${uri}`);
+    const subSite = extractParameter(uri, 0);
     const expectedRoutes = ['textpreview', 'wordspreview'];
     const contains = expectedRoutes.some(route => subSite.indexOf(route)>=0)
-    return contains ? subSite : expectedRoutes[0];
+    const subSiteOrDefault = contains ? subSite : expectedRoutes[0];
+    console.log(`Extractor: subSite = ${subSite}`);
+    return subSiteOrDefault;
   }
 
   getResourceId(): string {

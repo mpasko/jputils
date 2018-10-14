@@ -1,7 +1,7 @@
 import { TestBed, inject } from '@angular/core/testing';
 import { Router } from '@angular/router';
 
-import { RouterUtilService } from './router-util.service';
+import { RouterUtilService } from './router-extractor.service';
 
 const routerMock = {
   routerState: {

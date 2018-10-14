@@ -12,7 +12,6 @@ export class MenuPaneComponent implements OnInit {
 
   constructor(private routerUtil: RouterUtilService) {
     this.resourceId = this.routerUtil.getResourceId();
-    console.log('menupane_id:',this.resourceId);
   }
 
   ngOnInit() {
@@ -20,7 +19,6 @@ export class MenuPaneComponent implements OnInit {
 
   public getResourceId(): string {
     this.resourceId = this.routerUtil.getResourceId();
-    console.log('menupane_id:',this.resourceId);
     return this.resourceId;
   }
 

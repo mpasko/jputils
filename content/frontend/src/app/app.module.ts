@@ -1,8 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-
 import { RoutingModule } from './routing/routing.module';
+import { FormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { FiletreeModule } from './filetree/filetree.module';
@@ -13,6 +13,7 @@ import { MenuPaneComponent } from './menu-pane/menu-pane.component';
 import { WordItemComponent } from './preview/words-preview/word-item/word-item.component';
 import { SearchToolbarComponent } from './search/search-toolbar/search-toolbar.component';
 import { SearchResultsComponent } from './search/search-results/search-results.component';
+import { InsertComponent } from './insert/insert.component';
 
 @NgModule({
   declarations: [
@@ -23,13 +24,15 @@ import { SearchResultsComponent } from './search/search-results/search-results.c
     MenuPaneComponent,
     WordItemComponent,
     SearchToolbarComponent,
-    SearchResultsComponent
+    SearchResultsComponent,
+    InsertComponent
   ],
   imports: [
     BrowserModule,
     FiletreeModule,
     RouterModule,
-    RoutingModule
+    RoutingModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
