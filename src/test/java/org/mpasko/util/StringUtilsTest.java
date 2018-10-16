@@ -36,4 +36,16 @@ public class StringUtilsTest {
         assertEquals("node1/node2/node3/node4", result2);
     }
 
+    @Test
+    public void testAlignPath() {
+        System.out.println("slignPath");
+        alignPathSuite("node1/node2/node3/", "/node2/node3/node4.txt", "node1/node2/node3/node4.txt");
+        alignPathSuite("node1/node2/node3", "/node2/node3/node4.txt", "node1/node2/node3/node4.txt");
+        alignPathSuite("node1/node2/node3/", "node2/node3/node4.txt", "node1/node2/node3/node4.txt");
+        alignPathSuite("node1/node2", "node1/node2/node3.txt", "node1/node2/node3.txt");
+    }
+
+    private void alignPathSuite(String base, String tip, String result) {
+        assertEquals(result, StringUtils.alignPaths(base, tip));
+    }
 }

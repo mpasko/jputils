@@ -90,4 +90,17 @@ public class StringUtils {
         String[] split = source.split(delimiter);
         return split[split.length - 1];
     }
+
+    public static String alignPaths(String base, String tip) {
+        String sharpenedTip = tip.replaceAll(commonPart(base, tip), "");
+        return joinPath(base, sharpenedTip);
+    }
+
+    private static String commonPart(String firstTxt, String secondTxt) {
+        int charsFromBeginning=0;
+        while(firstTxt.contains(secondTxt.substring(0, charsFromBeginning))) {
+            charsFromBeginning++;
+        }
+        return secondTxt.substring(0, charsFromBeginning-1);
+    }
 }

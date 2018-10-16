@@ -1,7 +1,7 @@
 <div>
-  <button (click)="save($event)">Save</button>
-  <input type="text" [(ngModel)]="directory">
-  <input type="text" [(ngModel)]="name">
+  <button (click)="save()">Save</button>
+  <input type="text" [(ngModel)]="data.directory">
+  <input type="text" [(ngModel)]="data.name">
 </div>
 <div>
   <textarea [(ngModel)]="data.japanese"></textarea>

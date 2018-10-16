@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-//import { Observable } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { Asset } from './asset.type';
 
@@ -16,8 +15,18 @@ export class EditorService {
     return this.http.get(editUrl, {params:{id}});
   }
 
-  save(directory:String, name: String, asset: Asset) {
-    //const httpParams = {params:{dir:directory}};
-    return this.http.put<Asset>(editUrl, asset);
+  save(asset: Asset) {
+    const httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    };
+    return this.http.put<Asset>(editUrl, asset, httpOptions)
+      .subscribe(
+        data => {
+            console.log("PUT Request is successful");
+        },
+        error => {
+            console.log("Rrror", error);
+        }
+      );
   }
 }
