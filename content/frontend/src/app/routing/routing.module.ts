@@ -7,6 +7,7 @@ import { WordsPreviewComponent } from '../preview/words-preview/words-preview.co
 import { SearchResultsComponent } from '../search/search-results/search-results.component';
 import { MainComponent } from '../main/main.component';
 import { InsertComponent } from '../insert/insert.component';
+import { ControlPaneComponent } from '../control-pane/control-pane.component';
 
 const routes = [
   {
@@ -36,6 +37,10 @@ const routes = [
   {
     path: 'search/:query',
     component: SearchResultsComponent
+  },
+  {
+    path: 'panel',
+    component: ControlPaneComponent
   },
   {
     path: '',

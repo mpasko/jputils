@@ -6,7 +6,7 @@
 package org.mpasko.web.generateExamData;
 
 import org.mpasko.commons.DictEntry;
-import org.mpasko.console.DefaultConfig;
+import org.mpasko.management.console.DefaultConfig;
 import org.mpasko.dictionary.Dictionary;
 import org.mpasko.dictionary.DictionaryFileLoader;
 import org.mpasko.dictionary.formatters.KanjiChooser;

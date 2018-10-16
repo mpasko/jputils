@@ -3,16 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.mpasko.japanese.runners.workflow;
+package org.mpasko.parseTexts;
 
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
-import org.mpasko.commons.analizers.WordsExtractor;
-import org.mpasko.console.DefaultConfig;
+import org.mpasko.management.console.DefaultConfig;
 import org.mpasko.dictionary.Dictionary;
 import org.mpasko.editor.Asset;
-import org.mpasko.japanese.wordfilters.compound.ExtractorFilter;
 import org.mpasko.util.Filesystem;
 
 /**

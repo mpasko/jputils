@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 import org.mpasko.commons.DictEntry;
 import org.mpasko.commons.analizers.ReadingDecomposer;
-import org.mpasko.console.DefaultConfig;
+import org.mpasko.management.console.DefaultConfig;
 import org.mpasko.dictionary.DictionaryFileLoader;
 import org.mpasko.dictionary.MultipleIndexer;
 import org.mpasko.util.Filesystem;

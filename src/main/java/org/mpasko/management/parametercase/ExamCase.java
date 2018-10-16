@@ -3,9 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.mpasko.console.parametercase;
+package org.mpasko.management.parametercase;
 
 import org.mpasko.japanese.runners.exams.GenerateExams;
+
+import java.util.List;
 
 /**
  *
@@ -24,13 +26,18 @@ public class ExamCase implements IParameterCase {
     }
 
     @Override
-    public boolean hasParameter() {
-        return true;
+    public String category() {
+        return "processing";
     }
 
     @Override
-    public void doTheJob(String paramValue) {
-        GenerateExams.processTripleDict(paramValue, null);
+    public int parametersCount() {
+        return 1;
+    }
+
+    @Override
+    public void doTheJob(List<String> paramValue) {
+        GenerateExams.processTripleDict(paramValue.get(0), null);
     }
 
 }

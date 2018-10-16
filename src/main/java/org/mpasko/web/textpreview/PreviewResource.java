@@ -1,6 +1,6 @@
 package org.mpasko.web.textpreview;
 
-import org.mpasko.console.DefaultConfig;
+import org.mpasko.management.console.DefaultConfig;
 import org.mpasko.dictionary.Dictionary;
 import org.mpasko.web.DataSourceCache;
 import org.mpasko.web.server.JsonTransformer;
@@ -22,6 +22,14 @@ public class PreviewResource {
                 -> new TreeGenerator().generate(DefaultConfig.sources), new JsonTransformer());
 
         get(PREVIEW_CONTEXT + "/file", "application/json", (request, response)
-                -> PreviewDTO.generate(request.queryParams("id"), idCache, dict), new JsonTransformer());
+                -> previewFile(request.queryParams("id")), new JsonTransformer());
+    }
+
+    private PreviewDTO previewFile(String id) {
+        if (id != null && !id.isEmpty() && !id.equalsIgnoreCase("undefined")) {
+            return PreviewDTO.generate(id, idCache, dict);
+        } else {
+            return new PreviewDTO("Please choose file");
+        }
     }
 }

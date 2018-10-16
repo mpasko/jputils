@@ -3,9 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.mpasko.console.parametercase;
+package org.mpasko.management.parametercase;
 
 import org.mpasko.japanese.runners.runonce.InteractiveDictionary;
+
+import java.util.List;
 
 /**
  *
@@ -24,12 +26,17 @@ public class DictionaryCase implements IParameterCase {
     }
 
     @Override
-    public boolean hasParameter() {
-        return false;
+    public String category() {
+        return "search";
     }
 
     @Override
-    public void doTheJob(String paramValue) {
+    public int parametersCount() {
+        return 0;
+    }
+
+    @Override
+    public void doTheJob(List<String> paramValue) {
         new InteractiveDictionary().start();
     }
 

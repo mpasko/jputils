@@ -6,18 +6,9 @@
 package org.mpasko.web;
 
 import java.util.List;
-import java.util.stream.Collectors;
-import org.mpasko.commons.DictEntry;
-import org.mpasko.console.DefaultConfig;
-import org.mpasko.dictionary.Dictionary;
-import org.mpasko.dictionary.DictionaryFileLoader;
-import org.mpasko.dictionary.formatters.KanjiChooser;
-import org.mpasko.dictionary.formatters.MeaningChooser;
-import org.mpasko.dictionary.formatters.RomajiWritingChooser;
-import org.mpasko.dictionary.formatters.WritingChooser;
+
+import org.mpasko.management.console.DefaultConfig;
 import org.mpasko.util.Filesystem;
-import org.mpasko.web.generateExamData.ActivityData;
-import org.mpasko.web.generateExamData.ExamData;
 
 /**
  *

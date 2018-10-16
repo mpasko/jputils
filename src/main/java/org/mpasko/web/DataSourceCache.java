@@ -1,10 +1,8 @@
 package org.mpasko.web;
 
-import org.mpasko.console.DefaultConfig;
 import org.mpasko.dictionary.Dictionary;
 import org.mpasko.japanese.runners.workflow.DataSources;
 import org.mpasko.japanese.runners.workflow.GenerateOnyomiWhitelist;
-import org.mpasko.web.textpreview.FileIdMap;
 
 public class DataSourceCache {
     public Dictionary listeningWhitelist;

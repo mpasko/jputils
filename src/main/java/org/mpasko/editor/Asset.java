@@ -1,6 +1,6 @@
 package org.mpasko.editor;
 
-import org.mpasko.console.DefaultConfig;
+import org.mpasko.management.console.DefaultConfig;
 import org.mpasko.util.Filesystem;
 import org.mpasko.util.IFilesystem;
 import org.mpasko.util.StringUtils;

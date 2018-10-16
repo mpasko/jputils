@@ -54,7 +54,6 @@ export class FiletreeComponent implements OnInit {
 
   setNewData(data: FileTree) {
     this.nodes = this.processor.process(data);
-    console.log(this.treeComponent);
     this.treeComponent.treeModel.expandAll();
   }
 

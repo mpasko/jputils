@@ -18,8 +18,8 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.mpasko.commons.Classifier;
 import org.mpasko.dictionary.Dictionary;
-import org.mpasko.japanese.wordfilters.compound.ExtractorFilter;
 import org.mpasko.loadres.JmDictLoader;
+import org.mpasko.parseTexts.ExtractorFilter;
 import org.mpasko.util.*;
 
 /**

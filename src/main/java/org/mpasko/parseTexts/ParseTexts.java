@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.mpasko.japanese.runners.workflow;
+package org.mpasko.parseTexts;
 
 import java.util.List;
 import org.mpasko.dictionary.Dictionary;
@@ -24,7 +24,7 @@ public class ParseTexts {
         processAllCategories();
     }
 
-    private static void processAllCategories() {
+    public static void processAllCategories() {
         full_dict = JmDictLoader.loadDictionary();
         traverseDir("improved_workflow", "texts", ParseTexts::processCategory);
     }

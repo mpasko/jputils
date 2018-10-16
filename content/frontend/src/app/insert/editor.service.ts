@@ -25,7 +25,7 @@ export class EditorService {
             console.log("PUT Request is successful");
         },
         error => {
-            console.log("Rrror", error);
+            console.log("Error", error);
         }
       );
   }

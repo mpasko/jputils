@@ -1,4 +1,4 @@
-package org.mpasko.japanese.wordfilters.compound;
+package org.mpasko.parseTexts;
 
 import org.mpasko.commons.DictEntry;
 import org.mpasko.dictionary.Dictionary;

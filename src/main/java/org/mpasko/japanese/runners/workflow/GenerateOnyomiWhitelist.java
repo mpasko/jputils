@@ -8,7 +8,7 @@ package org.mpasko.japanese.runners.workflow;
 import java.util.List;
 import java.util.Map;
 import org.mpasko.commons.analizers.ReadingDecomposer;
-import org.mpasko.console.DefaultConfig;
+import org.mpasko.management.console.DefaultConfig;
 import org.mpasko.dictionary.Dictionary;
 import org.mpasko.util.Filesystem;
 

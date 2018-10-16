@@ -1,2 +1,2 @@
-Main-Class: org.mpasko.console.Main
+Main-Class: org.mpasko.management.console.Main
 

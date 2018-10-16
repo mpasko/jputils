@@ -7,7 +7,7 @@ package org.mpasko.japanese.wordfilters;
 import java.util.LinkedList;
 import java.util.List;
 import org.mpasko.commons.DictEntry;
-import org.mpasko.console.DefaultConfig;
+import org.mpasko.management.console.DefaultConfig;
 import org.mpasko.dictionary.Dictionary;
 import org.mpasko.dictionary.DictionaryFileLoader;
 import org.mpasko.dictionary.formatters.IFeatureChooser;

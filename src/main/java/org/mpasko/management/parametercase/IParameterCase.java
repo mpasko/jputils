@@ -3,16 +3,23 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.mpasko.commons.analizers;
+package org.mpasko.management.parametercase;
 
 import java.util.List;
-import org.mpasko.commons.DictEntry;
 
 /**
  *
  * @author marcin
  */
-public interface ISplitter {
+public interface IParameterCase {
 
-    public List<DictEntry> split(DictEntry word);
+    String name();
+
+    String description();
+
+    String category();
+
+    int parametersCount();
+
+    void doTheJob(List<String> paramValue);
 }

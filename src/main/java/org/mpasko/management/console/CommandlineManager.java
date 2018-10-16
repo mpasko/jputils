@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.mpasko.console;
+package org.mpasko.management.console;
 
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -12,7 +12,7 @@ import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
-import org.mpasko.console.parametercase.*;
+import org.mpasko.management.parametercase.*;
 
 /**
  *

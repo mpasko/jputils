@@ -1,0 +1,6 @@
+<div *ngFor="let category of layout.categories">
+  <h3><span>{{ category.name }}</span></h3>
+  <div *ngFor="let control of category.controls">
+    <button (click)="onFire(control.name)">{{ control.description }}</button>
+  </div>
+</div>

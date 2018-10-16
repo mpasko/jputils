@@ -11,6 +11,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.mpasko.commons.DictEntry;
 import org.mpasko.dictionary.Dictionary;
+import org.mpasko.parseTexts.WordsExtractor;
 import testutils.DictionaryComparer;
 
 /**

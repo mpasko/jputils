@@ -32,7 +32,8 @@ public class StartModernWebserver {
             "wordspreview",
             "insert",
             "main",
-            "search"
+            "search",
+            "panel"
         )).stream()
         .forEach(item -> addStaticRoute(item));
     }

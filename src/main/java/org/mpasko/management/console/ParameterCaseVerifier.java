@@ -3,10 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.mpasko.console.parametercase;
+package org.mpasko.management.console;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.Options;
+import org.mpasko.management.parametercase.IParameterCase;
+
+import java.util.Arrays;
 
 /**
  *
@@ -21,16 +24,16 @@ public class ParameterCaseVerifier {
     }
 
     public void setup(Options options) {
-        options.addOption(parameterCase.name(), getShort(), parameterCase.hasParameter(), parameterCase.description());
+        options.addOption(parameterCase.name(), getShort(), parameterCase.parametersCount()>0, parameterCase.description());
     }
 
     public boolean doJobIfNeeded(CommandLine cmd) {
         if (cmd.hasOption(parameterCase.name())) {
             String parameter = "";
-            if (parameterCase.hasParameter()) {
+            if (parameterCase.parametersCount() > 0) {
                 parameter = cmd.getOptionValue(parameterCase.name());
             }
-            parameterCase.doTheJob(parameter);
+            parameterCase.doTheJob(Arrays.asList(parameter));
             return true;
         }
         return false;

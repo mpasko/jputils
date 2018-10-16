@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.mpasko.commons.analizers;
+package org.mpasko.parseTexts;
 
 import java.util.List;
 import org.mpasko.commons.DictEntry;

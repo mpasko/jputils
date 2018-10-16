@@ -14,6 +14,7 @@ import { WordItemComponent } from './preview/words-preview/word-item/word-item.c
 import { SearchToolbarComponent } from './search/search-toolbar/search-toolbar.component';
 import { SearchResultsComponent } from './search/search-results/search-results.component';
 import { InsertComponent } from './insert/insert.component';
+import { ControlPaneComponent } from './control-pane/control-pane.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { InsertComponent } from './insert/insert.component';
     WordItemComponent,
     SearchToolbarComponent,
     SearchResultsComponent,
-    InsertComponent
+    InsertComponent,
+    ControlPaneComponent
   ],
   imports: [
     BrowserModule,

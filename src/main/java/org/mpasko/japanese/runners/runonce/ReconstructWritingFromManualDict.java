@@ -9,7 +9,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import org.mpasko.commons.DictEntry;
-import org.mpasko.console.DefaultConfig;
+import org.mpasko.management.console.DefaultConfig;
 import org.mpasko.dictionary.Dictionary;
 import org.mpasko.dictionary.DictionaryFileLoader;
 import org.mpasko.japanese.wordcomparison.OrComparer;

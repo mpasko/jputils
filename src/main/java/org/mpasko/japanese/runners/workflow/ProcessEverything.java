@@ -7,7 +7,7 @@ package org.mpasko.japanese.runners.workflow;
 
 import java.util.Map;
 import java.util.stream.Collectors;
-import org.mpasko.console.DefaultConfig;
+import org.mpasko.management.console.DefaultConfig;
 import org.mpasko.dictionary.Dictionary;
 import org.mpasko.dictionary.DictionaryFileLoader;
 import org.mpasko.dictionary.formatters.DictionaryFormatter;

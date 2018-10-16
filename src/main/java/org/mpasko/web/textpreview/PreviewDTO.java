@@ -1,7 +1,7 @@
 package org.mpasko.web.textpreview;
 
 import org.mpasko.dictionary.Dictionary;
-import org.mpasko.japanese.runners.workflow.SongLayout;
+import org.mpasko.parseTexts.SongLayout;
 
 public class PreviewDTO {
     public PreviewDTO(String text) {

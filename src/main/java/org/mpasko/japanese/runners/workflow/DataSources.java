@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import org.mpasko.commons.DictEntry;
 import org.mpasko.commons.analizers.ReadingDecomposer;
-import org.mpasko.console.DefaultConfig;
+import org.mpasko.management.console.DefaultConfig;
 import org.mpasko.dictionary.Dictionary;
 import org.mpasko.dictionary.DictionaryFileLoader;
 import org.mpasko.dictionary.DictionaryReconstructor;

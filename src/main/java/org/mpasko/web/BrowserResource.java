@@ -5,7 +5,8 @@
  */
 package org.mpasko.web;
 
-import org.mpasko.console.DefaultConfig;
+import org.mpasko.management.console.DefaultConfig;
+import org.mpasko.web.controlPanel.PanelResource;
 import org.mpasko.web.editor.EditorResource;
 import org.mpasko.web.examResults.ResultResource;
 import org.mpasko.web.generateExamData.ExamDataResource;
@@ -45,6 +46,7 @@ public class BrowserResource {
         new WordsPreviewResource(data).setupEndpoints();
         new SearchResource().setupEndpoints();
         new EditorResource(sourceIdCache).setupEndpoints();
+        new PanelResource().setupEndpoints();
     }
 
     private void setupEndpoints() {
