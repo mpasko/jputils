@@ -6,6 +6,7 @@
 package org.mpasko.web.generateExamData;
 
 import org.mpasko.commons.DictEntry;
+import org.mpasko.exams.Combinations;
 import org.mpasko.management.console.DefaultConfig;
 import org.mpasko.dictionary.Dictionary;
 import org.mpasko.dictionary.DictionaryFileLoader;
@@ -89,9 +90,9 @@ public class ExamsPreparer {
     }
 
     private ExamItem getItemByActivity(DictEntry dict, String activity) {
-        if (activity.toLowerCase().equals("listening")) {
+        if (activity.toLowerCase().equals(Combinations.LISTENING)) {
             return getListeningItem(dict);
-        } else if (activity.toLowerCase().equals("reading")) {
+        } else if (activity.toLowerCase().equals(Combinations.READING)) {
             return getReadingItem(dict);
         } else {
             throwUnknownActivity(activity);
@@ -119,9 +120,9 @@ public class ExamsPreparer {
 
     private ActivityData switchActivity(ExamData data, String activity) {
         switch (activity.toLowerCase()) {
-            case "listening":
+            case Combinations.LISTENING:
                 return data.getListening();
-            case "reading":
+            case Combinations.READING:
                 return data.getReading();
             default:
                 throwUnknownActivity(activity);
@@ -131,11 +132,11 @@ public class ExamsPreparer {
 
     private List<DictEntry> switchPhase(ActivityData activity, String phase) {
         switch (phase.toLowerCase()) {
-            case "unprocessed":
+            case Combinations.UNPROCESSED:
                 return activity.getUnprocessed();
-            case "black":
+            case Combinations.BLACK:
                 return activity.getBlack();
-            case "white":
+            case Combinations.WHITE:
                 return activity.getWhite();
             default:
                 throwUnknownPhase(phase);

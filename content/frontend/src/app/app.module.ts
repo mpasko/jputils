@@ -15,6 +15,7 @@ import { SearchToolbarComponent } from './search/search-toolbar/search-toolbar.c
 import { SearchResultsComponent } from './search/search-results/search-results.component';
 import { InsertComponent } from './insert/insert.component';
 import { ControlPaneComponent } from './control-pane/control-pane.component';
+import { ExamComponent } from './verification/exam/exam.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { ControlPaneComponent } from './control-pane/control-pane.component';
     SearchToolbarComponent,
     SearchResultsComponent,
     InsertComponent,
-    ControlPaneComponent
+    ControlPaneComponent,
+    ExamComponent
   ],
   imports: [
     BrowserModule,

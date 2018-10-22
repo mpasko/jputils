@@ -3,16 +3,13 @@
   <h3>Summary:</h3>
   <table>
     <tr *ngFor="let mode of summary">
-      <td>{{ mode.type }} {{ mode.source }}</td>
+      <td>{{ mode.activity }} {{ mode.phase }}</td>
       <td>
         <span class="badge badge-danger">{{ mode.size }}</span>
       </td>
       <td>
-        <!--
         <button class="btn btn-sm btn-default"
-                ng-click="makeExam(previewDepth, mode.type, currentItem, mode.source);">
-                -->
-        <button>
+                (click)="makeExam(mode.activity, resourceId, mode.phase);">
           Run exam
         </button>
       </td>

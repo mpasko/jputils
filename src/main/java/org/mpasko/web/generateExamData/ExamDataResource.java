@@ -1,5 +1,6 @@
 package org.mpasko.web.generateExamData;
 
+import org.mpasko.exams.Combinations;
 import org.mpasko.web.DataSourceCache;
 import org.mpasko.web.server.JsonTransformer;
 
@@ -40,5 +41,10 @@ public class ExamDataResource {
                     -> exams.generateSubExam(request.params(":id"),
                         request.params(":activity"),
                         request.params(":source")), new JsonTransformer());
+
+        get(EXAM_CONTEXT + "/combinations",
+                "application/json",
+                (request, response)
+                    -> new Combinations(), new JsonTransformer());
     }
 }

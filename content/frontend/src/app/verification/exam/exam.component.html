@@ -1,0 +1,59 @@
+<section id="content-body">
+  <section>
+    <span style="color:green">{{ stats.correct }}</span>
+    -
+    <span style="color:red">{{ stats.errors }}</span>
+    / {{ stats.total }}
+  </section>
+
+  <div [hidden]="shouldFinish()">
+    <section>
+      <h3>{{ current }}</h3>
+    </section>
+
+    <section>
+      <input type="text"
+             #meaningInput placeholder="Type meaning"
+             [(ngModel)]="meaning"
+             (keypress)="inputKeyPress($event);">
+      <button (click)="next();">Next</button>
+      <br><br>
+    </section>
+  </div>
+
+  <section>
+    <div [hidden]="!shouldFinish()">
+      Congrats! You answered all questions. Please save results!
+    </div>
+  </section>
+
+
+  <button (click)="saveResults();">Save results</button>
+  <button (click)="agregateResults();">Agregate results</button>
+  <button (click)="cancel();">Cancel quiz</button>
+
+  <section>
+    <table class="results" cellpadding="10">
+      <tbody><tr>
+        <td align="left">Word</td>
+        <td align="center">Expected</td>
+        <td align="center">Actual</td>
+        <td align="right">Revert</td>
+      </tr>
+
+      <tr *ngFor="let mistake of mistakes">
+        <td align="left">{{ mistake.word }}</td>
+        <td align="center">
+          <span style="color: green">{{ mistake.expected }}</span>
+        </td>
+        <td align="center">
+          <span style="color: red">{{ mistake.actual }}</span>
+        </td>
+        <td align="right">
+          <button (click)="revertWord(mistake);">X</button>
+        </td>
+      </tr>
+      </tbody></table>
+
+  </section>
+</section>

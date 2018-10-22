@@ -8,6 +8,7 @@ import { SearchResultsComponent } from '../search/search-results/search-results.
 import { MainComponent } from '../main/main.component';
 import { InsertComponent } from '../insert/insert.component';
 import { ControlPaneComponent } from '../control-pane/control-pane.component';
+import { ExamComponent } from '../verification/exam/exam.component';
 
 const routes = [
   {
@@ -33,6 +34,10 @@ const routes = [
   {
     path: 'insert',
     component: InsertComponent
+  },
+  {
+    path: 'exam/:id/:activity/:phase',
+    component: ExamComponent
   },
   {
     path: 'search/:query',

@@ -1,6 +1,6 @@
 package org.mpasko.web.examResults;
 
-import org.mpasko.japanese.runners.workflow.Remover;
+import org.mpasko.exams.Remover;
 import org.mpasko.util.Filesystem;
 import org.mpasko.web.DataSourceCache;
 

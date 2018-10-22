@@ -13,6 +13,13 @@ function extractParameter(uri, parameterIndex) {
   return (fragments.length < expectedSize) ? "" : fragments[parameterIndex];
 }
 
+export class Indexes {
+  public SubSite = 0;
+  public ResourceId = 1;
+  public Activity = 2;
+  public Phase = 3;
+}
+
 @Injectable({
   providedIn: 'root'
 })

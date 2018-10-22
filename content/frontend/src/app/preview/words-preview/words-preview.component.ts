@@ -1,6 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+
 import { WordsPreviewService, Word } from './words-preview.service';
+import { ExamHttpService } from '../../verification/exam.http.service';
+
+export interface SummaryItem {
+  activity: string;
+  phase: string;
+  size: number;
+}
 
 @Component({
   selector: 'app-words-preview',
@@ -9,12 +17,18 @@ import { WordsPreviewService, Word } from './words-preview.service';
 })
 export class WordsPreviewComponent implements OnInit {
 
-  public phases: Array<string> = ['unprocessed', 'black', 'white'];
-  public activities: Array<string> = ['reading', 'listening'];
+  public phases: Array<string> = [];
+  public activities: Array<string> = [];
   public data;
+  public summary: Array<SummaryItem> = [];
+  public resourceId: string;
 
-  constructor(private route: ActivatedRoute,
-    private preview: WordsPreviewService) { }
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private preview: WordsPreviewService,
+    private examHttp: ExamHttpService
+  ) { }
 
   getWordsOf(activity: string, phase: string): Array<Word> {
     if (this.data) {
@@ -24,13 +38,36 @@ export class WordsPreviewComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.examHttp.getCombinations().subscribe((combinations) => {
+        this.phases = combinations.phases;
+        this.activities = combinations.activities;
+      });
     this.route.paramMap.subscribe(params => {
-      const id =  params['params'].id;
-      if (id) {
-        this.preview.getPreview(id)
-        .subscribe(data => this.data = data);
+      this.resourceId =  params['params'].id;
+      if (this.resourceId) {
+        this.preview.getPreview(this.resourceId)
+        .subscribe(data => {
+          this.data = data;
+          this.generateSummary();
+        });
       }
     });
   }
 
+  makeExam(activity, resourceId, phase) {
+    this.router.navigate(['exam', resourceId, activity, phase]);
+  }
+
+  private generateSummary() {
+    this.summary = [];
+    this.activities.forEach(activity => {
+      this.phases.forEach(phase => {
+        this.summary.push({
+          phase,
+          activity,
+          size: this.data[activity][phase].length
+        } as SummaryItem);
+      });
+    });
+  }
 }
