@@ -28,4 +28,19 @@ export class ProcessorService {
   process(data: FileTree) {
     return [this.processData(data, {value: 0})];
   }
+
+  public findNode(actual: FileTree, name: string): FileTree | null {
+    console.log('searching '+name+'traversing '+actual.name);
+    if (actual.name.toLowerCase() == name.toLowerCase()) {
+      return actual;
+    }
+    const mergedSub = mergeSafe(actual.subnodes, actual.subleafs);
+    if (mergedSub.length == 0) {
+      return null;
+    }
+    const foundCandidates = mergedSub
+      .map(subnode => this.findNode(subnode, name))
+      .filter(node => node != null);
+    return foundCandidates.length == 1 ? foundCandidates[0] : null;
+  }
 }

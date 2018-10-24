@@ -1,0 +1,7 @@
+<div *ngFor="let dir of currentNode.subnodes">
+  <a class="folder-style"
+    (click)="gotoDirectory(dir.name)">./{{ dir.name }}/</a>
+</div>
+<div *ngFor="let file of currentNode.subleafs">
+  <a (click)="gotoFile(file.name)">{{ file.name }}</a>
+</div>

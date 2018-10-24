@@ -1,5 +1,5 @@
 import { Component, OnInit, ElementRef, Renderer2, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { Mistake } from './mistake.type';
 import { convertToNode, convertFromNode } from './converters';
@@ -33,6 +33,7 @@ export class ExamComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private http: ExamHttpService
   ) { }
 
@@ -78,7 +79,7 @@ export class ExamComponent implements OnInit {
   }
 
   cancel() {
-
+    this.router.navigate(['wordspreview', this.resourceId]);
   }
 
   revertWord(mistake: Mistake) {

@@ -1,6 +1,7 @@
 package org.mpasko.web.editor;
 
 import org.mpasko.editor.Asset;
+import org.mpasko.repository.EditorInterface;
 import org.mpasko.web.server.JsonParser;
 import org.mpasko.web.server.JsonTransformer;
 import org.mpasko.web.textpreview.FileIdMap;

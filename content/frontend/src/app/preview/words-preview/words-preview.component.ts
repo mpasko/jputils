@@ -43,7 +43,7 @@ export class WordsPreviewComponent implements OnInit {
         this.activities = combinations.activities;
       });
     this.route.paramMap.subscribe(params => {
-      this.resourceId =  params['params'].id;
+      this.resourceId = params['params'].id;
       if (this.resourceId) {
         this.preview.getPreview(this.resourceId)
         .subscribe(data => {

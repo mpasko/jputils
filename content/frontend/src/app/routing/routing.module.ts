@@ -9,6 +9,7 @@ import { MainComponent } from '../main/main.component';
 import { InsertComponent } from '../insert/insert.component';
 import { ControlPaneComponent } from '../control-pane/control-pane.component';
 import { ExamComponent } from '../verification/exam/exam.component';
+import { FolderBrowseComponent } from '../filetree/folder.browse/folder-browse.component'
 
 const routes = [
   {
@@ -46,6 +47,10 @@ const routes = [
   {
     path: 'panel',
     component: ControlPaneComponent
+  },
+  {
+    path: 'browse/:id',
+    component: FolderBrowseComponent
   },
   {
     path: '',

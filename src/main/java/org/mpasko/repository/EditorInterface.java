@@ -1,4 +1,4 @@
-package org.mpasko.web.editor;
+package org.mpasko.repository;
 
 import org.mpasko.editor.Asset;
 import org.mpasko.util.StringUtils;
@@ -12,6 +12,7 @@ public class EditorInterface {
 
     public void save(String path, String name, Asset asset, FileIdMap idCache) {
         String full_path = StringUtils.joinPath(path, name);
+        idCache.put(name, full_path);
         idCache.put(name+".txt", full_path+".txt");
         Asset.save(path, name, asset);
     }
