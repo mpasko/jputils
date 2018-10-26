@@ -15,7 +15,7 @@ public class PreviewDTO {
     }
 
     private static PreviewDTO generate(String song, String filename, Dictionary full_dict) {
-        String text = new SongLayout().dryProcess(song, filename, full_dict);
+        String text = new SongLayout().generateChunksForFile(song, filename, full_dict);
         return new PreviewDTO(text);
     }
 }

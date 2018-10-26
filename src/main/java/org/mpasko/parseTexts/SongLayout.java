@@ -19,14 +19,26 @@ import org.mpasko.util.Filesystem;
  */
 public class SongLayout {
 
-    public String process(String song, String filename, String category, Dictionary full_dict) {
+    private final int MAX_CHUNK_SIZE;
+    private final int MIN_CHUNK_SIZE;
+
+    public SongLayout(int maxChunkSize, int minChunkSize) {
+        MAX_CHUNK_SIZE = maxChunkSize;
+        MIN_CHUNK_SIZE = minChunkSize;
+    }
+
+    public SongLayout() {
+        this(500, 200);
+    }
+
+    public String processFile(String song, String filename, String category, Dictionary full_dict) {
         String jap = new Filesystem().loadFile(filename);
         final String dictionaryStringified = findAndFilterWords(jap, full_dict);
         new Filesystem().saveFile(String.format("./%s/%s/%s", DefaultConfig.globalSources, category, song), dictionaryStringified);
-        return dryProcess(song, filename, full_dict);
+        return generateChunksForFile(song, filename, full_dict);
     }
 
-    public String dryProcess(String song, String filename, Dictionary full_dict) {
+    public String generateChunksForFile(String song, String filename, Dictionary full_dict) {
         return generateChunked(song, Asset.load(filename), full_dict);
     }
 
@@ -44,7 +56,7 @@ public class SongLayout {
         return filtered.toString();
     }
 
-    private String generateChunked(String title, Asset source, Dictionary global_dict) {
+    public String generateChunked(String title, Asset source, Dictionary global_dict) {
         StringBuilder result = new StringBuilder("[" + title + "]").append("\n");
         for (String chunk : splitEvenly(source.japanese)) {
             result.append(formatChunk(chunk, global_dict)).append("\n");
@@ -62,7 +74,7 @@ public class SongLayout {
 
     private List<String> splitEvenly(String songText) {
         final LinkedList<String> result = new LinkedList<>();
-        String[] split = songText.split("\n|。");
+        String[] split = songText.split("\n|。|、|「|」");
         StringBuilder currentChunk = new StringBuilder();
         for (int index = 0; index < split.length; ++index) {
             currentChunk.append(split[index]).append("\n");
@@ -77,10 +89,10 @@ public class SongLayout {
 
     private int calculateChunkSize(String songText) {
         int total = songText.length();
-        if (total < 500) {
+        if (total < MAX_CHUNK_SIZE) {
             return total;
         } else {
-            int chunksNumber = total / 200;
+            int chunksNumber = total / MIN_CHUNK_SIZE;
             return total / chunksNumber;
         }
     }

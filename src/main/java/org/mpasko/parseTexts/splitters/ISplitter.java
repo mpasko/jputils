@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.mpasko.parseTexts;
+package org.mpasko.parseTexts.splitters;
 
 import java.util.List;
 import org.mpasko.commons.DictEntry;
@@ -14,5 +14,5 @@ import org.mpasko.commons.DictEntry;
  */
 public interface ISplitter {
 
-    public List<DictEntry> split(DictEntry word);
+    List<DictEntry> split(DictEntry word);
 }

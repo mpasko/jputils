@@ -5,8 +5,10 @@
  */
 package org.mpasko.japanese.wordfilters.wordsplitter;
 
-import org.mpasko.parseTexts.DictionarySplitter;
+import org.mpasko.parseTexts.splitters.DictionarySplitter;
 import java.util.List;
+import java.util.stream.Collectors;
+
 import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -90,7 +92,8 @@ public class DictionarySplitterTest {
     private void testCannotSplit(String kanji, String writing, String meaning) {
         DictionarySplitter instance = new DictionarySplitter(getSplitableDictionary(), "", "");
         List<DictEntry> result = instance.split(new DictEntry(kanji, writing, meaning));
-        assertEquals(1, result.size());
+        String printedList = result.stream().map(r -> r.kanji).collect(Collectors.joining(","));
+        assertEquals("Expected to leave only one piece but left:"+ printedList,1, result.size());
         assertEquals(kanji, result.get(0).kanji);
     }
 }

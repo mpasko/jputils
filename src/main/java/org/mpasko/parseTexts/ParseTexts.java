@@ -49,7 +49,7 @@ public class ParseTexts {
         String category = StringUtils.lastSegment(base, "/");
         String filename = base + "/" + song;
         if (!filename.contains(".eng.txt")) {
-            return new SongLayout().process(song, filename, category, full_dict);
+            return new SongLayout().processFile(song, filename, category, full_dict);
         }
         return "";
     }

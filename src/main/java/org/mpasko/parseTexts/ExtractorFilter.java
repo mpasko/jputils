@@ -26,7 +26,7 @@ public class ExtractorFilter {
         return found;
     }
 
-    public static Dictionary findAllItems(List<String> itemsOrdered, Dictionary dict) {
+    private static Dictionary findAllItems(List<String> itemsOrdered, Dictionary dict) {
         Dictionary found = new Dictionary();
         for (String pair : itemsOrdered) {
             DictEntry item = dict.find(pair, pair);

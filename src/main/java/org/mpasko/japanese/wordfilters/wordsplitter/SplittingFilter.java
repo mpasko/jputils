@@ -7,7 +7,7 @@ package org.mpasko.japanese.wordfilters.wordsplitter;
 
 import java.util.LinkedList;
 import org.mpasko.commons.DictEntry;
-import org.mpasko.parseTexts.DictionarySplitter;
+import org.mpasko.parseTexts.splitters.DictionarySplitter;
 import org.mpasko.dictionary.Dictionary;
 import org.mpasko.japanese.wordfilters.IFilter;
 

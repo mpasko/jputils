@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.mpasko.parseTexts;
+package org.mpasko.parseTexts.stemmers;
 
 import java.util.HashMap;
 import org.mpasko.commons.Furiganiser;
@@ -12,7 +12,7 @@ import org.mpasko.commons.Furiganiser;
  *
  * @author marcin
  */
-public class GrammarStemmer {
+public class GrammarStemmer implements IStemmer {
 
     private HashMap<String, String> map = new HashMap<String, String>();
 
