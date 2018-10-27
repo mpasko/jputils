@@ -15,4 +15,11 @@ public class Node {
         subnodes.forEach(subnode -> result.addAll(subnode.getAllLeafs()));
         return result;
     }
+
+    public List<Node> getAllNodes() {
+        LinkedList<Node> result = new LinkedList<>();
+        result.addAll(subnodes);
+        subnodes.forEach(subnode -> result.addAll(subnode.getAllNodes()));
+        return result;
+    }
 }

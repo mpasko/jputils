@@ -12,10 +12,20 @@ public class FileIdMap {
 
     public static FileIdMap generateDefault(String base) {
         Node tree = new TreeGenerator().generate(base);
-        List<Leaf> leafs = tree.getAllLeafs();
         FileIdMap map = new FileIdMap();
-        leafs.stream().forEach(leaf -> map.put(leaf.id, leaf.fullPath));
+        putAllNodes(map, tree);
+        putAllLeafs(tree, map);
         return map;
+    }
+
+    private static void putAllLeafs(Node tree, FileIdMap map) {
+        List<Leaf> leafs = tree.getAllLeafs();
+        leafs.stream().forEach(leaf -> map.put(leaf.name, leaf.fullPath));
+    }
+
+    private static void putAllNodes(FileIdMap map, Node tree) {
+        List<Node> nodes = tree.getAllNodes();
+        nodes.stream().forEach(node -> map.put(node.name, node.base+"/"+node.name));
     }
 
     public void put(String key, String path) {

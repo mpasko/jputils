@@ -1,4 +1,4 @@
-package org.mpasko.web.generateExamData;
+package org.mpasko.web.legacyApi.generateExamData;
 
 import org.mpasko.exams.Combinations;
 import org.mpasko.web.DataSourceCache;
@@ -6,6 +6,7 @@ import org.mpasko.web.server.JsonTransformer;
 
 import static spark.Spark.get;
 
+@Deprecated
 public class ExamDataResource {
     private static final String EXAM_CONTEXT = "/api/exam";
     private static final String BROWSER_CONTEXT = "/api/browser";
@@ -15,6 +16,7 @@ public class ExamDataResource {
         exams = new ExamsPreparer(data);
     }
 
+    @Deprecated
     public void setupEndpoints() {
 
         get(BROWSER_CONTEXT + "/item/:id",

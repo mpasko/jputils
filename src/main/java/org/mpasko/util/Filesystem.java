@@ -60,6 +60,13 @@ public class Filesystem implements IFilesystem {
                 .forEach(content
                         -> builder.append(loadFile(content.toAbsolutePath().toString()))
                         .append("\n"));
+
+        Arrays.stream(files)
+                .map(path -> path.toPath())
+                .filter(Files::isDirectory)
+                .forEach(content
+                        -> builder.append(loadFilesInDirectory(content.toAbsolutePath().toString()))
+                        .append("\n"));
         return builder.toString();
     }
 
@@ -121,6 +128,24 @@ public class Filesystem implements IFilesystem {
                     throw new RuntimeException("Error closing file stream: " + full_name, ex);
                 }
             }
+        }
+    }
+
+    @Override
+    public boolean isFile(String path) {
+        try {
+            return new File(path).isFile();
+        } catch (RuntimeException ex) {
+            throw new RuntimeException("Error checking path: "+path);
+        }
+    }
+
+    @Override
+    public boolean isDirectory(String path) {
+        try {
+            return new File(path).isDirectory();
+        } catch (RuntimeException ex) {
+            throw new RuntimeException("Error checking path: "+path);
         }
     }
 }

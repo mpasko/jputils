@@ -30,13 +30,27 @@ public class TreeGenerator {
         String path = StringUtils.joinPath(base, subpath);
         node.base = base;
         node.name = subpath;
-        List<String> subfiles = filesystem.getSubfiles(path);
-        node.subleafs = Leaf.WrapLeafs(path, subfiles);
+        prepareSubfiles(node, path);
+        prepareSubdirectories(node, path);
+        return node;
+    }
+
+    private void prepareSubdirectories(Node node, String path) {
         List<String> subfolders = filesystem.getSubdirectories(path);
         node.subnodes = subfolders.stream()
                 .map(name -> generateNodeStartingAt(path, name))
                 .collect(Collectors.toList());
-        return node;
     }
 
+    private void prepareSubfiles(Node node, String path) {
+        List<String> subfiles = filesystem.getSubfiles(path)
+                .stream()
+                .filter(TreeGenerator::filter)
+                .collect(Collectors.toList());
+        node.subleafs = Leaf.WrapLeafs(path, subfiles);
+    }
+
+    private static boolean filter(String path) {
+        return !path.contains(".eng.");
+    }
 }

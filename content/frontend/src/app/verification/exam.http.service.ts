@@ -4,6 +4,9 @@ import { Observable } from 'rxjs';
 
 import { Question } from './exam/question.type';
 
+const EXAM_API = '/api.v2/exam';
+const COMBINATIONS_API = '/api.v2/combinations';
+
 export interface Results {
   correct: any;
   incorrect: any;
@@ -22,12 +25,11 @@ export class ExamHttpService {
   constructor(private http: HttpClient) { }
 
   public getExam(activity, id, phase): Observable<Array<Question>> {
-    const depth = 'subitem';
-    return this.http.get('api/exam/'+depth+'/'+activity+'/'+id+'/'+phase) as Observable<Array<Question>>;
+    return this.http.get(EXAM_API+'/'+id+'/'+activity+'/'+phase) as Observable<Array<Question>>;
   };
 
   public getCombinations(): Observable<Combinations> {
-    return this.http.get('api/exam/combinations') as Observable<Combinations>;
+    return this.http.get(COMBINATIONS_API) as Observable<Combinations>;
   };
 
   public saveResults(activity, name, black, white) {

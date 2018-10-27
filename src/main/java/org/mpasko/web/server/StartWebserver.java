@@ -13,6 +13,7 @@ import static spark.Spark.*;
  *
  * @author marcin
  */
+@Deprecated
 public class StartWebserver {
 
     public static void main(String args[]) {

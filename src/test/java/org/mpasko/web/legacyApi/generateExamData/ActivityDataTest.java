@@ -1,9 +1,10 @@
-package org.mpasko.web.generateExamData;
+package org.mpasko.web.legacyApi.generateExamData;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.mpasko.commons.DictEntry;
 import org.mpasko.dictionary.Dictionary;
+import org.mpasko.exams.ActivityData;
 
 import java.util.List;
 

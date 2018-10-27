@@ -63,4 +63,14 @@ public class NestedFilesystem implements IFilesystem {
     public void saveFile(String full_name, String content) {
 
     }
+
+    @Override
+    public boolean isFile(String path) {
+        return false;
+    }
+
+    @Override
+    public boolean isDirectory(String path) {
+        return true;
+    }
 }

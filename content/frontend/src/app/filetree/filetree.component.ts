@@ -43,7 +43,11 @@ export class FiletreeComponent implements OnInit {
       this.routeToSelected(event.node);
     } else {
       event.node.expand();
-      this.router.navigate(['browse', event.node.data.name]);
+      let site = this.routerUtil.getSubSite();
+      if (site.indexOf('wordspreview')<0) {
+        site = 'browse';
+      }
+      this.router.navigate([site, event.node.data.name]);
     }
   }
 

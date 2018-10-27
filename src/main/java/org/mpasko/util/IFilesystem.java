@@ -14,4 +14,7 @@ public interface IFilesystem {
     String tryLoadFile(String filename);
 
     void saveFile(String full_name, String content);
+
+    boolean isFile(String path);
+    boolean isDirectory(String path);
 }
