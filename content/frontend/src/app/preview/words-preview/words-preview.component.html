@@ -9,8 +9,14 @@
       </td>
       <td>
         <button class="btn btn-sm btn-default"
-                (click)="makeExam(mode.activity, resourceId, mode.phase);">
+                (click)="makeExam(resourceId, mode.activity, mode.phase);">
           Run exam
+        </button>
+      </td>
+      <td>
+        <button class="btn btn-sm btn-default"
+                (click)="makeQuiz(resourceId, mode.activity, mode.phase);">
+          Download drill
         </button>
       </td>
     </tr>

@@ -35,7 +35,11 @@ public class FileIdMap {
     }
 
     public String search(String key) {
-        return map.get(normalize(key));
+        String found = map.get(normalize(key));
+        if (found == null) {
+            throw new RuntimeException("");
+        }
+        return found;
     }
 
     private String normalize(String key) {

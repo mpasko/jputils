@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.mpasko.quizgeneration;
+package org.mpasko.quizgeneration.legacy;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -15,6 +15,7 @@ import org.mpasko.util.Randomation;
  *
  * @author marcin
  */
+@Deprecated
 public class WrongAnswerSelector {
 
     void addAnyRandom(DictEntry question, ArrayList<DictEntry> answers, Dictionary dictionary) {

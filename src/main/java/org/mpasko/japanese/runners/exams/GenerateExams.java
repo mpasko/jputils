@@ -14,7 +14,7 @@ import org.mpasko.japanese.wordfilters.LengthFilter;
 import org.mpasko.japanese.wordfilters.OnlyKanjiFilter;
 import org.mpasko.loadres.JmDictLoader;
 import org.mpasko.loadres.PopularDictionaries;
-import org.mpasko.quizgeneration.DictionaryToQuiz;
+import org.mpasko.quizgeneration.legacy.DictionaryToQuiz;
 import org.mpasko.util.Filesystem;
 
 /**

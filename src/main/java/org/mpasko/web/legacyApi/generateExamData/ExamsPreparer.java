@@ -27,7 +27,7 @@ public class ExamsPreparer {
         this.data = data;
     }
 
-    public Object generateExamByPath(String path, String activity, String phase) {
+    public List<ExamItem> generateExamByPath(String path, String activity, String phase) {
         return new ExamBuilder().generateExam(getDataByPath(path), activity, phase);
     }
 

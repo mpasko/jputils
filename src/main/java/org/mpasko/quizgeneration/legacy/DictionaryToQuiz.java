@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.mpasko.quizgeneration;
+package org.mpasko.quizgeneration.legacy;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +11,9 @@ import java.util.stream.Collectors;
 import org.mpasko.commons.DictEntry;
 import org.mpasko.commons.DictSplitter;
 import org.mpasko.dictionary.Dictionary;
+import org.mpasko.quizgeneration.Question;
+import org.mpasko.quizgeneration.Quiz;
+import org.mpasko.quizgeneration.QuizFormatter;
 import org.mpasko.util.Filesystem;
 import org.mpasko.util.Randomation;
 
@@ -18,6 +21,7 @@ import org.mpasko.util.Randomation;
  *
  * @author marcin
  */
+@Deprecated
 public class DictionaryToQuiz {
 
     public static void generateExamsInParts(Dictionary dict, int desiredSize, String keyword) {

@@ -16,11 +16,17 @@ public class SynonimeComparer implements IWordComparer {
 
     @Override
     public boolean areSimillar(DictEntry entry1, DictEntry entry2) {
-        if (entry1.english.equalsIgnoreCase(entry2.english)) {
+        String english1 = entry1.english;
+        String english2 = entry2.english;
+        return areSimillar(english1, english2);
+    }
+
+    public boolean areSimillar(String english1, String english2) {
+        if (english1.equalsIgnoreCase(english2)) {
             return true;
         }
-        String[] list1 = makeListFrom(entry1);
-        String[] list2 = makeListFrom(entry2);
+        String[] list1 = makeListFrom(english1);
+        String[] list2 = makeListFrom(english2);
         /*
         if (list1.length > 3 || list2.length > 3) {
             return false;
@@ -39,8 +45,8 @@ public class SynonimeComparer implements IWordComparer {
         return false;
     }
 
-    private String[] makeListFrom(DictEntry entry1) {
-        String operating1 = entry1.english.replaceAll(",", " ");
+    private String[] makeListFrom(String english) {
+        String operating1 = english.replaceAll(",", " ");
         String[] list1 = operating1.split(" ");
         return list1;
     }

@@ -20,7 +20,7 @@ public class Question {
     public List<String> wron_answers = new LinkedList<>();
     public String correct_answer = "";
 
-    Question(String question, String correct, List<String> answers) {
+    public Question(String question, String correct, List<String> answers) {
         content = question;
         correct_answer = correct;
         wron_answers.addAll(answers);

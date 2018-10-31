@@ -4,6 +4,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { WordsPreviewService, Word } from './words-preview.service';
 import { ExamHttpService } from '../../verification/exam.http.service';
 
+import { DownloadService } from '../../verification/quiz/download.service';
+
 export interface SummaryItem {
   activity: string;
   phase: string;
@@ -27,7 +29,8 @@ export class WordsPreviewComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private preview: WordsPreviewService,
-    private examHttp: ExamHttpService
+    private examHttp: ExamHttpService,
+    private quiz: DownloadService
   ) { }
 
   getWordsOf(activity: string, phase: string): Array<Word> {
@@ -54,8 +57,29 @@ export class WordsPreviewComponent implements OnInit {
     });
   }
 
-  makeExam(activity, resourceId, phase) {
+  makeExam(resourceId, activity, phase) {
     this.router.navigate(['exam', resourceId, activity, phase]);
+  }
+
+  makeQuiz(resourceId, activity, phase) {
+    this.quiz.getQuizData(resourceId, activity, phase)
+      .subscribe(data => this.downloadFile(data, resourceId, activity, phase));
+  }
+
+  downloadFile(data: string, resourceId, activity, phase){
+    var blob = new Blob([data], {
+      type: 'text/plain'
+    });
+
+    const url = window.URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    const timestamp = new Date().toISOString().split('T')[0]
+    link.download=`${resourceId}_${activity}_${phase}_${timestamp}.txt`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    setTimeout(() => window.URL.revokeObjectURL(data), 2000);
   }
 
   private generateSummary() {

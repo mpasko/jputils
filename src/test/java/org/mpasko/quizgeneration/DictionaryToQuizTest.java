@@ -10,6 +10,12 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.mpasko.dictionary.Dictionary;
+import org.mpasko.exams.ExamBuilder;
+import org.mpasko.exams.ExamItem;
+import org.mpasko.quizgeneration.builder.GeneralPurposeBuilder;
+import org.mpasko.quizgeneration.legacy.DictionaryToQuiz;
+
+import java.util.List;
 
 /**
  *
@@ -44,9 +50,15 @@ public class DictionaryToQuizTest {
 
     @Test
     public void testGenerateQuiz() {
-        System.out.println("generateQuiz");
-        DictionaryToQuiz instance = new DictionaryToQuiz(regularDictionary, 10);
-        Quiz result = instance.generateQuiz();
+        basicTestForActivity("reading");
+        basicTestForActivity("listening");
+    }
+
+    private static void basicTestForActivity(String activity) {
+        System.out.println("generateQuiz:"+activity);
+        GeneralPurposeBuilder builder = new GeneralPurposeBuilder();
+        List<ExamItem> exam = new ExamBuilder().dictionaryIntoExam(regularDictionary.getDict(), activity);
+        Quiz result = builder.buildQuiz(exam, exam);
         assertEquals("expected one question per dict entry", regularDictionary.size(), result.getQuestions().size());
         assertAnswersNotEmpty(result);
     }

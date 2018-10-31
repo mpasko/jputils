@@ -26,6 +26,7 @@ public class DictEntry {
         this(kanji, kanji, english);
     }
 
+    @Deprecated
     public boolean isSimillar(DictEntry entry) {
         if (equals(entry)) {
             return false;
@@ -48,6 +49,7 @@ public class DictEntry {
         return false;
     }
 
+    @Deprecated
     public boolean isColliding(DictEntry entry) {
         return entry.kanji.contains(this.kanji)
                 || this.kanji.contains(entry.kanji)
@@ -91,6 +93,7 @@ public class DictEntry {
         return kanji + " " + writing;
     }
 
+    @Deprecated
     private boolean hasCommonKanjiWith(String kanji) {
         char[] oppositeArray = kanji.toCharArray();
         for (char k1 : this.kanji.toCharArray()) {

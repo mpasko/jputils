@@ -11,6 +11,7 @@ import org.mpasko.web.editor.EditorResource;
 import org.mpasko.web.examGeneration.ExamResource;
 import org.mpasko.web.examResults.ResultResource;
 import org.mpasko.web.legacyApi.generateExamData.ExamDataResource;
+import org.mpasko.web.quizDownload.QuizResource;
 import org.mpasko.web.textpreview.FileIdMap;
 import org.mpasko.web.textpreview.PreviewResource;
 import org.mpasko.web.server.JsonTransformer;
@@ -32,10 +33,12 @@ public class BrowserResource {
     private final FileSearcher search;
     private final Presentation song;
     private final FileIdMap sourceIdCache;
+    private final FileIdMap dictionariesIdCache;
 
     public BrowserResource() {
         DataSourceCache data = new DataSourceCache();
         sourceIdCache = FileIdMap.generateDefault(DefaultConfig.sources);
+        dictionariesIdCache = FileIdMap.generateDefault(DefaultConfig.globalSources);
 
         exams = new SourceDirectory(data);
         search = new FileSearcher();
@@ -44,6 +47,7 @@ public class BrowserResource {
         new ResultResource(data).setupEndpoints();
         //new ExamDataResource(data).setupEndpoints();
         new ExamResource(data).setupEndpoints();
+        new QuizResource(dictionariesIdCache, data).setupEndpoints();
         new PreviewResource(data, sourceIdCache).setupEndpoints();
         new WordsPreviewResource(data).setupEndpoints();
         new SearchResource().setupEndpoints();

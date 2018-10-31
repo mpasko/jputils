@@ -4,6 +4,7 @@ import org.mpasko.management.console.DefaultConfig;
 import org.mpasko.dictionary.Dictionary;
 import org.mpasko.web.DataSourceCache;
 import org.mpasko.web.server.JsonTransformer;
+import org.mpasko.web.server.StringDTO;
 
 import static spark.Spark.get;
 
@@ -25,11 +26,11 @@ public class PreviewResource {
                 -> previewFile(request.queryParams("id")), new JsonTransformer());
     }
 
-    private PreviewDTO previewFile(String id) {
+    private StringDTO previewFile(String id) {
         if (id != null && !id.isEmpty() && !id.equalsIgnoreCase("undefined")) {
-            return PreviewDTO.generate(id, idCache, dict);
+            return StringDTO.generate(id, idCache, dict);
         } else {
-            return new PreviewDTO("Please choose file");
+            return new StringDTO("Please choose file");
         }
     }
 }
