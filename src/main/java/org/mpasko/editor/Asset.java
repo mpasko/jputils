@@ -13,12 +13,30 @@ public class Asset {
     public String directory;
 
     public static Asset load(String filename) {
+        if(new Filesystem().isFile(filename)) {
+            return loadFile(filename);
+        } else {
+            return loadDirectory(filename);
+        }
+    }
+
+    private static Asset loadFile(String filename) {
         Asset asset = new Asset();
         asset.japanese = new Filesystem().loadFile(filename);
         asset.english = new Filesystem().tryLoadFile(filename.replaceAll(".txt", ".eng.txt"));
         asset.path = filename;
         asset.name = StringUtils.lastSegment(filename, "/");
         asset.directory = filename.replaceAll(asset.name, "");
+        return asset;
+    }
+
+    private static Asset loadDirectory(String path) {
+        Asset asset = new Asset();
+        asset.japanese = "";
+        asset.english = "";
+        asset.path = path;
+        asset.name = "new_file.txt";
+        asset.directory = path;
         return asset;
     }
 

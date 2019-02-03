@@ -41,4 +41,12 @@ export class FolderBrowseComponent implements OnInit {
   public gotoDirectory(name: string) {
     this.router.navigate(['browse', name]);
   }
+
+  public newFile() {
+    this.router.navigate(['insert', this.resourceId]);
+  }
+
+  public newDirectory() {
+
+  }
 }

@@ -42,4 +42,11 @@ public class ParameterCaseVerifier {
     private String getShort() {
         return parameterCase.name().substring(0, 1).toUpperCase();
     }
+
+    public String getDescription() {
+        return String.format("'--%s' parameters:%d description: '%s'",
+                parameterCase.name(),
+                parameterCase.parametersCount(),
+                parameterCase.description());
+    }
 }

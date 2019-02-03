@@ -34,6 +34,7 @@ public class CommandlineManager {
         add(new SongsCase());
         add(new DictionaryCase());
         add(new WorkflowCase());
+        add(new WebserverCase());
         cases.forEach(param -> param.setup(options));
     }
 
@@ -47,9 +48,15 @@ public class CommandlineManager {
             boolean anyMatched = cases.stream().anyMatch(param -> param.doJobIfNeeded(cmd));
             if (!anyMatched) {
                 System.out.println(String.format("Unknown command: %s", Arrays.toString(argv)));
+                printHelp();
             }
         } catch (ParseException ex) {
             System.out.println(String.format("Bad command: %s", ex.getMessage()));
         }
+    }
+
+    private void printHelp() {
+        System.out.println("Possible commands:");
+        cases.stream().forEach(param -> System.out.println(param.getDescription()));
     }
 }

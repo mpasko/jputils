@@ -4,6 +4,7 @@ inputs/songs/*_pliki
 inputs/*.txt
 inputs/*.htm
 inputs/*_pliki
+inputs/novels
 *.db
 target
 interproducts
