@@ -40,7 +40,7 @@ public class ProcessEverything {
     private Map<String, String> directoriesAsSelectedSources() {
         return DataSources.getGlobalSourceList()
                 .stream()
-                .collect(Collectors.toMap(dir -> dir, dir -> DefaultConfig.globalSources + "/" + dir + "/"));
+                .collect(Collectors.toMap(dir -> dir, dir -> DefaultConfig.wordsGlobalSources + "/" + dir + "/"));
     }
 
     private void generateReadingFromSelectedSources() {

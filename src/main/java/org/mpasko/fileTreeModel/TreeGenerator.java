@@ -1,7 +1,5 @@
-package org.mpasko.web.textpreview;
+package org.mpasko.fileTreeModel;
 
-import org.mpasko.fileTreeModel.Leaf;
-import org.mpasko.fileTreeModel.Node;
 import org.mpasko.util.Filesystem;
 import org.mpasko.util.IFilesystem;
 import org.mpasko.util.StringUtils;

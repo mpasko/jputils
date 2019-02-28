@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.mpasko.parseTexts;
+package org.mpasko.parseTexts.legacy;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -11,12 +11,15 @@ import java.util.stream.Collectors;
 import org.mpasko.management.console.DefaultConfig;
 import org.mpasko.dictionary.Dictionary;
 import org.mpasko.editor.Asset;
+import org.mpasko.parseTexts.ExtractorFilter;
+import org.mpasko.parseTexts.WordsExtractor;
 import org.mpasko.util.Filesystem;
 
 /**
  *
  * @author marcin
  */
+@Deprecated
 public class SongLayout {
 
     private final int MAX_CHUNK_SIZE;
@@ -32,9 +35,11 @@ public class SongLayout {
     }
 
     public String processFile(String song, String filename, String category, Dictionary full_dict) {
+        //reuse ExtractWordsFromTexts
         String jap = new Filesystem().loadFile(filename);
         final String dictionaryStringified = findAndFilterWords(jap, full_dict);
-        new Filesystem().saveFile(String.format("./%s/%s/%s", DefaultConfig.globalSources, category, song), dictionaryStringified);
+        new Filesystem().saveFile(String.format("./%s/%s/%s", DefaultConfig.wordsGlobalSources, category, song), dictionaryStringified);
+        //end reuse
         return generateChunksForFile(song, filename, full_dict);
     }
 
@@ -52,7 +57,7 @@ public class SongLayout {
 
     private String findAndFilterWords(String sourceText, Dictionary full_dict) {
         List<String> words = findWords(sourceText, full_dict);
-        Dictionary filtered = ExtractorFilter.findAndFilterItemsFromDictionary(words, sourceText, full_dict);
+        Dictionary filtered = new ExtractorFilter().findAndFilterItemsFromDictionary(words, full_dict);
         return filtered.toString();
     }
 

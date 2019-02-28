@@ -45,11 +45,13 @@ public class ReadingDecomposer {
     }
 
     public List<Entry<String, String>> decompose(List<DictEntry> entries) {
-        final List<Entry<String, String>> allItems = entries.stream()
+        final Optional<List<Entry<String, String>>> allItems = entries.stream()
                 .map(entry -> decompose(entry))
-                .reduce(ReadingDecomposer::mergeLists)
-                .get();
-        return allItems
+                .reduce(ReadingDecomposer::mergeLists);
+        if (!allItems.isPresent()) {
+            return new LinkedList<>();
+        }
+        return allItems.get()
                 .stream()
                 .filter(item -> item.getValue() != null)
                 .distinct()

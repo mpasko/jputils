@@ -2,6 +2,7 @@ package org.mpasko.web.textpreview;
 
 import org.mpasko.fileTreeModel.Leaf;
 import org.mpasko.fileTreeModel.Node;
+import org.mpasko.fileTreeModel.TreeGenerator;
 
 import java.util.HashMap;
 import java.util.List;

@@ -41,7 +41,7 @@ public class ExamsPreparer {
     @Deprecated
     public ExamData getDataAbout(String id, String subid) {
         Dictionary dict = new DictionaryFileLoader()
-                .loadTripleDict(DefaultConfig.globalSources + "/" + id + "/" + subid);
+                .loadTripleDict(DefaultConfig.wordsGlobalSources + "/" + id + "/" + subid);
         return new ExamDataBuilder(this.data).buildExamData(dict);
     }
 
@@ -58,14 +58,14 @@ public class ExamsPreparer {
     @Deprecated
     public ExamData getDataAbout(String id) {
         Dictionary dict = new DictionaryFileLoader()
-                .loadTripleDictFromFolder(DefaultConfig.globalSources + "/" + id);
+                .loadTripleDictFromFolder(DefaultConfig.wordsGlobalSources + "/" + id);
         return new ExamDataBuilder(this.data).buildExamData(dict);
     }
 
     @Deprecated
     public ExamData getDataAboutSubitem(String params) {
         System.out.println(params);
-        String path = findFileWithName(DefaultConfig.globalSources, params);
+        String path = findFileWithName(DefaultConfig.wordsGlobalSources, params);
         Dictionary dict = new DictionaryFileLoader().loadTripleDict(path);
         return new ExamDataBuilder(this.data).buildExamData(dict);
     }

@@ -63,7 +63,7 @@ public class DataSources {
     }
 
     public static List<String> getGlobalSourceList() {
-        return new Filesystem().getSubdirectories(DefaultConfig.globalSources)
+        return new Filesystem().getSubdirectories(DefaultConfig.wordsGlobalSources)
                 .stream()
                 .filter(dir -> !dir.startsWith("_"))
                 .collect(Collectors.toList());
@@ -73,7 +73,7 @@ public class DataSources {
         List<DictEntry> speculation = getGlobalSourceList()
                 .stream()
                 .map(dir -> new DictionaryFileLoader()
-                .loadTripleDictFromFolder(String.format("%s/%s", DefaultConfig.globalSources, dir)).items())
+                .loadTripleDictFromFolder(String.format("%s/%s", DefaultConfig.wordsGlobalSources, dir)).items())
                 .reduce(ReadingDecomposer::mergeLists)
                 .orElseGet(() -> new LinkedList<DictEntry>());
         return speculation;

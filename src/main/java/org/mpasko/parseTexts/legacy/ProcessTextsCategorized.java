@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.mpasko.parseTexts;
+package org.mpasko.parseTexts.legacy;
 
 import java.util.List;
 import org.mpasko.dictionary.Dictionary;
@@ -16,7 +16,8 @@ import org.mpasko.util.collectors.StringNewlineCollector;
  *
  * @author marcin
  */
-public class ParseTexts {
+@Deprecated
+public class ProcessTextsCategorized {
 
     private static Dictionary full_dict;
 
@@ -26,11 +27,11 @@ public class ParseTexts {
 
     public static void processAllCategories() {
         full_dict = JmDictLoader.loadDictionary();
-        traverseDir("improved_workflow", "texts", ParseTexts::processCategory);
+        traverseDir("improved_workflow", "texts", ProcessTextsCategorized::processCategory);
     }
 
     private static void processCategory(String base, String category) {
-        traverseDir(base, category, ParseTexts::processAlbum);
+        traverseDir(base, category, ProcessTextsCategorized::processAlbum);
     }
 
     private static void processAlbum(String base, String album) {

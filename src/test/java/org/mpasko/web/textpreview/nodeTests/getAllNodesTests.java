@@ -7,7 +7,7 @@ import mocks.filesystemMocks.OnlyFoldersFilesystemMock;
 import org.junit.Assert;
 import org.junit.Test;
 import org.mpasko.fileTreeModel.Node;
-import org.mpasko.web.textpreview.TreeGenerator;
+import org.mpasko.fileTreeModel.TreeGenerator;
 
 import java.util.List;
 

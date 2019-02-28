@@ -62,7 +62,7 @@ public class ParseJishoOutputs {
             final String english = new Filesystem().loadFile(filename.replace(".htm", ".txt"));
             //TreeMap<String, String> items = loadSpecifiedOutputs(filename);
             List<String> items = loadWordsInTheirNaturalForm(filename);
-            Dictionary found = ExtractorFilter.findAndFilterItemsFromDictionary(items, rawText, dict);
+            Dictionary found = new ExtractorFilter().findAndFilterItemsFromDictionary(items, dict);
             merged.addAll(found);
             found.write("dictionaries/" + songName + ".txt");
             //GenerateExams.processTripleDict(dict_filename);

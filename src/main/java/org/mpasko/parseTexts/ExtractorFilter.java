@@ -9,20 +9,32 @@ import java.util.List;
 
 public class ExtractorFilter {
 
+    private DuplicateFilter duplicateFilter;
+    private KnownWordsFilter knownWordFilter;
+
+    public ExtractorFilter() {
+        buildFilters();
+    }
+
+    private void buildFilters() {
+        //duplicateFilter = DuplicateFilter.outputDictionaryDuplicateFilter();
+        knownWordFilter = KnownWordsFilter.build();
+    }
+
     public Dictionary filterItems(List<String> items, Dictionary fulldict, Dictionary whiteReading, Dictionary whiteListening) {
-        Dictionary input = findAndFilterItemsFromDictionary(items, "", fulldict);
+        Dictionary input = findAndFilterItemsFromDictionary(items, fulldict);
         input = notIn(whiteListening).filter(input);
         input = notIn(whiteReading).filter(input);
         return input;
     }
 
-    public static Dictionary findAndFilterItemsFromDictionary(List<String> items, final String rawText, Dictionary dict) {
+    public Dictionary findAndFilterItemsFromDictionary(List<String> items, Dictionary dict) {
         //ArrayList<Entry<String, String>> itemsOrdered = new ArrayList(items.entrySet());
         //itemsOrdered.sort(new TextPositionComparator(rawText));
         Dictionary found = findAllItems(items, dict);
-        DuplicateFilter duplicateFilter = DuplicateFilter.outputDictionaryDuplicateFilter();
+        duplicateFilter = DuplicateFilter.outputDictionaryDuplicateFilter();
         found = duplicateFilter.filter(found);
-        found = KnownWordsFilter.build().filter(found);
+        found = knownWordFilter.filter(found);
         return found;
     }
 
@@ -38,8 +50,6 @@ public class ExtractorFilter {
         }
         return found;
     }
-
-
 
     private GenericFilter notIn(Dictionary dict) {
         return new InversionOf(in(dict));

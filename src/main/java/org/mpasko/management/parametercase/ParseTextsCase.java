@@ -1,6 +1,6 @@
 package org.mpasko.management.parametercase;
 
-import org.mpasko.parseTexts.ParseTexts;
+import org.mpasko.parseTexts.legacy.ProcessTextsCategorized;
 
 import java.util.List;
 
@@ -27,6 +27,6 @@ public class ParseTextsCase implements IParameterCase{
 
     @Override
     public void doTheJob(List<String> paramValue) {
-        ParseTexts.processAllCategories();
+        ProcessTextsCategorized.processAllCategories();
     }
 }

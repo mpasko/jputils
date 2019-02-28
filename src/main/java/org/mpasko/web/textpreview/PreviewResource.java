@@ -1,5 +1,6 @@
 package org.mpasko.web.textpreview;
 
+import org.mpasko.fileTreeModel.TreeGenerator;
 import org.mpasko.management.console.DefaultConfig;
 import org.mpasko.dictionary.Dictionary;
 import org.mpasko.web.DataSourceCache;
@@ -20,7 +21,7 @@ public class PreviewResource {
 
     public void setupEndpoints() {
         get(PREVIEW_CONTEXT + "/dir", "application/json", (request, response)
-                -> new TreeGenerator().generate(DefaultConfig.sources), new JsonTransformer());
+                -> new TreeGenerator().generate(DefaultConfig.textSources), new JsonTransformer());
 
         get(PREVIEW_CONTEXT + "/file", "application/json", (request, response)
                 -> previewFile(request.queryParams("id")), new JsonTransformer());

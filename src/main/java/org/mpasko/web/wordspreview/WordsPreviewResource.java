@@ -1,7 +1,6 @@
 package org.mpasko.web.wordspreview;
 
 import org.mpasko.management.console.DefaultConfig;
-import org.mpasko.dictionary.Dictionary;
 import org.mpasko.web.DataSourceCache;
 import org.mpasko.web.legacyApi.generateExamData.ExamsPreparer;
 import org.mpasko.web.server.JsonTransformer;
@@ -17,7 +16,7 @@ public class WordsPreviewResource {
     public WordsPreviewResource(DataSourceCache data) {
         //TODO luckily there are common ids (filenames) between both previews [15.09.2018]
         //..but it would be safer for separate trees for both..
-        idCache = FileIdMap.generateDefault(DefaultConfig.globalSources);
+        idCache = FileIdMap.generateDefault(DefaultConfig.wordsGlobalSources);
         exams = new ExamsPreparer(data);
     }
 

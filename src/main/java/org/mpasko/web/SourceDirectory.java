@@ -22,12 +22,12 @@ class SourceDirectory {
     }
 
     public List<String> getItems() {
-        List<String> directories = new Filesystem().getSubdirectories(DefaultConfig.globalSources);
+        List<String> directories = new Filesystem().getSubdirectories(DefaultConfig.wordsGlobalSources);
         return directories;
     }
 
     public List<String> getSubItems(String id) {
-        List<String> files = new Filesystem().getSubfiles(DefaultConfig.globalSources + "/" + id);
+        List<String> files = new Filesystem().getSubfiles(DefaultConfig.wordsGlobalSources + "/" + id);
         return files;
     }
 }

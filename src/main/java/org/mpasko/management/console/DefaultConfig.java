@@ -21,9 +21,9 @@ public class DefaultConfig {
     public static String understandingWhitelist = "improved_workflow/words/understanding/whitelists/";
     public static String understandingWhitelistFile = "reading_listening_merged";
     public static String workflowManualSources = "improved_workflow/words/manual_dicts";
-    public static String globalSources = "improved_workflow/words/global_sources";
-    public static String workflowManualProcessed = globalSources + "/manual_dic/recovered_manual.txt";
+    public static String wordsGlobalSources = "improved_workflow/words/global_sources";
+    public static String workflowManualProcessed = wordsGlobalSources + "/manual_dic/recovered_manual.txt";
     public static String onyomiWhitelist = "improved_workflow/kanji/test_onyomi_whitelist.txt";
-    public static String sources = "improved_workflow/texts";
-
+    public static String textSources = "improved_workflow/texts";
+    public static String readingOutut = "texts";
 }
