@@ -5,19 +5,20 @@
  */
 package org.mpasko.japanese.wordfilters;
 
-import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.mpasko.dictionary.Dictionary;
 
+import static org.junit.Assert.assertEquals;
+
 /**
  *
  * @author marcin
  */
-public class OnlyKanjiFilterTest {
+public class NotEnglishOriginFilterTest {
 
-    public OnlyKanjiFilterTest() {
+    public NotEnglishOriginFilterTest() {
     }
 
     @BeforeClass
@@ -30,10 +31,10 @@ public class OnlyKanjiFilterTest {
 
     @Test
     public void testKatakanaFilter() {
-        System.out.println("katakanaFilter");
-        GenericFilter filter = OnlyKanjiFilter.katakanaFilter();
+        System.out.println("NotEnglishFilter");
+        GenericFilter filter = new NotEnglishOriginFilter();
         final Dictionary filtered = filter.filter(mixedKatakanaAndKanji());
-        assertEquals(3, filtered.size());
+        assertEquals(6, filtered.size());
     }
 
     private Dictionary mixedKatakanaAndKanji() {
@@ -42,6 +43,9 @@ public class OnlyKanjiFilterTest {
         dictionary.put("夢幻", "むげん", "ilusion");
         dictionary.put("リンゴ", "りんご", "apple");
         dictionary.put("リンゴ課", "りんごか", "applefruit");
+        dictionary.put("ヒヒ", "ひひ", "...");
+        dictionary.put("コンコン", "こんこん", "knock knock");
+        dictionary.put("ショウブショウブ", "しょうぶしょうぶ", "...");
         dictionary.put("だいじょうぶ", "だいじょうぶ", "alright");
         return dictionary;
     }

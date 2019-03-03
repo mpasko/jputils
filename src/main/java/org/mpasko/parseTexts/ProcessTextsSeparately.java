@@ -1,7 +1,7 @@
 package org.mpasko.parseTexts;
 
 import org.mpasko.dictionary.Dictionary;
-import org.mpasko.loadres.JmDictLoader;
+import org.mpasko.loadres.AllDictionaries;
 
 public class ProcessTextsSeparately {
 
@@ -10,7 +10,7 @@ public class ProcessTextsSeparately {
     }
 
     public void start() {
-        Dictionary fullDictionary = JmDictLoader.loadDictionary();
+        Dictionary fullDictionary = AllDictionaries.load();
         new ExtractWordsFromTexts(fullDictionary).start();
         new GenerateReading(fullDictionary).start();
     }

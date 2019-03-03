@@ -14,7 +14,8 @@ import org.mpasko.commons.DictEntry;
 public class OnlyKanjiFilter extends GenericFilter{
 
     boolean hiragana = false;
-    
+
+    @Deprecated
     public static OnlyKanjiFilter katakanaFilter() {
         OnlyKanjiFilter filter = new OnlyKanjiFilter();
         filter.hiragana = true;

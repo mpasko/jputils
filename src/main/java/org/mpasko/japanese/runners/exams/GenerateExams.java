@@ -6,12 +6,7 @@ package org.mpasko.japanese.runners.exams;
 
 import org.mpasko.dictionary.Dictionary;
 import org.mpasko.dictionary.DictionaryFileLoader;
-import org.mpasko.japanese.wordfilters.CompoundFilter;
-import org.mpasko.japanese.wordfilters.GenericFilter;
-import org.mpasko.japanese.wordfilters.GradeFilter;
-import org.mpasko.japanese.wordfilters.KnownWordsFilter;
-import org.mpasko.japanese.wordfilters.LengthFilter;
-import org.mpasko.japanese.wordfilters.OnlyKanjiFilter;
+import org.mpasko.japanese.wordfilters.*;
 import org.mpasko.loadres.JmDictLoader;
 import org.mpasko.loadres.PopularDictionaries;
 import org.mpasko.quizgeneration.legacy.DictionaryToQuiz;
@@ -90,7 +85,7 @@ public class GenerateExams {
     }
 
     public static void processFuriganaDict(String filename) {
-        final CompoundFilter filter = new CompoundFilter(OnlyKanjiFilter.katakanaFilter());
+        final CompoundFilter filter = new CompoundFilter(new NotEnglishOriginFilter());
         processTripleDict(filename, filter.and(KnownWordsFilter.build()));
     }
 

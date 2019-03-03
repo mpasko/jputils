@@ -7,13 +7,14 @@ package org.mpasko.japanese.runners.workflow;
 
 import java.util.Map;
 import java.util.stream.Collectors;
+
+import org.mpasko.japanese.wordfilters.NotEnglishOriginFilter;
 import org.mpasko.management.console.DefaultConfig;
 import org.mpasko.dictionary.Dictionary;
 import org.mpasko.dictionary.DictionaryFileLoader;
 import org.mpasko.dictionary.formatters.DictionaryFormatter;
 import org.mpasko.dictionary.operations.Product;
 import org.mpasko.japanese.wordfilters.DuplicateFilter;
-import org.mpasko.japanese.wordfilters.OnlyKanjiFilter;
 import org.mpasko.japanese.wordfilters.OnyomiSpeculationFilter;
 import org.mpasko.japanese.wordfilters.wordsplitter.SplittingFilter;
 import org.mpasko.util.Filesystem;
@@ -83,7 +84,7 @@ public class ProcessEverything {
                 .filter(new_dict);
         DuplicateFilter duplicateFilter = DuplicateFilter.outputDictionaryDuplicateFilter();
         new_dict = duplicateFilter.filter(new_dict);
-        new_dict = OnlyKanjiFilter.katakanaFilter().filter(new_dict);
+        new_dict = new NotEnglishOriginFilter().filter(new_dict);
         return new_dict;
     }
 

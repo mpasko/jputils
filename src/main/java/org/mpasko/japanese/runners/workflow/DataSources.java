@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import org.mpasko.commons.DictEntry;
 import org.mpasko.commons.analizers.ReadingDecomposer;
+import org.mpasko.loadres.AllDictionaries;
 import org.mpasko.management.console.DefaultConfig;
 import org.mpasko.dictionary.Dictionary;
 import org.mpasko.dictionary.DictionaryFileLoader;
@@ -21,7 +22,6 @@ import org.mpasko.dictionary.formatters.RomajiWritingChooser;
 import org.mpasko.dictionary.formatters.WritingChooser;
 import org.mpasko.dictionary.operations.Sum;
 import org.mpasko.japanese.wordfilters.OnyomiSpeculationFilter;
-import org.mpasko.loadres.JmDictLoader;
 import org.mpasko.util.Filesystem;
 
 /**
@@ -37,7 +37,7 @@ public class DataSources {
     }
 
     private void init() {
-        this.globalDictionary = JmDictLoader.loadDictionary();
+        this.globalDictionary = AllDictionaries.load();
     }
 
     public Dictionary getGlobalDict() {
