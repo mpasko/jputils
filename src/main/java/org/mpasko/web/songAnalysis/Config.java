@@ -1,36 +1,29 @@
 package org.mpasko.web.songAnalysis;
 
+import org.mpasko.util.Filesystem;
+
 import java.util.Arrays;
 import java.util.List;
 
 public class Config {
-    public List<String> artists = Arrays.asList("hiroyuki_sawano",
-            "nano",
-            "garnidelia",
-            "yousei_teikoku",
-            "kalafina",
-            "kenshi_yonezu",
-            "aimer",
-            "egoist",
-            "cream",
-            "stereopony",
-            "orange range",
-            "yui",
-            "eir aoi",
-            "wagakki band",
-            "band maid",
-            "lisa",
-            "luna haruna",
-            "haruka tomatsu",
-            "ling tosite sigure");
+    private Config() {
+
+    }
+
+    public static Config loadConfig() {
+        Config config = new Config();
+        config.artists = loadList("./improved_workflow/config/artists.txt");
+        config.english_songs = loadList("./improved_workflow/config/ignore_songs.txt");
+        return config;
+    }
+
+    private static List<String> loadList(String filename) {
+        String raw = new Filesystem().loadFile(filename);
+        return Arrays.asList(raw.split("\n"));
+    }
+
+    public List<String> artists;
     public String lyrics_path = "./improved_workflow/texts/songs";
     public String audio_path = "/mnt/data/repo/Music/nihongo";
-    public List<String> english_songs = Arrays.asList("unhappy refrain", "scarlet story",
-            "the beast", "glowenglish version", "last refrain",
-            "go to west", "silver sky", "complicated", "neophobia", "nightcore silence",
-            "guilty crown bios", "layers mod", "owari no seraph",
-            "brave_the_ocean", "hill_of_sorrow", "breath", "cage",
-            "god of ink", " keep on keping", "perfect time", "release my soul",
-            "blessing departures", "breathless", "into_the_sky", "warcry",
-            "out of control", "through my blood");
+    public List<String> english_songs;
 }

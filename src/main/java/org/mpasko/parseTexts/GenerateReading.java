@@ -20,7 +20,13 @@ public class GenerateReading {
     }
 
     public void start() {
-        Traverser.traverse(DefaultConfig.wordsGlobalSources, (_b, relative, name) -> generateReadingForFile(relative, name, this.fullDictionary));
+        Traverser.traverse(DefaultConfig.wordsGlobalSources, this::visit);
+    }
+
+    private void visit(String _b, String relative, String name) {
+        if (!name.contains(".eng")) {
+            generateReadingForFile(relative, name, this.fullDictionary);
+        }
     }
 
     private void generateReadingForFile(String relative, String name, Dictionary fullDict) {

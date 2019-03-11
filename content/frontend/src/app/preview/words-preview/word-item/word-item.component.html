@@ -1,7 +1,17 @@
 <table>
   <tr *ngFor="let item of words">
-    <td><a href="/search/{{ item.kanji }}" target="_blank">{{ item.kanji }}</a> </td>
-    <td><a href="/search/{{ item.writing }}" target="_blank">{{ item.writing }}</a> </td>
+    <td class="table-cell">
+      <a href="/search/{{ item.kanji }}"
+         target="_blank">
+        {{ item.kanji }}
+      </a>
+    </td>
+    <td class="table-cell">
+      <a href="/search/{{ item.writing }}"
+         target="_blank">
+        {{ item.writing }}
+      </a>
+    </td>
     <td>{{ item.english }} </td>
   </tr>
 </table>
