@@ -1,6 +1,7 @@
 package org.mpasko.web.server;
 
 import org.mpasko.dictionary.Dictionary;
+import org.mpasko.editor.Asset;
 import org.mpasko.parseTexts.GenerateReading;
 import org.mpasko.web.textpreview.FileIdMap;
 
@@ -16,7 +17,7 @@ public class StringDTO {
     }
 
     private static StringDTO generate(String song, String filename, Dictionary full_dict) {
-        String text = new GenerateReading(full_dict).generateChunksForFile(song, filename, full_dict);
+        String text = new GenerateReading(full_dict).generateChunked(song, Asset.load(filename), full_dict);
         return new StringDTO(text);
     }
 }

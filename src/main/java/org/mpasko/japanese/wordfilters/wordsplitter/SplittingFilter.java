@@ -10,6 +10,7 @@ import org.mpasko.commons.DictEntry;
 import org.mpasko.parseTexts.splitters.DictionarySplitter;
 import org.mpasko.dictionary.Dictionary;
 import org.mpasko.japanese.wordfilters.IFilter;
+import org.mpasko.parseTexts.splitters.ISplitter;
 
 /**
  *
@@ -17,10 +18,14 @@ import org.mpasko.japanese.wordfilters.IFilter;
  */
 public class SplittingFilter implements IFilter {
 
-    private final DictionarySplitter splitter;
+    private final ISplitter splitter;
 
-    public SplittingFilter(Dictionary fullDictionary, String prefixes, String suffixes) {
+    private SplittingFilter(Dictionary fullDictionary, String prefixes, String suffixes) {
         this.splitter = new DictionarySplitter(fullDictionary, prefixes, suffixes);
+    }
+
+    public static SplittingFilter StandardSplittingFilter(Dictionary fullDictionary, String prefixes, String suffixes) {
+        return new SplittingFilter(fullDictionary, prefixes, suffixes);
     }
 
     @Override

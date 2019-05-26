@@ -20,7 +20,7 @@ public class Downloader {
 	public void download(String URL){
 		try {
 			BufferedInputStream bus = new BufferedInputStream(new URL(URL).openStream());
-			content = new Filesystem().streamToString(bus);
+			content = new Filesystem().streamToString(bus, "UTF-8");
 		} catch (IOException ex) {
 			Logger.getLogger(Downloader.class.getName()).log(Level.SEVERE, null, ex);
 		}

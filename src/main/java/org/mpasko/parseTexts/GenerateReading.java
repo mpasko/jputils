@@ -34,12 +34,8 @@ public class GenerateReading {
         String textFullPath = String.format("%s/%s/%s", DefaultConfig.textSources, relative, name);
         String resultPath = String.format("%s/%s/%s", DefaultConfig.readingOutut, relative, name);
         //Dictionary dictionary = new DictionaryFileLoader().loadTripleDict(dictSourceFullPath);
-        String content = generateChunksForFile(name, textFullPath, fullDict);
+        String content = generateChunked(name, Asset.load(textFullPath), fullDict);
         new Filesystem().saveFile(resultPath, content);
-    }
-
-    public String generateChunksForFile(String song, String filename, Dictionary full_dict) {
-        return generateChunked(song, Asset.load(filename), full_dict);
     }
 
     public String generateChunked(String title, Asset source, Dictionary global_dict) {

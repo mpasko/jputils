@@ -52,9 +52,12 @@ public class Dictionary {
     }
 
     public void put(DictEntry item) {
-        if (findStrict(item.kanji, item.writing) == null) {
+        DictEntry existingAlready = findStrict(item.kanji, item.writing);
+        if (existingAlready == null) {
             getDict().add(item);
             updateIndex(item);
+        } else if (!existingAlready.english.contains(item.english)) {
+            existingAlready.english = existingAlready.english+","+item.english;
         }
     }
 
