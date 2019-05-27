@@ -17,6 +17,7 @@ import org.mpasko.dictionary.formatters.IFeatureChooser;
 import org.mpasko.dictionary.formatters.KanjiChooser;
 import org.mpasko.dictionary.formatters.WritingChooser;
 import org.mpasko.util.Filesystem;
+import org.mpasko.util.ImmutableList;
 import org.mpasko.util.LangUtils;
 import org.mpasko.util.StringUtils;
 import org.mpasko.util.collectors.DictEntryCollector;
@@ -25,9 +26,8 @@ import org.mpasko.util.collectors.DictEntryCollector;
  *
  * @author marcin
  */
-public class Dictionary {
+public class Dictionary extends AbstractDictionary {
 
-    private List<DictEntry> dict = new LinkedList<>();
     private MultipleIndexer<DictEntry> strictindex;
     private MultipleIndexer<DictEntry> kanjiindex;
     private MultipleIndexer<DictEntry> stripindex;
@@ -36,36 +36,31 @@ public class Dictionary {
     private static Comparator<? super DictEntry> THE_SHORTEST = (d1, d2) -> d1.writing.length() - d2.writing.length();
 
     public Dictionary(List<DictEntry> initializeWith) {
+        this();
         this.putAll(new LinkedList<>(initializeWith));
     }
 
     public Dictionary() {
-
+        dict = new LinkedList<>();
     }
 
-    public void put(String kanji, String writing, String english) {
-        put(new DictEntry(kanji, writing, english));
-    }
-
-    public void put(String kanji, String english) {
-        put(new DictEntry(kanji, english));
-    }
-
+    @Override
     public void put(DictEntry item) {
         DictEntry existingAlready = findStrict(item.kanji, item.writing);
         if (existingAlready == null) {
-            getDict().add(item);
+            dict.add(item);
             updateIndex(item);
         } else if (!existingAlready.english.contains(item.english)) {
             existingAlready.english = existingAlready.english+","+item.english;
         }
     }
 
-    @SuppressWarnings("unchecked")
-    public List<DictEntry> items() {
-        return new LinkedList<>(getDict());
+    @Override
+    public void putAll(List<DictEntry> found) {
+        found.stream().forEach(this::put);
     }
 
+    @Override
     public DictEntry find(String key, String value) {
         DictEntry hit = findStrict(key, value);
         if (hit == null) {
@@ -125,7 +120,7 @@ public class Dictionary {
         strictindex = new MultipleIndexer<>();
         kanjiindex = new MultipleIndexer<>();
         stripindex = new MultipleIndexer<>();
-        getDict().forEach((item) -> {
+        dict.forEach((item) -> {
             if (Classifier.classify(item.kanji).containsJapanese()) {
                 //we dont like Crisps anumore :(
                 strictindex.put(item.kanji + item.writing, item);
@@ -136,10 +131,6 @@ public class Dictionary {
         readindex.createIndex();
     }
 
-    public void addAll(Dictionary dict) {
-        this.getDict().addAll(dict.items());
-    }
-
     private void updateIndex(DictEntry item) {
         strictindex.put(item.kanji + item.writing, item);
         kanjiindex.put(item.kanji, item);
@@ -147,36 +138,13 @@ public class Dictionary {
         readindex.updateIndex(item);
     }
 
+    @Override
     public DictEntry findStrict(String key, String value) {
         if (strictindex == null) {
             createIndex();
         }
         DictEntry hit = strictindex.getBest(key + value, THE_SHORTEST);
         return hit;
-    }
-
-    public int size() {
-        return this.getDict().size();
-    }
-
-    public void write(String filename) {
-        new Filesystem().saveFile(filename, toString());
-    }
-
-    @Override
-    public String toString() {
-        return DictionaryFormatter.buildStandardFormatter().format(this);
-    }
-
-    /**
-     * @return the dict
-     */
-    public List<DictEntry> getDict() {
-        return dict;
-    }
-
-    public void putAll(List<DictEntry> found) {
-        found.stream().forEach(this::put);
     }
 
     private UniversalIndex createIndexIfNotExist(IFeatureChooser feature) {

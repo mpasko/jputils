@@ -19,7 +19,7 @@ public class DictionaryUniversalLoader {
         } else {
             throw new RuntimeException("Invalid path: "+path);
         }
-        System.out.println(dict.items().size());
+        System.out.println(dict.size());
         return dict;
     }
 }

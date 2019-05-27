@@ -2,6 +2,7 @@ package org.mpasko.parseTexts;
 
 import org.mpasko.commons.DictEntry;
 import org.mpasko.dictionary.Dictionary;
+import org.mpasko.dictionary.IDictionary;
 import org.mpasko.japanese.wordfilters.*;
 import org.mpasko.util.SimpleUtils;
 
@@ -21,7 +22,7 @@ public class ExtractorFilter {
         knownWordFilter = KnownWordsFilter.build();
     }
 
-    public Dictionary filterItems(List<String> items, Dictionary fulldict, Dictionary whiteReading, Dictionary whiteListening) {
+    public IDictionary filterItems(List<String> items, Dictionary fulldict, Dictionary whiteReading, Dictionary whiteListening) {
         Dictionary input = findAndFilterItemsFromDictionary(items, fulldict);
         input = notIn(whiteListening).filter(input);
         input = notIn(whiteReading).filter(input);
@@ -56,6 +57,6 @@ public class ExtractorFilter {
     }
 
     private GenericFilter in(Dictionary dict) {
-        return new ItemExistsInDictionary(dict.getDict());
+        return new ItemExistsInDictionary(dict.items());
     }
 }

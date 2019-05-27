@@ -1,7 +1,7 @@
 package org.mpasko.repository;
 
-import org.mpasko.dictionary.Dictionary;
+import org.mpasko.dictionary.IDictionary;
 
 public interface IExamData {
-    Dictionary getExamData(String userId, String activity, String phase);
+    IDictionary getExamData(String userId, String activity, String phase);
 }

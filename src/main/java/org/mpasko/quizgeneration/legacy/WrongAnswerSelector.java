@@ -20,7 +20,7 @@ public class WrongAnswerSelector {
 
     void addAnyRandom(DictEntry question, ArrayList<DictEntry> answers, Dictionary dictionary) {
         LinkedList<DictEntry> candidates = new LinkedList<DictEntry>();
-        for (DictEntry item : dictionary.getDict()) {
+        for (DictEntry item : dictionary.items()) {
             if (!answers.contains(item) && !item.isColliding(question)) {
                 candidates.add(item);
             }
@@ -32,7 +32,7 @@ public class WrongAnswerSelector {
                 candidates.remove(next);
             }
         } else {
-            ArrayList<DictEntry> tmp = new ArrayList<DictEntry>(dictionary.getDict());
+            ArrayList<DictEntry> tmp = new ArrayList<DictEntry>(dictionary.items());
             tmp.removeAll(answers);
             while (tmp.size() + answers.size() > 6) {
                 tmp.remove(Randomation.choose(tmp));
@@ -42,7 +42,7 @@ public class WrongAnswerSelector {
     }
 
     void addSimillar(DictEntry entry, ArrayList<DictEntry> answers, Dictionary dictionary) {
-        for (DictEntry item : dictionary.getDict()) {
+        for (DictEntry item : dictionary.items()) {
             if (item.isSimillar(entry) && !item.isColliding(entry)) {
                 answers.add(item);
             }

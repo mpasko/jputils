@@ -6,7 +6,7 @@
 package org.mpasko.dictionary.formatters;
 
 import org.mpasko.commons.DictEntry;
-import org.mpasko.dictionary.Dictionary;
+import org.mpasko.dictionary.IDictionary;
 import org.mpasko.dictionary.formatters.complex.ListeningFormatter;
 import org.mpasko.dictionary.formatters.complex.ReadingFormatter;
 import org.mpasko.dictionary.formatters.complex.StandardFormatter;
@@ -23,7 +23,7 @@ public class DictionaryFormatter {
         this.chooser = chooser;
     }
 
-    public String format(Dictionary dict) {
+    public String format(IDictionary dict) {
         StringBuilder all = new StringBuilder();
         for (DictEntry item : dict.items()) {
             all.append(chooser.choose(item)).append("\n");

@@ -44,7 +44,7 @@ public class DictionaryReconstructor {
                 new RomajiWritingChooser());
     }
 
-    public Dictionary reconstructFromFile(String filename) {
+    public IDictionary reconstructFromFile(String filename) {
         return reconstruct(new Filesystem().loadFile(filename));
     }
 

@@ -8,6 +8,7 @@ package org.mpasko.japanese.runners;
 import org.mpasko.commons.DictEntry;
 import org.mpasko.dictionary.Dictionary;
 import org.mpasko.commons.Furiganiser;
+import org.mpasko.dictionary.IDictionary;
 import org.mpasko.loadres.JmDictLoader;
 import org.mpasko.util.Filesystem;
 import org.mpasko.util.SimpleUtils;
@@ -21,7 +22,7 @@ public class DictFromJishoSearch {
     public static void main(String args[]) {
         System.getProperties().setProperty("jdk.xml.entityExpansionLimit", "0");
         Dictionary full = new JmDictLoader().load(new JmDictLoader.DefaultFilter());
-        Dictionary produced = new Dictionary();
+        IDictionary produced = new Dictionary();
         String trans = new Filesystem().loadFile("inputs/jisho_searches.txt");
         final Furiganiser furiganiser = new Furiganiser();
         StringBuilder log = new StringBuilder();

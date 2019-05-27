@@ -1,7 +1,7 @@
 package org.mpasko.repository;
 
-import org.mpasko.dictionary.Dictionary;
+import org.mpasko.dictionary.IDictionary;
 
 public interface IParsedDictionary {
-    Dictionary getParsedDictionary(String userId, String resourceId);
+    IDictionary getParsedDictionary(String userId, String resourceId);
 }

@@ -8,6 +8,8 @@ package org.mpasko.parseTexts.legacy;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import org.mpasko.dictionary.IDictionary;
 import org.mpasko.management.console.DefaultConfig;
 import org.mpasko.dictionary.Dictionary;
 import org.mpasko.editor.Asset;
@@ -57,7 +59,7 @@ public class SongLayout {
 
     private String findAndFilterWords(String sourceText, Dictionary full_dict) {
         List<String> words = findWords(sourceText, full_dict);
-        Dictionary filtered = new ExtractorFilter().findAndFilterItemsFromDictionary(words, full_dict);
+        IDictionary filtered = new ExtractorFilter().findAndFilterItemsFromDictionary(words, full_dict);
         return filtered.toString();
     }
 

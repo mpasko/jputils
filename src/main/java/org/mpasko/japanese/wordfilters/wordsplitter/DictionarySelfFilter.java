@@ -11,7 +11,7 @@ public class DictionarySelfFilter implements IFilter {
 
     @Override
     public Dictionary filter(Dictionary dict) {
-        ArrayList<DictEntry> raw = new ArrayList<>(dict.getDict());
+        ArrayList<DictEntry> raw = new ArrayList<>(dict.items());
         raw.sort(Comparator.comparingInt(o -> o.kanji.length()));
         Dictionary result = new Dictionary();
         for (DictEntry entry: raw) {

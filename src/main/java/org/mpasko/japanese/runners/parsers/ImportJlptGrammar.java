@@ -2,6 +2,7 @@ package org.mpasko.japanese.runners.parsers;
 
 import org.mpasko.commons.Furiganiser;
 import org.mpasko.dictionary.Dictionary;
+import org.mpasko.dictionary.IDictionary;
 import org.mpasko.util.Filesystem;
 import org.mpasko.util.StringUtils;
 
@@ -12,7 +13,7 @@ public class ImportJlptGrammar {
 
     public void start() {
         String raw = new Filesystem().loadFile("inputs/jlpt_grammar_raw.txt");
-        Dictionary dict = new Dictionary();
+        IDictionary dict = new Dictionary();
         for (String line : raw.split("\n")) {
             String kanji = StringUtils.clear(line.split(" ")[0]);
             String romaji = StringUtils.clear(extractExpressionInParents(line)).replaceAll(" ", "");

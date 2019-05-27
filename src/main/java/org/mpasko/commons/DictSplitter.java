@@ -5,6 +5,8 @@
 package org.mpasko.commons;
 
 import org.mpasko.dictionary.Dictionary;
+import org.mpasko.dictionary.IDictionary;
+
 import java.util.LinkedList;
 import java.util.List;
 

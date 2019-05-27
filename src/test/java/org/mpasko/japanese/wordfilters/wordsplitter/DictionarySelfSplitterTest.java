@@ -9,13 +9,8 @@ import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.mpasko.commons.DictEntry;
 import org.mpasko.dictionary.Dictionary;
-import org.mpasko.parseTexts.splitters.DictionarySplitter;
-import testutils.DictionaryComparer;
-
-import java.util.List;
-import java.util.stream.Collectors;
+import org.mpasko.dictionary.IDictionary;
 
 import static org.junit.Assert.assertEquals;
 
@@ -44,7 +39,7 @@ public class DictionarySelfSplitterTest {
         inputDic.put("臨機応変", "adapting oneself to environment");
         inputDic.put("応変", "ansewring, response");
         DictionarySelfFilter filter = new DictionarySelfFilter();
-        Dictionary resultDic = filter.filter(inputDic);
+        IDictionary resultDic = filter.filter(inputDic);
         Assert.assertEquals("Expected lond word to be filtered", 2, resultDic.size());
     }
 
@@ -58,7 +53,7 @@ public class DictionarySelfSplitterTest {
         inputDic.put("abcde", "");
         inputDic.put("cde", "");
         DictionarySelfFilter filter = new DictionarySelfFilter();
-        Dictionary resultDic = filter.filter(inputDic);
+        IDictionary resultDic = filter.filter(inputDic);
         Assert.assertEquals("Expected lond word to be filtered", 2, resultDic.size());
     }
 }
