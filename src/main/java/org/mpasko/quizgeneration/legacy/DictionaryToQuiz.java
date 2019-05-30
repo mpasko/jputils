@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
 import org.mpasko.commons.DictEntry;
 import org.mpasko.commons.DictSplitter;
 import org.mpasko.dictionary.Dictionary;
+import org.mpasko.dictionary.IDictionary;
 import org.mpasko.quizgeneration.Question;
 import org.mpasko.quizgeneration.Quiz;
 import org.mpasko.quizgeneration.QuizFormatter;

@@ -38,7 +38,8 @@ public class FileIdMap {
     public String search(String key) {
         String found = map.get(normalize(key));
         if (found == null) {
-            throw new RuntimeException("");
+            String message = String.format("Cannot find [%s] in [%s]", key, map.keySet().toString());
+            throw new RuntimeException(message);
         }
         return found;
     }

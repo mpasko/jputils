@@ -95,7 +95,7 @@ public class GenerateExams {
         processTripleDict(filename, new CompoundFilter(grade).and(known));
     }
 
-    public static void processTripleDict(String filename, GenericFilter filter) {
+    public static void processTripleDict(String filename, IFilter filter) {
         System.out.println(filename);
         Dictionary dict = new DictionaryFileLoader().loadTripleDict(filename);
         if (filter != null) {

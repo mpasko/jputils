@@ -2,6 +2,7 @@ package org.mpasko.parseTexts;
 
 import org.mpasko.commons.DictEntry;
 import org.mpasko.dictionary.Dictionary;
+import org.mpasko.dictionary.IDictionary;
 import org.mpasko.management.console.DefaultConfig;
 import org.mpasko.util.Filesystem;
 import org.mpasko.util.Traverser;
@@ -30,7 +31,7 @@ public class ExtractWordsFromTexts {
 
     private String findAndFilterWords(String sourceText, Dictionary full_dict) {
         List<DictEntry> words = findWords(sourceText, full_dict);
-        Dictionary filtered = new Dictionary(words);
+        IDictionary filtered = new Dictionary(words);
         return filtered.toString();
     }
 

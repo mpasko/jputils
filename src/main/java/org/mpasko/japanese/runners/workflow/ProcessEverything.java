@@ -80,7 +80,7 @@ public class ProcessEverything {
 
     private Dictionary applyRequiredFilters(Dictionary dict) {
         Dictionary new_dict = dict;
-        new_dict = new SplittingFilter(data.globalDictionary(), "", "")
+        new_dict = SplittingFilter.StandardSplittingFilter(data.globalDictionary(), "", "")
                 .filter(new_dict);
         DuplicateFilter duplicateFilter = DuplicateFilter.outputDictionaryDuplicateFilter();
         new_dict = duplicateFilter.filter(new_dict);

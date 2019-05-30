@@ -8,8 +8,8 @@ import java.util.stream.Collectors;
 
 public class Filesystem implements IFilesystem {
 
-    public String streamToString(InputStream in) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(in, "UTF-8"));
+    public String streamToString(InputStream in, String charset) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(in, charset));
         StringBuilder out = new StringBuilder();
         String line;
         while ((line = br.readLine()) != null) {
@@ -82,10 +82,14 @@ public class Filesystem implements IFilesystem {
 
     @Override
     public String loadFile(String filename) {
+        return this.loadFile(filename, "UTF-8");
+    }
+
+    public String loadFile(String filename, String charset) {
         FileInputStream stream = null;
         try {
             stream = new FileInputStream(filename);
-            return streamToString(stream);
+            return streamToString(stream, charset);
         } catch (IOException ex) {
             throw new RuntimeException(ex);
         } finally {

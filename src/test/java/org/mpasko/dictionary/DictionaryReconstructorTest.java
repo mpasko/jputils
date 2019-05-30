@@ -58,7 +58,7 @@ public class DictionaryReconstructorTest {
                 fullDictionary,
                 new WritingChooser(),
                 new MeaningChooser());
-        Dictionary result = instance.reconstruct(source);
+        IDictionary result = instance.reconstruct(source);
         assertEquals(0, result.size());
     }
 

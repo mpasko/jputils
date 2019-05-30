@@ -43,7 +43,7 @@ public class StringUtils {
     }
 
     public static String clear(String string) {
-        String charsRemoved = replaceAllInto(string, "", "-", "\n", "\r", "'");
+        String charsRemoved = replaceAllInto(string, "", "-", "\n", "\r", "'", "%");
         String comasUnified = replaceAllInto(charsRemoved, ",", ";", ", ");
         return comasUnified.trim().toLowerCase();
     }

@@ -13,5 +13,5 @@ import org.mpasko.dictionary.Dictionary;
  */
 public interface IFilter {
 
-    public Dictionary filter(Dictionary dict);
+    Dictionary filter(Dictionary dict);
 }

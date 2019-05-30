@@ -9,6 +9,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.mpasko.dictionary.Dictionary;
+import org.mpasko.dictionary.IDictionary;
 
 import static org.junit.Assert.assertEquals;
 
@@ -33,7 +34,7 @@ public class NotEnglishOriginFilterTest {
     public void testKatakanaFilter() {
         System.out.println("NotEnglishFilter");
         GenericFilter filter = new NotEnglishOriginFilter();
-        final Dictionary filtered = filter.filter(mixedKatakanaAndKanji());
+        final IDictionary filtered = filter.filter(mixedKatakanaAndKanji());
         assertEquals(6, filtered.size());
     }
 

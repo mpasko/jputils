@@ -26,7 +26,7 @@ public class GenerateOnyomiWhitelist {
         Dictionary whitelist = loadWhitelist();
         List<Map.Entry<String, String>> decomposed = ReadingDecomposer
                 .initializeWithDefaultDict()
-                .decompose(whitelist.getDict());
+                .decompose(whitelist.items());
         new Filesystem().saveFile(DefaultConfig.onyomiWhitelist, formatDecomposed(decomposed));
     }
 

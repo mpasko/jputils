@@ -74,7 +74,7 @@ public class ReconstructWritingFromManualDictTest {
         List<Entry<String, String>> manual = DictionaryFileLoader.parseAsSimpleMap(builder.toString());
         Dictionary sourceDict = DictionaryRepository.threeHomonymes();
         ReconstructWritingFromManualDict testable = new ReconstructWritingFromManualDict();
-        List<DictEntry> result = testable.reconstructFrom(manual, sourceDict).getDict();
+        List<DictEntry> result = testable.reconstructFrom(manual, sourceDict).items();
         Assert.assertEquals(4, result.size());
     }
 
@@ -86,7 +86,7 @@ public class ReconstructWritingFromManualDictTest {
         List<Entry<String, String>> manual = DictionaryFileLoader.parseAsSimpleMap(builder.toString());
         Dictionary sourceDict = DictionaryRepository.threeHomonymes();
         ReconstructWritingFromManualDict testable = new ReconstructWritingFromManualDict();
-        List<DictEntry> result = testable.reconstructFrom(manual, sourceDict).getDict();
+        List<DictEntry> result = testable.reconstructFrom(manual, sourceDict).items();
         Assert.assertEquals(4, result.size());
     }
 

@@ -15,7 +15,7 @@ public class NumericUtil {
         val = val.replaceAll("\"", "");
         try {
             return Integer.parseInt(val);
-        } catch (NumberFormatException _) {
+        } catch (NumberFormatException exception) {
             return defaultValue;
         }
     }

@@ -18,6 +18,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.mpasko.commons.Classifier;
 import org.mpasko.dictionary.Dictionary;
+import org.mpasko.dictionary.IDictionary;
 import org.mpasko.loadres.JmDictLoader;
 import org.mpasko.parseTexts.ExtractorFilter;
 import org.mpasko.util.*;
@@ -45,7 +46,7 @@ public class ParseJishoOutputs {
 
     public static void processSongsFrom(String listfile, String inputPath, String outputName, Dictionary dict) {
         List<String> songs = Arrays.asList(new Filesystem().loadFile(listfile).split("\n"));
-        Dictionary merged = new Dictionary();
+        IDictionary merged = new Dictionary();
         StringBuilder plaintext = new StringBuilder();
         plaintext.append(songs.toString()).append("\n");
         for (String songName : songs) {
@@ -56,7 +57,7 @@ public class ParseJishoOutputs {
         merged.write("dictionaries/" + outputName + ".txt");
     }
 
-    private static void processSingleSong(String filename, String songName, Dictionary dict, Dictionary merged, StringBuilder plaintext) {
+    private static void processSingleSong(String filename, String songName, Dictionary dict, IDictionary merged, StringBuilder plaintext) {
         try {
             final String rawText = loadRawText(filename);
             final String english = new Filesystem().loadFile(filename.replace(".htm", ".txt"));
@@ -72,7 +73,7 @@ public class ParseJishoOutputs {
         }
     }
 
-    public static String formatSong(String song, final String rawText, Dictionary found, String english) {
+    public static String formatSong(String song, final String rawText, IDictionary found, String english) {
         StringBuilder plaintext = new StringBuilder();
         plaintext.append(song.replace(".htm", "")).append("\n");
         plaintext.append(rawText).append("\n");

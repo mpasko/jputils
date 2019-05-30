@@ -10,6 +10,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.mpasko.dictionary.Dictionary;
+import org.mpasko.dictionary.IDictionary;
 
 /**
  *
@@ -32,7 +33,7 @@ public class OnlyKanjiFilterTest {
     public void testKatakanaFilter() {
         System.out.println("katakanaFilter");
         GenericFilter filter = OnlyKanjiFilter.katakanaFilter();
-        final Dictionary filtered = filter.filter(mixedKatakanaAndKanji());
+        final IDictionary filtered = filter.filter(mixedKatakanaAndKanji());
         assertEquals(3, filtered.size());
     }
 

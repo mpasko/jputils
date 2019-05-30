@@ -13,7 +13,7 @@ import org.mpasko.dictionary.Dictionary;
  */
 public abstract class GenericFilter implements IFilter {
 
-    public static GenericFilter buildStandardFilter() {
+    public static IFilter buildStandardFilter() {
         final GradeFilter grade = GradeFilter.build(3, 8, true);
         final KnownWordsFilter known = KnownWordsFilter.build();
         return new CompoundFilter(grade).and(known);
