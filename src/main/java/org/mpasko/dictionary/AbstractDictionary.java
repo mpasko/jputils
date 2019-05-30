@@ -9,6 +9,7 @@ import java.util.List;
 
 public class AbstractDictionary implements IDictionary {
     protected List<DictEntry> dict;
+    protected boolean pristine = false;
 
     @Override
     public void put(String kanji, String writing, String english) {
@@ -23,11 +24,13 @@ public class AbstractDictionary implements IDictionary {
     @Override
     public void put(DictEntry item) {
         dict.add(item);
+        this.pristine = false;
     }
 
     @Override
     public void addAll(Dictionary dict) {
         this.dict.addAll(dict.items());
+        this.pristine = false;
     }
 
     @Override
@@ -48,6 +51,7 @@ public class AbstractDictionary implements IDictionary {
     @Override
     public void putAll(List<DictEntry> found) {
         dict.addAll(found);
+        this.pristine = false;
     }
 
     @Override

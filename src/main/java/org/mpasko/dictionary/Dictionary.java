@@ -44,6 +44,10 @@ public class Dictionary extends AbstractDictionary {
         dict = new LinkedList<>();
     }
 
+    public Dictionary(IDictionary iDictionary) {
+        dict = iDictionary.items();
+    }
+
     @Override
     public void put(DictEntry item) {
         DictEntry existingAlready = findStrict(item.kanji, item.writing);

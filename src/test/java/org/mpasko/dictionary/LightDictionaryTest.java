@@ -61,19 +61,23 @@ public class LightDictionaryTest {
 
     @Test
     public void given_multiple_entries_when_exact_matches_then_get_results() {
-        LightDictionary dict = new LightDictionary();
-        dict.put("確固", "かっこ", "firm");
-        dict.put("感に敏", "かんにびん", "sharp senses");
-        dict.put("機に発し", "きにはっし", "by the chance");
-        dict.put("質実剛健", "しつじつ", "unaffected and sincere");
-        dict.put("克己", "こっき", "independent");
-        dict.put("涵養", "かんよう", "cultivate");
+        LightDictionary dict = buildShortLightDictionary();
         DictEntry result = dict.find("質実剛健", "しつじつ");
         Assert.assertEquals("unaffected and sincere", result.english);
+        result = dict.find("確固", "かっこ");
+        Assert.assertEquals("firm", result.english);
+        result = dict.find("克己", "こっき");
+        Assert.assertEquals("independent", result.english);
     }
 
     @Test
     public void given_multiple_entries_when_does_not_match_then_should_be_null() {
+        LightDictionary dict = buildShortLightDictionary();
+        DictEntry result = dict.find("洞窟", "どうくつ");
+        Assert.assertEquals(null, result);
+    }
+
+    private static LightDictionary buildShortLightDictionary() {
         LightDictionary dict = new LightDictionary();
         dict.put("確固", "かっこ", "firm");
         dict.put("感に敏", "かんにびん", "sharp senses");
@@ -81,7 +85,6 @@ public class LightDictionaryTest {
         dict.put("質実剛健", "しつじつ", "unaffected and sincere");
         dict.put("克己", "こっき", "independent");
         dict.put("涵養", "かんよう", "cultivate");
-        DictEntry result = dict.find("洞窟", "どうくつ");
-        Assert.assertEquals(null, result);
+        return dict;
     }
 }

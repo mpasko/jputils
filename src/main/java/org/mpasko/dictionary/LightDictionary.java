@@ -13,18 +13,26 @@ public class LightDictionary extends AbstractDictionary {
 
     @Override
     public DictEntry find(String kanji, String reading) {
-        this.dict.sort(Comparator.comparing(item -> item.kanji));
+        sortWhenNeeded();
         return findBisect(kanji, 0, dict.size()-1);
+    }
+
+    private void sortWhenNeeded() {
+        if (!pristine) {
+            this.dict.sort(Comparator.comparing(item -> item.kanji));
+        }
+        pristine = true;
     }
 
     @Override
     public DictEntry findStrict(String kanji, String reading) {
-        return find(kanji, reading);
+        DictEntry standard = find(kanji, reading);
+        return standard.writing.equalsIgnoreCase(reading) ? standard : null;
     }
 
     private DictEntry findBisect(String keyword, int start, int stop) {
         DictEntry startValue = this.dict.get(start);
-        DictEntry stopValue = this.dict.get(start);
+        DictEntry stopValue = this.dict.get(stop);
         if (start >= stop - 1) {
             if (startValue.kanji.equalsIgnoreCase(keyword)) {
                 return startValue;
@@ -34,7 +42,7 @@ public class LightDictionary extends AbstractDictionary {
                 return null;
             }
         }
-        int medium = start + stop / 2;
+        int medium = (start + stop) / 2;
         DictEntry mediumValue = this.dict.get(medium);
         if (keyword.compareTo(mediumValue.kanji)<0) {
             return findBisect(keyword, start, medium - 1);
