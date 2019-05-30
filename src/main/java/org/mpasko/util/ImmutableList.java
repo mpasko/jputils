@@ -1,7 +1,5 @@
 package org.mpasko.util;
 
-import com.sun.xml.internal.fastinfoset.stax.events.ReadIterator;
-
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
