@@ -3,6 +3,7 @@ package org.mpasko.loadres;
 import org.mpasko.dictionary.Dictionary;
 import org.mpasko.dictionary.DictionaryFileLoader;
 import org.mpasko.dictionary.IDictionary;
+import org.mpasko.dictionary.operations.Merge;
 import org.mpasko.japanese.wordfilters.CompoundFilter;
 import org.mpasko.japanese.wordfilters.OnlyKanjiFilter;
 import org.mpasko.japanese.wordfilters.wordsplitter.DictionarySelfFilter;
@@ -11,18 +12,18 @@ public class AllDictionaries {
     public static Dictionary load() {
         Dictionary dictionary = new Dictionary();
         Dictionary jmdict = filterDictionary(JmDictLoader.loadDictionary());
-        dictionary.putAll(jmdict.items());
+        new Merge().mergeDictionaries(dictionary, jmdict);
         addEntriesFromFile(dictionary, "dictionaries/jlpt_grammar.txt");
         addEntriesFromFile(dictionary, "dictionaries/character_names.txt");
         Dictionary emdict = filterDictionary(EmDictLoader.loadDictionary());
-        dictionary.putAll(emdict.items());
+        new Merge().mergeDictionaries(dictionary, emdict);
         return dictionary;
     }
 
     private static void addEntriesFromFile(IDictionary jmdict, String filename) {
         Dictionary jlptGrammar = new DictionaryFileLoader()
                 .loadTripleDict(filename);
-        jmdict.putAll(jlptGrammar.items());
+        new Merge().mergeDictionaries(jmdict, jlptGrammar);
     }
 
     private static Dictionary filterDictionary(Dictionary dict) {

@@ -9,6 +9,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import org.mpasko.commons.DictEntry;
+import org.mpasko.dictionary.operations.Merge;
+import org.mpasko.dictionary.operations.MergeStrict;
 import org.mpasko.management.console.DefaultConfig;
 import org.mpasko.dictionary.Dictionary;
 import org.mpasko.dictionary.DictionaryFileLoader;
@@ -45,6 +47,7 @@ public class ReconstructWritingFromManualDict {
 
     public Dictionary reconstructFrom(List<Map.Entry<String, String>> manualDict, Dictionary sourceDict) {
         final Dictionary dictionary = new Dictionary();
+        final MergeStrict merger = new MergeStrict();
         for (Map.Entry<String, String> entry : manualDict) {
             LinkedList<DictEntry> found;
             if (entry.getValue().isEmpty()) {
@@ -52,7 +55,7 @@ public class ReconstructWritingFromManualDict {
             } else {
                 found = sourceDict.findPhoneticWithMeaning(entry.getKey(), entry.getValue());
             }
-            dictionary.putAll(found);
+            merger.mergeDictionaries(dictionary, found);
         }
         return dictionary;
     }

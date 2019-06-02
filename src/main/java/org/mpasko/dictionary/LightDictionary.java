@@ -13,8 +13,7 @@ public class LightDictionary extends AbstractDictionary {
 
     @Override
     public DictEntry find(String kanji, String reading) {
-        sortWhenNeeded();
-        return findBisect(kanji, 0, dict.size()-1);
+        return findDefault(kanji);
     }
 
     private void sortWhenNeeded() {
@@ -28,6 +27,12 @@ public class LightDictionary extends AbstractDictionary {
     public DictEntry findStrict(String kanji, String reading) {
         DictEntry standard = find(kanji, reading);
         return standard.writing.equalsIgnoreCase(reading) ? standard : null;
+    }
+
+    @Override
+    public DictEntry findDefault(String kanji) {
+        sortWhenNeeded();
+        return findBisect(kanji, 0, dict.size()-1);
     }
 
     private DictEntry findBisect(String keyword, int start, int stop) {

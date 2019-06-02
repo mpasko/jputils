@@ -50,13 +50,8 @@ public class Dictionary extends AbstractDictionary {
 
     @Override
     public void put(DictEntry item) {
-        DictEntry existingAlready = findStrict(item.kanji, item.writing);
-        if (existingAlready == null) {
-            dict.add(item);
-            updateIndex(item);
-        } else if (!existingAlready.english.contains(item.english)) {
-            existingAlready.english = existingAlready.english+","+item.english;
-        }
+        dict.add(item);
+        updateIndex(item);
     }
 
     @Override
@@ -136,6 +131,9 @@ public class Dictionary extends AbstractDictionary {
     }
 
     private void updateIndex(DictEntry item) {
+        if (strictindex == null) {
+            createIndex();
+        }
         strictindex.put(item.kanji + item.writing, item);
         kanjiindex.put(item.kanji, item);
         stripindex.put(LangUtils.getOnlyPreInfix(item.kanji), item);
@@ -149,6 +147,14 @@ public class Dictionary extends AbstractDictionary {
         }
         DictEntry hit = strictindex.getBest(key + value, THE_SHORTEST);
         return hit;
+    }
+
+    @Override
+    public DictEntry findDefault(String kanji) {
+        if (strictindex == null) {
+            createIndex();
+        }
+        return kanjiindex.getBest(kanji, THE_SHORTEST);
     }
 
     private UniversalIndex createIndexIfNotExist(IFeatureChooser feature) {

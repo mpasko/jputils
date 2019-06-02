@@ -7,7 +7,7 @@ import org.mpasko.util.ImmutableList;
 
 import java.util.List;
 
-public class AbstractDictionary implements IDictionary {
+public abstract class AbstractDictionary implements IDictionary {
     protected List<DictEntry> dict;
     protected boolean pristine = false;
 
@@ -57,15 +57,5 @@ public class AbstractDictionary implements IDictionary {
     @Override
     public List<DictEntry> items() {
         return new ImmutableList<>(dict);
-    }
-
-    @Override
-    public DictEntry find(String kanji, String reading) {
-        return null;
-    }
-
-    @Override
-    public DictEntry findStrict(String kanji, String reading) {
-        return null;
     }
 }

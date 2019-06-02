@@ -26,4 +26,6 @@ public interface IDictionary {
     DictEntry find(String kanji, String reading);
 
     DictEntry findStrict(String kanji, String reading);
+
+    DictEntry findDefault(String kanji);
 }
