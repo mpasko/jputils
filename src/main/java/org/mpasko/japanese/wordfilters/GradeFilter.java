@@ -69,7 +69,7 @@ public class GradeFilter extends GenericFilter{
     public boolean itemMatches(DictEntry item) {
         boolean all = true;
         boolean atLeastOne = false;
-        for (char k : item.kanji.toCharArray()) {
+        for (char k : item.serializedKeywords().toCharArray()) {
             if (acceptedKanji.indexOf(k)>=0) {
                 atLeastOne = true;
             } else {

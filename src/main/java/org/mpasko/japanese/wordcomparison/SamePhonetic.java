@@ -16,7 +16,7 @@ public class SamePhonetic implements IWordComparer {
 
     @Override
     public boolean areSimillar(DictEntry entry1, DictEntry entry2) {
-        return StringUtils.equalsIgnoreCase(entry1.writing, entry2.writing);
+        return StringUtils.equalsIgnoreCase(entry1.serializedReadings(), entry2.serializedReadings());
     }
 
 }

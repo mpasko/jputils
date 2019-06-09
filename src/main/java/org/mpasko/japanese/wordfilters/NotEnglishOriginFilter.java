@@ -7,7 +7,7 @@ public class NotEnglishOriginFilter extends GenericFilter {
 
     @Override
     public boolean itemMatches(DictEntry entry) {
-        return !containsKatakana(entry) || isOnomatopeic(entry.kanji);
+        return !containsKatakana(entry) || isOnomatopeic(entry.serializedKeywords());
     }
 
     private boolean isOnomatopeic(String entry) {
@@ -18,6 +18,6 @@ public class NotEnglishOriginFilter extends GenericFilter {
     }
 
     private boolean containsKatakana(DictEntry entry) {
-        return Classifier.classify(entry.kanji).containsKatakana();
+        return Classifier.classify(entry.serializedKeywords()).containsKatakana();
     }
 }

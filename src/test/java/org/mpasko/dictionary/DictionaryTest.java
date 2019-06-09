@@ -49,7 +49,7 @@ public class DictionaryTest {
         Dictionary dict = new Dictionary();
         dict.put("洞窟", "どうくつ", "cave");
         DictEntry result = dict.find("洞窟", "どうくつ");
-        Assert.assertEquals("cave", result.english);
+        Assert.assertEquals("cave", result.serializedMeanings());
     }
 
     @Test
@@ -57,7 +57,7 @@ public class DictionaryTest {
         Dictionary dict = new Dictionary();
         dict.put("洞窟", "どうくつ", "cave");
         DictEntry result = dict.findStrict("洞窟", "どうくつ");
-        Assert.assertEquals("cave", result.english);
+        Assert.assertEquals("cave", result.serializedMeanings());
     }
 
     @Test
@@ -65,7 +65,7 @@ public class DictionaryTest {
         Dictionary dict = new Dictionary();
         dict.put("短病", "たんびょう", "headache");
         DictEntry result = dict.find("端秒", "たんびょう");
-        Assert.assertEquals("headache", result.english);
+        Assert.assertEquals("headache", result.serializedMeanings());
     }
 
     @Test
@@ -73,7 +73,7 @@ public class DictionaryTest {
         Dictionary dict = new Dictionary();
         dict.put("一人", "ひとり", "one person");
         DictEntry result = dict.find("一人", "いちじん");
-        Assert.assertEquals("one person", result.english);
+        Assert.assertEquals("one person", result.serializedMeanings());
     }
 
     @Test
@@ -90,7 +90,7 @@ public class DictionaryTest {
         dict.put("一人", "ひとり", "one person");
         dict.put("一人", "ひとつおまえ", "one person");
         DictEntry result = dict.find("一人", "うぜい");
-        Assert.assertEquals("ひとり", result.writing);
+        Assert.assertEquals("ひとり", result.serializedReadings());
     }
 
     @Test
@@ -105,7 +105,7 @@ public class DictionaryTest {
         Dictionary dict = DictionaryRepository.threeHomonymes();
         LinkedList<DictEntry> result = dict.findAllByFeature("とうさく-plagiarism", new ListeningFormatter());
         Assert.assertEquals(1, result.size());
-        Assert.assertEquals("盗作", result.get(0).kanji);
+        Assert.assertEquals("盗作", result.get(0).serializedKeywords());
     }
 
     @Test
@@ -116,7 +116,7 @@ public class DictionaryTest {
                 new RomajiWritingChooser(),
                 new MeaningChooser());
         Assert.assertEquals(1, result.size());
-        Assert.assertEquals("倒錯", result.get(0).kanji);
+        Assert.assertEquals("倒錯", result.get(0).serializedKeywords());
     }
 
     //@Test
@@ -132,6 +132,6 @@ public class DictionaryTest {
                 new MeaningChooser(),
                 new KanjiChooser());
         Assert.assertEquals(1, result.size());
-        Assert.assertEquals("付加語", result.get(0).kanji);
+        Assert.assertEquals("付加語", result.get(0).serializedKeywords());
     }
 }

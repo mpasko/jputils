@@ -16,8 +16,8 @@ public class SynonimeComparer implements IWordComparer {
 
     @Override
     public boolean areSimillar(DictEntry entry1, DictEntry entry2) {
-        String english1 = entry1.english;
-        String english2 = entry2.english;
+        String english1 = entry1.serializedMeanings();
+        String english2 = entry2.serializedMeanings();
         return areSimillar(english1, english2);
     }
 

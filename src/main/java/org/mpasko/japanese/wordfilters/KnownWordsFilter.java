@@ -92,7 +92,7 @@ public class KnownWordsFilter extends GenericFilter {
     private boolean IsContainedInExceptions(DictEntry item, Dictionary exceptions) {
         boolean allow = false;
         for (DictEntry except : exceptions.items()) {
-            if (item.kanji.equalsIgnoreCase(except.kanji)) {
+            if (item.serializedKeywords().equalsIgnoreCase(except.serializedKeywords())) {
                 allow = true;
             }
         }

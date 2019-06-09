@@ -17,7 +17,7 @@ import org.mpasko.dictionary.formatters.IFeatureChooser;
 public class UniversalIndex {
 
     static Comparator<? super DictEntry> THE_SHORTEST_WRITING
-            = (s1, s2) -> s1.writing.length() - s2.writing.length();
+            = (s1, s2) -> s1.serializedReadings().length() - s2.serializedReadings().length();
 
     private final IFeatureChooser feature;
     private MultipleIndexer<DictEntry> index;

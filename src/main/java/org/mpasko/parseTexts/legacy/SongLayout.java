@@ -53,7 +53,7 @@ public class SongLayout {
         return new WordsExtractor(dict)
                 .extractFromText(jap)
                 .stream()
-                .map(entry -> entry.kanji)
+                .map(entry -> entry.serializedKeywords())
                 .collect(Collectors.toList());
     }
 

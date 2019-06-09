@@ -24,7 +24,7 @@ public abstract class GenericFilter implements IFilter {
         for (DictEntry item : dict.items()) {
             if (itemMatches(item)) {
                 filtered.put(item);
-                System.out.println(String.format("Accepted item: %s", item.kanji));
+                System.out.println(String.format("Accepted item: %s", item.serializedKeywords()));
             }
         }
         return filtered;

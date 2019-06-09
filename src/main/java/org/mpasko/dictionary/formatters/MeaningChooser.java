@@ -15,7 +15,7 @@ public class MeaningChooser implements IFeatureChooser {
 
     @Override
     public String choose(DictEntry entry) {
-        return entry.english;
+        return entry.serializedMeanings();
     }
 
 }

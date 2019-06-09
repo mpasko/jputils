@@ -15,6 +15,6 @@ public class WritingChooser implements IFeatureChooser {
 
     @Override
     public String choose(DictEntry entry) {
-        return entry.writing;
+        return entry.serializedReadings();
     }
 }

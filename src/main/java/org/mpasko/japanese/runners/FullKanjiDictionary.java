@@ -15,7 +15,7 @@ import org.mpasko.commons.KanjiEntry;
 import org.mpasko.loadres.KanjiDictLoader;
 import org.mpasko.loadres.KanjiDictLoader.Filter;
 import org.mpasko.util.Filesystem;
-import org.mpasko.util.collectors.JoinList;
+import utils.collectors.JoinList;
 
 /**
  *

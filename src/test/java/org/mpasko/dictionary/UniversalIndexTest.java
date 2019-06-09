@@ -43,7 +43,7 @@ public class UniversalIndexTest {
         System.out.println("testFindBest_ShouldFind");
         UniversalIndex instance = new UniversalIndex(new WritingChooser(), dict);
         DictEntry result = instance.findBest(new DictEntry("ちょうさ", "transcendence"));
-        assertEquals("search", result.english);
+        assertEquals("search", result.serializedMeanings());
     }
 
     @Test

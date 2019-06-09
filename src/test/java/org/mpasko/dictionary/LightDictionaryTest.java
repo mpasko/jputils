@@ -47,7 +47,7 @@ public class LightDictionaryTest {
         LightDictionary dict = new LightDictionary();
         dict.put("洞窟", "どうくつ", "cave");
         DictEntry result = dict.find("洞窟", "どうくつ");
-        Assert.assertEquals("cave", result.english);
+        Assert.assertEquals("cave", result.serializedMeanings());
     }
 
     @Test
@@ -56,18 +56,18 @@ public class LightDictionaryTest {
         dict.put("物語", "ものがたり", "story");
         dict.put("洞窟", "どうくつ", "cave");
         DictEntry result = dict.find("洞窟", "どうくつ");
-        Assert.assertEquals("cave", result.english);
+        Assert.assertEquals("cave", result.serializedMeanings());
     }
 
     @Test
     public void given_multiple_entries_when_exact_matches_then_get_results() {
         LightDictionary dict = buildShortLightDictionary();
         DictEntry result = dict.find("質実剛健", "しつじつ");
-        Assert.assertEquals("unaffected and sincere", result.english);
+        Assert.assertEquals("unaffected and sincere", result.serializedMeanings());
         result = dict.find("確固", "かっこ");
-        Assert.assertEquals("firm", result.english);
+        Assert.assertEquals("firm", result.serializedMeanings());
         result = dict.find("克己", "こっき");
-        Assert.assertEquals("independent", result.english);
+        Assert.assertEquals("independent", result.serializedMeanings());
     }
 
     @Test

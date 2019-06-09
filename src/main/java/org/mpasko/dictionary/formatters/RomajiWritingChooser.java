@@ -16,7 +16,7 @@ public class RomajiWritingChooser implements IFeatureChooser {
 
     @Override
     public String choose(DictEntry entry) {
-        return new Furiganiser().romanize(entry.writing);
+        return new Furiganiser().romanize(entry.serializedReadings());
     }
 
 }

@@ -92,8 +92,8 @@ public class DictionarySplitterTest {
     private void testCannotSplit(String kanji, String writing, String meaning) {
         DictionarySplitter instance = new DictionarySplitter(getSplitableDictionary(), "", "");
         List<DictEntry> result = instance.split(new DictEntry(kanji, writing, meaning));
-        String printedList = result.stream().map(r -> r.kanji).collect(Collectors.joining(","));
+        String printedList = result.stream().map(r -> r.serializedKeywords()).collect(Collectors.joining(","));
         assertEquals("Expected to leave only one piece but left:"+ printedList,1, result.size());
-        assertEquals(kanji, result.get(0).kanji);
+        assertEquals(kanji, result.get(0).serializedKeywords());
     }
 }

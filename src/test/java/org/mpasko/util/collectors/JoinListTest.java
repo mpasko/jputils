@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import org.junit.*;
+import utils.collectors.JoinList;
+
 import static org.junit.Assert.*;
 
 /**

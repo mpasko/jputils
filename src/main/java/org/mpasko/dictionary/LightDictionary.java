@@ -18,7 +18,7 @@ public class LightDictionary extends AbstractDictionary {
 
     private void sortWhenNeeded() {
         if (!pristine) {
-            this.dict.sort(Comparator.comparing(item -> item.kanji));
+            this.dict.sort(Comparator.comparing(item -> item.serializedKeywords()));
         }
         pristine = true;
     }
@@ -26,7 +26,7 @@ public class LightDictionary extends AbstractDictionary {
     @Override
     public DictEntry findStrict(String kanji, String reading) {
         DictEntry standard = find(kanji, reading);
-        return standard.writing.equalsIgnoreCase(reading) ? standard : null;
+        return standard.serializedReadings().equalsIgnoreCase(reading) ? standard : null;
     }
 
     @Override
@@ -39,9 +39,9 @@ public class LightDictionary extends AbstractDictionary {
         DictEntry startValue = this.dict.get(start);
         DictEntry stopValue = this.dict.get(stop);
         if (start >= stop - 1) {
-            if (startValue.kanji.equalsIgnoreCase(keyword)) {
+            if (startValue.serializedKeywords().equalsIgnoreCase(keyword)) {
                 return startValue;
-            } else if (stopValue.kanji.equalsIgnoreCase(keyword)) {
+            } else if (stopValue.serializedKeywords().equalsIgnoreCase(keyword)) {
                 return stopValue;
             } else {
                 return null;
@@ -49,11 +49,11 @@ public class LightDictionary extends AbstractDictionary {
         }
         int medium = (start + stop) / 2;
         DictEntry mediumValue = this.dict.get(medium);
-        if (keyword.compareTo(mediumValue.kanji)<0) {
+        if (keyword.compareTo(mediumValue.serializedKeywords())<0) {
             return findBisect(keyword, start, medium - 1);
-        } else if (keyword.compareTo(mediumValue.kanji)>0) {
+        } else if (keyword.compareTo(mediumValue.serializedKeywords())>0) {
             return findBisect(keyword, medium + 1, stop);
-        } else if (mediumValue.kanji.equalsIgnoreCase(keyword)) {
+        } else if (mediumValue.serializedKeywords().equalsIgnoreCase(keyword)) {
             return mediumValue;
         } else {
             return null;

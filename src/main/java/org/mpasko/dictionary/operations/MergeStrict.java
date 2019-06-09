@@ -24,12 +24,12 @@ public class MergeStrict {
     }
 
     public void mergeItem(Dictionary base, DictEntry additional) {
-        DictEntry existingAlready = base.findStrict(additional.kanji, additional.writing);
+        DictEntry existingAlready = base.findStrict(additional.serializedKeywords(), additional.serializedReadings());
         if (existingAlready == null) {
             base.put(additional);
         } else {
-            if (!existingAlready.english.contains(additional.english)) {
-                existingAlready.english = existingAlready.english + "," + additional.english;
+            if (!existingAlready.serializedMeanings().contains(additional.serializedMeanings())) {
+                existingAlready.english = existingAlready.serializedMeanings() + "," + additional.serializedMeanings();
             }
         }
     }

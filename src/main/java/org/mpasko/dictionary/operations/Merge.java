@@ -19,15 +19,15 @@ public class Merge {
     }
 
     public void mergeItem(IDictionary base, DictEntry additional) {
-        DictEntry existingAlready = base.findDefault(additional.kanji);
+        DictEntry existingAlready = base.findDefault(additional.serializedKeywords());
         if (existingAlready == null) {
             base.put(additional);
         } else {
-            if (!existingAlready.english.contains(additional.english)) {
-                existingAlready.english = existingAlready.english + "," + additional.english;
+            if (!existingAlready.serializedMeanings().contains(additional.serializedMeanings())) {
+                existingAlready.english = existingAlready.serializedMeanings() + "," + additional.serializedMeanings();
             }
-            if (!existingAlready.writing.contains(additional.writing)) {
-                existingAlready.writing = existingAlready.writing + "," + additional.writing;
+            if (!existingAlready.serializedReadings().contains(additional.serializedReadings())) {
+                existingAlready.writing = existingAlready.serializedReadings() + "," + additional.serializedReadings();
             }
         }
     }

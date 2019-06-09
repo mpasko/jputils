@@ -29,16 +29,16 @@ public class DictionarySelfFilter implements IFilter {
     }
 
     private boolean wordIsBuitFromExisting(DictEntry entry, LightDictionary raw) {
-        if (entry.kanji.length() <= 3) {
+        if (entry.serializedKeywords().length() <= 3) {
             return false;
         }
         int start;
-        for (start=0; start<entry.kanji.length()-3; start += 2) {
-            if (!existsInRaw(entry.kanji.substring(start, start+2), raw)) {
+        for (start=0; start<entry.serializedKeywords().length()-3; start += 2) {
+            if (!existsInRaw(entry.serializedKeywords().substring(start, start+2), raw)) {
                 return false;
             }
         }
-        return existsInRaw(entry.kanji.substring(start, entry.kanji.length()), raw);
+        return existsInRaw(entry.serializedKeywords().substring(start, entry.serializedKeywords().length()), raw);
     }
 
     private boolean existsInRaw(String keyword, LightDictionary raw) {

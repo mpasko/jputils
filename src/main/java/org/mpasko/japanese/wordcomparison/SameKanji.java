@@ -16,9 +16,9 @@ public class SameKanji implements IWordComparer {
 
     @Override
     public boolean areSimillar(DictEntry entry1, DictEntry entry2) {
-        boolean stright = StringUtils.equalsIgnoreCase(entry1.kanji, entry2.kanji);
-        boolean skipKanji1 = StringUtils.equalsIgnoreCase(entry1.writing, entry2.kanji);
-        boolean skipKanji2 = StringUtils.equalsIgnoreCase(entry1.kanji, entry2.writing);
+        boolean stright = StringUtils.equalsIgnoreCase(entry1.serializedKeywords(), entry2.serializedKeywords());
+        boolean skipKanji1 = StringUtils.equalsIgnoreCase(entry1.serializedReadings(), entry2.serializedKeywords());
+        boolean skipKanji2 = StringUtils.equalsIgnoreCase(entry1.serializedKeywords(), entry2.serializedReadings());
         return stright || skipKanji1 || skipKanji2;
     }
 

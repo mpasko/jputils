@@ -67,12 +67,12 @@ public class ReadingDecomposer {
     }
 
     public List<Entry<String, String>> decompose(DictEntry entry) {
-        final String word = entry.kanji;
+        final String word = entry.serializedKeywords();
         List<Character> containedKanji = Classifier.classify(word).getKanji();
         final LinkedList<Entry<String, String>> returnedList = new LinkedList<>();
         for (int index = 0; index < containedKanji.size(); ++index) {
             Character kanji = containedKanji.get(index);
-            String reading = findReadingForFragment(word, entry.writing, index, containedKanji);
+            String reading = findReadingForFragment(word, entry.serializedReadings(), index, containedKanji);
             returnedList.add(MapUtils.entry(kanji.toString(), reading));
         }
         return returnedList;

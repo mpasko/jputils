@@ -25,9 +25,9 @@ public class OnlyKanjiFilter extends GenericFilter{
     @Override
     public boolean itemMatches(DictEntry entry) {
         if (hiragana) {
-            return !Classifier.classify(entry.kanji).containsKatakana();
+            return !Classifier.classify(entry.serializedKeywords()).containsKatakana();
         } else {
-            return !Classifier.classify(entry.kanji).containsFurigana();
+            return !Classifier.classify(entry.serializedKeywords()).containsFurigana();
         }
     }
     

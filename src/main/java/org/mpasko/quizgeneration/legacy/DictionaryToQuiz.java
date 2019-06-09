@@ -79,8 +79,8 @@ public class DictionaryToQuiz {
         for (DictEntry entry : dictionary.items()) {
             ArrayList<DictEntry> answers = prepareAllAnswers(entry, dictionary, expectedAnswers);
             String question = entry.generateQuestion();
-            List<String> englishAnswers = answers.stream().map((DictEntry ans) -> ans.english).collect(Collectors.toList());
-            quiz.addQuestion(new Question(question, entry.english, englishAnswers));
+            List<String> englishAnswers = answers.stream().map((DictEntry ans) -> ans.serializedMeanings()).collect(Collectors.toList());
+            quiz.addQuestion(new Question(question, entry.serializedMeanings(), englishAnswers));
         }
         return quiz;
     }

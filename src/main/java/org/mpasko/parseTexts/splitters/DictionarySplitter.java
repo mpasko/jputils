@@ -41,15 +41,15 @@ public class DictionarySplitter implements ISplitter {
 
     @Override
     public List<DictEntry> split(DictEntry word) {
-        if (word.kanji.length() <= 3) {
+        if (word.serializedKeywords().length() <= 3) {
             return Arrays.asList(word);
         }
-        if (Classifier.classify(word.kanji).getKanji().size() < word.kanji.length()) {
+        if (Classifier.classify(word.serializedKeywords()).getKanji().size() < word.serializedKeywords().length()) {
             return Arrays.asList(word);
         }
         List<DictEntry> extracted = new BruteForceExtractor(new AggregateStemmer(prefixes, postfixes), dictionary)
                 .setLimits(splitFrom, splitUpTo)
-                .extract(word.kanji)
+                .extract(word.serializedKeywords())
                 .stream().map(inflection -> inflection.dictionaryWord)
                 .collect(Collectors.toList());
         if (coversAllCharsFromSource(extracted, word)) {
@@ -61,9 +61,9 @@ public class DictionarySplitter implements ISplitter {
 
     private static boolean coversAllCharsFromSource(List<DictEntry> split, DictEntry word) {
         Set<Character> splitSet = new HashSet<>();
-        Set<Character> wordSet = charactersIntoSet(word.kanji);
+        Set<Character> wordSet = charactersIntoSet(word.serializedKeywords());
         split.stream()
-                .forEach(candidate -> splitSet.addAll(charactersIntoSet(candidate.kanji)));
+                .forEach(candidate -> splitSet.addAll(charactersIntoSet(candidate.serializedKeywords())));
         return splitSet.containsAll(wordSet);
     }
 

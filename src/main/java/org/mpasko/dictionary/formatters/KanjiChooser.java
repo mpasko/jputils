@@ -15,7 +15,7 @@ public class KanjiChooser implements IFeatureChooser {
 
     @Override
     public String choose(DictEntry entry) {
-        return entry.kanji;
+        return entry.serializedKeywords();
     }
 
 }

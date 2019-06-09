@@ -27,7 +27,7 @@ public class LengthFilter extends GenericFilter{
     
     @Override
     public boolean itemMatches(DictEntry entry) {
-        return (entry.kanji.length() >= desiredFrom) && (entry.kanji.length() <= desiredTo);
+        return (entry.serializedKeywords().length() >= desiredFrom) && (entry.serializedKeywords().length() <= desiredTo);
     }
     
 }

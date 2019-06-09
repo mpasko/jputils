@@ -4,16 +4,32 @@
  */
 package org.mpasko.commons;
 
+import org.mpasko.japanese.dictionaries.SplitterSerializer;
 import org.mpasko.japanese.wordcomparison.SynonimeComparer;
+import org.mpasko.japanese.dictionaries.IDictEntry;
+
+import java.util.List;
 
 /**
  *
  * @author marcin
  */
-public class DictEntry {
+public class DictEntry implements IDictEntry{
 
+    /**
+     * Deprecated, please use interface methods instead
+     */
+    @Deprecated
     public String kanji = "";
+    /**
+     * Deprecated, please use interface methods instead
+     */
+    @Deprecated
     public String writing = "";
+    /**
+     * Deprecated, please use interface methods instead
+     */
+    @Deprecated
     public String english = "";
 
     public DictEntry(String kanji, String writing, String english) {
@@ -116,5 +132,35 @@ public class DictEntry {
         all.append(" -");
         all.append(this.english);
         return all.toString();
+    }
+
+    @Override
+    public List<String> getKeywords() {
+        return SplitterSerializer.split(kanji, ",;");
+    }
+
+    @Override
+    public List<String> getReadings() {
+        return SplitterSerializer.split(writing, ",;");
+    }
+
+    @Override
+    public List<String> getMeanings() {
+        return SplitterSerializer.split(english, ",;");
+    }
+
+    @Override
+    public String serializedKeywords() {
+        return this.kanji;
+    }
+
+    @Override
+    public String serializedReadings() {
+        return this.writing;
+    }
+
+    @Override
+    public String serializedMeanings() {
+        return this.english;
     }
 }

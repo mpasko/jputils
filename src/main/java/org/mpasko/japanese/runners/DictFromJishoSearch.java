@@ -37,7 +37,7 @@ public class DictFromJishoSearch {
             }
             log.append(word).append(" to: -> ").append(processed).append("\n");
             DictEntry entry = full.find(processed, processed);
-            if (entry != null && entry.kanji.length() >= 2) {
+            if (entry != null && entry.serializedKeywords().length() >= 2) {
                 produced.put(entry);
             }
         }

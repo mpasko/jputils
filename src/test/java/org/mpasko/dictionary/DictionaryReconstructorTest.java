@@ -43,10 +43,10 @@ public class DictionaryReconstructorTest {
         Dictionary result = instance.reconstruct(source);
         assertEquals(6, result.size());
         final List<DictEntry> items = result.items();
-        assertEquals("汪然", items.get(0).kanji);
-        assertEquals("旺然", items.get(1).kanji);
-        assertEquals("離陸", items.get(2).kanji);
-        assertEquals("紛い", items.get(5).kanji);
+        assertEquals("汪然", items.get(0).serializedKeywords());
+        assertEquals("旺然", items.get(1).serializedKeywords());
+        assertEquals("離陸", items.get(2).serializedKeywords());
+        assertEquals("紛い", items.get(5).serializedKeywords());
     }
 
     @Test

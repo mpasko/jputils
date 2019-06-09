@@ -24,7 +24,7 @@ public class DictFilter extends GenericFilter{
 
     public final DictFilter withDict(Dictionary dict) {
         for (DictEntry item : dict.items()) {
-            for (char kanji : item.kanji.toCharArray()) {
+            for (char kanji : item.serializedKeywords().toCharArray()) {
                 if (Classifier.classify(kanji).containsKanji()) {
                     kanjiSet.add(Character.toString(kanji));
                 }

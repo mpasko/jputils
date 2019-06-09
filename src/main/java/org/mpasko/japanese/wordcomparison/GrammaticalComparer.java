@@ -19,13 +19,13 @@ public class GrammaticalComparer implements IWordComparer {
     @Override
     public boolean areSimillar(DictEntry entry1, DictEntry entry2) {
         boolean sameKanji = sameKanjiSet(entry1, entry2);
-        boolean differOnlyLast = differOnlyLastCharacter(entry1.writing, entry2.writing);
+        boolean differOnlyLast = differOnlyLastCharacter(entry1.serializedReadings(), entry2.serializedReadings());
         return sameKanji && differOnlyLast;
     }
 
     private boolean sameKanjiSet(DictEntry entry1, DictEntry entry2) {
-        List<Character> kanji1 = Classifier.classify(entry1.kanji).getKanji();
-        List<Character> kanji2 = Classifier.classify(entry2.kanji).getKanji();
+        List<Character> kanji1 = Classifier.classify(entry1.serializedKeywords()).getKanji();
+        List<Character> kanji2 = Classifier.classify(entry2.serializedKeywords()).getKanji();
         return ListUtils.areListsSame(kanji1, kanji2);
     }
 

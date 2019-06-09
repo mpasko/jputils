@@ -16,7 +16,7 @@ public class StrictSynonimeComparer implements IWordComparer {
 
     @Override
     public boolean areSimillar(DictEntry entry1, DictEntry entry2) {
-        return StringUtils.equalsIgnoreCase(entry1.english, entry2.english);
+        return StringUtils.equalsIgnoreCase(entry1.serializedMeanings(), entry2.serializedMeanings());
     }
 
 }

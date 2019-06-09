@@ -44,7 +44,7 @@ public class ExtractorFilter {
         for (String pair : itemsOrdered) {
             DictEntry item = dict.find(pair, pair);
             if ((item != null)) {
-                found.put(item.kanji, item.writing, SimpleUtils.limitComas(item.english));
+                found.put(item.serializedKeywords(), item.serializedReadings(), SimpleUtils.limitComas(item.serializedMeanings()));
             } else {
                 System.out.println(pair + " -not found in dict!");
             }

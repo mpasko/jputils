@@ -33,7 +33,8 @@ public class Dictionary extends AbstractDictionary {
     private MultipleIndexer<DictEntry> stripindex;
     private Map<String, UniversalIndex> indexByFeature = new HashMap<String, UniversalIndex>();
     private UniversalIndex readindex = new UniversalIndex(new WritingChooser(), this);
-    private static Comparator<? super DictEntry> THE_SHORTEST = (d1, d2) -> d1.writing.length() - d2.writing.length();
+    private static Comparator<? super DictEntry> THE_SHORTEST =
+            (d1, d2) -> d1.serializedReadings().length() - d2.serializedReadings().length();
 
     public Dictionary(List<DictEntry> initializeWith) {
         this();
@@ -92,7 +93,7 @@ public class Dictionary extends AbstractDictionary {
         LinkedList<DictEntry> foundPhonetical = findAllByReading(key);
         return foundPhonetical
                 .stream()
-                .filter(entry -> containsNormalized(entry.english, value))
+                .filter(entry -> containsNormalized(entry.serializedMeanings(), value))
                 .collect(new DictEntryCollector());
     }
 
@@ -120,11 +121,11 @@ public class Dictionary extends AbstractDictionary {
         kanjiindex = new MultipleIndexer<>();
         stripindex = new MultipleIndexer<>();
         dict.forEach((item) -> {
-            if (Classifier.classify(item.kanji).containsJapanese()) {
+            if (Classifier.classify(item.serializedKeywords()).containsJapanese()) {
                 //we dont like Crisps anumore :(
-                strictindex.put(item.kanji + item.writing, item);
-                kanjiindex.put(item.kanji, item);
-                stripindex.put(LangUtils.getOnlyPreInfix(item.kanji), item);
+                strictindex.put(item.serializedKeywords() + item.serializedReadings(), item);
+                kanjiindex.put(item.serializedKeywords(), item);
+                stripindex.put(LangUtils.getOnlyPreInfix(item.serializedKeywords()), item);
             }
         });
         readindex.createIndex();
@@ -134,9 +135,9 @@ public class Dictionary extends AbstractDictionary {
         if (strictindex == null) {
             createIndex();
         }
-        strictindex.put(item.kanji + item.writing, item);
-        kanjiindex.put(item.kanji, item);
-        stripindex.put(LangUtils.getOnlyPreInfix(item.kanji), item);
+        strictindex.put(item.serializedKeywords() + item.serializedReadings(), item);
+        kanjiindex.put(item.serializedKeywords(), item);
+        stripindex.put(LangUtils.getOnlyPreInfix(item.serializedKeywords()), item);
         readindex.updateIndex(item);
     }
 
