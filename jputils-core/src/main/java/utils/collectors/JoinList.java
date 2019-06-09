@@ -1,9 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package org.mpasko.util.collectors;
+package utils.collectors;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -15,10 +10,6 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Collector;
 
-/**
- *
- * @author marcin
- */
 public class JoinList<T> implements Collector<List<T>, LinkedList<T>, LinkedList<T>> {
 
     public JoinList() {
@@ -45,7 +36,7 @@ public class JoinList<T> implements Collector<List<T>, LinkedList<T>, LinkedList
     }
 
     @Override
-    public Set<Collector.Characteristics> characteristics() {
+    public Set<Characteristics> characteristics() {
         return new TreeSet<>();
     }
 
