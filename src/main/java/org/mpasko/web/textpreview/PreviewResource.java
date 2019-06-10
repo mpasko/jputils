@@ -16,7 +16,7 @@ public class PreviewResource {
 
     public PreviewResource(DataSourceCache data, FileIdMap sourceIds) {
         this.idCache = sourceIds;
-        dict = data.dataSources.getGlobalDict();
+        dict = data.getDataSources().getGlobalDictionary();
     }
 
     public void setupEndpoints() {

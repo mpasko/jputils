@@ -28,7 +28,7 @@ import org.mpasko.util.Filesystem;
  *
  * @author marcin
  */
-public class DataSources {
+public class DataSources implements IDataSource {
 
     private Dictionary globalDictionary;
 
@@ -40,11 +40,7 @@ public class DataSources {
         this.globalDictionary = AllDictionaries.load();
     }
 
-    public Dictionary getGlobalDict() {
-        return globalDictionary;
-    }
-
-    public Dictionary readingWhitelist() {
+    private Dictionary readingWhitelist() {
         Dictionary listening = reconstructReadingWhitelist();
         System.out.println("Reading reconstructed: " + listening.size());
         Dictionary speculation = loadWhitelistSpeculation();
@@ -55,7 +51,7 @@ public class DataSources {
     }
 
     public Dictionary loadWhitelistSpeculation() {
-        List<DictEntry> speculation = loadAllSources();
+        List<DictEntry> speculation = loadAllWordsFromSources();
 
         OnyomiSpeculationFilter defaultOnyomiFilter = OnyomiSpeculationFilter.initializeDefault();
         //InversionOf filter = new InversionOf(defaultOnyomiFilter);
@@ -69,7 +65,7 @@ public class DataSources {
                 .collect(Collectors.toList());
     }
 
-    private List<DictEntry> loadAllSources() {
+    private List<DictEntry> loadAllWordsFromSources() {
         List<DictEntry> speculation = getGlobalSourceList()
                 .stream()
                 .map(dir -> new DictionaryFileLoader()
@@ -79,7 +75,7 @@ public class DataSources {
         return speculation;
     }
 
-    public Dictionary listeningWhitelist() {
+    private Dictionary listeningWhitelist() {
         return reconstructListening(DefaultConfig.listeningWhitelist);
     }
 
@@ -101,11 +97,11 @@ public class DataSources {
         return reconstructReading(DefaultConfig.readingWhitelist);
     }
 
-    public Dictionary readingBlacklist() {
+    private Dictionary readingBlacklist() {
         return reconstructReading(DefaultConfig.readingBlacklist);
     }
 
-    public Dictionary listeningBlacklist() {
+    private Dictionary listeningBlacklist() {
         return reconstructListening(DefaultConfig.listeningBlacklist);
     }
 
@@ -117,6 +113,31 @@ public class DataSources {
     }
 
     Dictionary globalDictionary() {
+        return globalDictionary;
+    }
+
+    @Override
+    public Dictionary getListeningWhitelist() {
+        return listeningWhitelist();
+    }
+
+    @Override
+    public Dictionary getReadingWhitelist() {
+        return readingWhitelist();
+    }
+
+    @Override
+    public Dictionary getListeningBlacklist() {
+        return listeningBlacklist();
+    }
+
+    @Override
+    public Dictionary getReadingBlacklist() {
+        return readingBlacklist();
+    }
+
+    @Override
+    public Dictionary getGlobalDictionary() {
         return globalDictionary;
     }
 }

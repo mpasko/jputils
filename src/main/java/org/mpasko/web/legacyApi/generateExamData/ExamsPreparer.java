@@ -6,12 +6,12 @@
 package org.mpasko.web.legacyApi.generateExamData;
 
 import org.mpasko.exams.*;
+import org.mpasko.japanese.runners.workflow.IDataSource;
 import org.mpasko.management.console.DefaultConfig;
 import org.mpasko.dictionary.Dictionary;
 import org.mpasko.dictionary.DictionaryFileLoader;
 import org.mpasko.util.Filesystem;
 import org.mpasko.repository.filesystem.DictionaryUniversalLoader;
-import org.mpasko.web.DataSourceCache;
 import org.mpasko.exams.ExamItem;
 
 import java.util.List;
@@ -22,8 +22,8 @@ import java.util.List;
  */
 public class ExamsPreparer {
 
-    private DataSourceCache data;
-    public ExamsPreparer(DataSourceCache data) {
+    private IDataSource data;
+    public ExamsPreparer(IDataSource data) {
         this.data = data;
     }
 
@@ -38,6 +38,9 @@ public class ExamsPreparer {
                 .buildExamData(dict);
     }
 
+    /**
+     * Todo: use getDataByPath instead
+     */
     @Deprecated
     public ExamData getDataAbout(String id, String subid) {
         Dictionary dict = new DictionaryFileLoader()
@@ -45,11 +48,18 @@ public class ExamsPreparer {
         return new ExamDataBuilder(this.data).buildExamData(dict);
     }
 
+
+    /**
+     * Todo: -forgot to add label. Speculation: probably we need something that returns @return ExamData
+     */
     @Deprecated
     List<ExamItem> generateExam(String params, String activity, String phase) {
         return new ExamBuilder().generateExam(getDataAbout(params), activity, phase);
     }
 
+    /**
+     * Todo: -forgot to add label. Speculation: probably we need something that returns @return ExamData
+     */
     @Deprecated
     List<ExamItem> generateSubExam(String params, String activity, String phase) {
         return new ExamBuilder().generateExam(getDataAboutSubitem(params), activity, phase);

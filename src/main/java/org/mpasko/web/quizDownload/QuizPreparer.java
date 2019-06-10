@@ -28,7 +28,7 @@ public class QuizPreparer {
     public StringDTO prepareQuiz(String id, String activity, String phase) {
         String path = idCache.search(id);
         List<ExamItem> quizData = new ExamsPreparer(data).generateExamByPath(path, activity, phase);
-        List<DictEntry> shrinkedDict = shrinkedSubset(data.dataSources.getGlobalDict().items(), 1000);
+        List<DictEntry> shrinkedDict = shrinkedSubset(data.getDataSources().getGlobalDictionary().items(), 1000);
         List<ExamItem> answerPool = new ExamBuilder().dictionaryIntoExam(shrinkedDict, activity);
         Quiz quiz = new QuizBuilderFactory()
                 .getBuilder(activity, phase)

@@ -26,7 +26,7 @@ import org.mpasko.util.StringUtils;
  */
 public class ProcessEverything {
 
-    DataSources data = new DataSources();
+    IDataSource data = new DataSources();
 
     public static void main(String[] args) {
         new ProcessEverything().start();
@@ -80,7 +80,7 @@ public class ProcessEverything {
 
     private Dictionary applyRequiredFilters(Dictionary dict) {
         Dictionary new_dict = dict;
-        new_dict = SplittingFilter.StandardSplittingFilter(data.globalDictionary(), "", "")
+        new_dict = SplittingFilter.StandardSplittingFilter(data.getGlobalDictionary(), "", "")
                 .filter(new_dict);
         DuplicateFilter duplicateFilter = DuplicateFilter.outputDictionaryDuplicateFilter();
         new_dict = duplicateFilter.filter(new_dict);
@@ -96,8 +96,8 @@ public class ProcessEverything {
     }
 
     private void mergeReadingAndListening() {
-        Dictionary reading = data.readingWhitelist();
-        Dictionary listening = data.listeningWhitelist();
+        Dictionary reading = data.getReadingWhitelist();
+        Dictionary listening = data.getListeningWhitelist();
         Dictionary commonPart = new Product(reading, listening).result();
         System.out.println("Common part: " + commonPart.size());
         saveAs(commonPart, DictionaryFormatter.buildStandardFormatter(), DefaultConfig.understandingWhitelist, DefaultConfig.understandingWhitelistFile);

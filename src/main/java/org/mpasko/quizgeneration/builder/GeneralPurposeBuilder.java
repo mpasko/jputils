@@ -1,12 +1,8 @@
 package org.mpasko.quizgeneration.builder;
 
-import org.mpasko.commons.DictEntry;
-import org.mpasko.dictionary.Dictionary;
-import org.mpasko.exams.ExamData;
 import org.mpasko.exams.ExamItem;
 import org.mpasko.quizgeneration.Question;
 import org.mpasko.quizgeneration.Quiz;
-import org.mpasko.quizgeneration.legacy.WrongAnswerSelector;
 import org.mpasko.quizgeneration.wrongAnswers.GeneralPurposeSelector;
 import org.mpasko.util.Randomation;
 

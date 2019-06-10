@@ -18,7 +18,7 @@ public class ResultSaver {
     }
 
     public String saveResults(String type, String id, ResultData content) {
-        final Remover remover = new Remover(data.dataSources.getGlobalDict());
+        final Remover remover = new Remover(data.getDataSources().getGlobalDictionary());
         try {
             remover.removeRedundancy("black", type, content.correct);
             remover.removeRedundancy("white", type, content.incorrect);
