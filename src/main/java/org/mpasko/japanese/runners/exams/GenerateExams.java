@@ -4,6 +4,7 @@
  */
 package org.mpasko.japanese.runners.exams;
 
+import org.mpasko.configuration.RuntimeSetup;
 import org.mpasko.dictionary.Dictionary;
 import org.mpasko.dictionary.DictionaryFileLoader;
 import org.mpasko.japanese.wordfilters.*;
@@ -19,7 +20,7 @@ import org.mpasko.util.Filesystem;
 public class GenerateExams {
 
     public static void main(String args[]) {
-        System.getProperties().setProperty("jdk.xml.entityExpansionLimit", "0");
+        RuntimeSetup.configure();
         int i = 0;
 
         /*

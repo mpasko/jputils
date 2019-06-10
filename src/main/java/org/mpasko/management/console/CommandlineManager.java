@@ -30,6 +30,7 @@ public class CommandlineManager {
     }
 
     private void setupCommands() {
+        add(new InstallCase());
         add(new ExamCase());
         add(new SongsCase());
         add(new DictionaryCase());

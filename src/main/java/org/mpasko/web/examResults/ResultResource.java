@@ -1,5 +1,6 @@
 package org.mpasko.web.examResults;
 
+import org.mpasko.japanese.runners.workflow.IDataSource;
 import org.mpasko.web.DataSourceCache;
 import org.mpasko.web.server.JsonParser;
 
@@ -9,7 +10,7 @@ public class ResultResource {
     private static final String FILE_CONTEXT = "/api/save-results";
     private final ResultSaver saver;
 
-    public ResultResource(DataSourceCache data) {
+    public ResultResource(IDataSource data) {
         saver = new ResultSaver(data);
     }
 

@@ -7,7 +7,8 @@ package org.mpasko.web;
 
 import java.util.List;
 
-import org.mpasko.management.console.DefaultConfig;
+import org.mpasko.configuration.DefaultPaths;
+import org.mpasko.japanese.runners.workflow.IDataSource;
 import org.mpasko.util.Filesystem;
 
 /**
@@ -16,18 +17,18 @@ import org.mpasko.util.Filesystem;
  */
 class SourceDirectory {
 
-    private DataSourceCache data;
-    public SourceDirectory(DataSourceCache data) {
+    private IDataSource data;
+    public SourceDirectory(IDataSource data) {
         this.data = data;
     }
 
     public List<String> getItems() {
-        List<String> directories = new Filesystem().getSubdirectories(DefaultConfig.wordsGlobalSources);
+        List<String> directories = new Filesystem().getSubdirectories(DefaultPaths.wordsGlobalSources);
         return directories;
     }
 
     public List<String> getSubItems(String id) {
-        List<String> files = new Filesystem().getSubfiles(DefaultConfig.wordsGlobalSources + "/" + id);
+        List<String> files = new Filesystem().getSubfiles(DefaultPaths.wordsGlobalSources + "/" + id);
         return files;
     }
 }

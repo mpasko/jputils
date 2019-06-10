@@ -4,6 +4,7 @@
  */
 package org.mpasko.loadres;
 
+import org.mpasko.configuration.RuntimeSetup;
 import org.mpasko.loadres.loaderfilters.IJmDictFilter;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
@@ -21,7 +22,6 @@ import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
 import org.mpasko.dictionary.Dictionary;
-import org.mpasko.util.SimpleUtils;
 import org.mpasko.util.StringUtils;
 import org.mpasko.util.Util;
 
@@ -46,7 +46,7 @@ public class JmDictLoader {
     private Map<String, LinkedList<String>> map = new HashMap<String, LinkedList<String>>();
 
     public Dictionary load(DefaultFilter filter) {
-        System.getProperties().setProperty("jdk.xml.entityExpansionLimit", "0");
+        RuntimeSetup.configure();
         XMLEventReader eventReader = null;
         String tagContent = "";
         String lastTag = "";

@@ -1,9 +1,9 @@
 package org.mpasko.parseTexts;
 
+import org.mpasko.configuration.DefaultPaths;
 import org.mpasko.dictionary.Dictionary;
 import org.mpasko.dictionary.IDictionary;
 import org.mpasko.editor.Asset;
-import org.mpasko.management.console.DefaultConfig;
 import org.mpasko.util.Filesystem;
 import org.mpasko.util.Traverser;
 
@@ -21,7 +21,7 @@ public class GenerateReading {
     }
 
     public void start() {
-        Traverser.traverse(DefaultConfig.wordsGlobalSources, this::visit);
+        Traverser.traverse(DefaultPaths.wordsGlobalSources, this::visit);
     }
 
     private void visit(String _b, String relative, String name) {
@@ -31,9 +31,9 @@ public class GenerateReading {
     }
 
     private void generateReadingForFile(String relative, String name, Dictionary fullDict) {
-        //String dictSourceFullPath = String.format("%s/%s/%s", DefaultConfig.wordsGlobalSources, relative, name);
-        String textFullPath = String.format("%s/%s/%s", DefaultConfig.textSources, relative, name);
-        String resultPath = String.format("%s/%s/%s", DefaultConfig.readingOutut, relative, name);
+        //String dictSourceFullPath = String.format("%s/%s/%s", DefaultPaths.wordsGlobalSources, relative, name);
+        String textFullPath = String.format("%s/%s/%s", DefaultPaths.textSources, relative, name);
+        String resultPath = String.format("%s/%s/%s", DefaultPaths.readingOutut, relative, name);
         //Dictionary dictionary = new DictionaryFileLoader().loadTripleDict(dictSourceFullPath);
         String content = generateChunked(name, Asset.load(textFullPath), fullDict);
         new Filesystem().saveFile(resultPath, content);

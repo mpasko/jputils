@@ -1,6 +1,6 @@
 package org.mpasko.editor;
 
-import org.mpasko.management.console.DefaultConfig;
+import org.mpasko.configuration.DefaultPaths;
 import org.mpasko.util.Filesystem;
 import org.mpasko.util.IFilesystem;
 import org.mpasko.util.StringUtils;
@@ -46,7 +46,7 @@ public class Asset {
 
     public static void save(String name, Asset asset) {
         String name_cut = name.replaceAll(".txt", "");
-        String realignedPath = StringUtils.alignPaths(DefaultConfig.textSources, name_cut);
+        String realignedPath = StringUtils.alignPaths(DefaultPaths.textSources, name_cut);
         IFilesystem fs = new Filesystem();
         saveJapanese(fs, realignedPath, asset);
         saveEnglish(fs, realignedPath, asset);

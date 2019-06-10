@@ -3,6 +3,7 @@ package org.mpasko.web.quizDownload;
 import org.mpasko.commons.DictEntry;
 import org.mpasko.exams.ExamBuilder;
 import org.mpasko.exams.ExamItem;
+import org.mpasko.japanese.runners.workflow.IDataSource;
 import org.mpasko.quizgeneration.Quiz;
 import org.mpasko.quizgeneration.QuizFormatter;
 import org.mpasko.quizgeneration.builder.QuizBuilderFactory;
@@ -18,9 +19,9 @@ import java.util.List;
 public class QuizPreparer {
 
     private final FileIdMap idCache;
-    private final DataSourceCache data;
+    private final IDataSource data;
 
-    public QuizPreparer(FileIdMap idCache, DataSourceCache data) {
+    public QuizPreparer(FileIdMap idCache, IDataSource data) {
         this.idCache = idCache;
         this.data = data;
     }
@@ -28,7 +29,7 @@ public class QuizPreparer {
     public StringDTO prepareQuiz(String id, String activity, String phase) {
         String path = idCache.search(id);
         List<ExamItem> quizData = new ExamsPreparer(data).generateExamByPath(path, activity, phase);
-        List<DictEntry> shrinkedDict = shrinkedSubset(data.getDataSources().getGlobalDictionary().items(), 1000);
+        List<DictEntry> shrinkedDict = shrinkedSubset(data.getGlobalDictionary().items(), 1000);
         List<ExamItem> answerPool = new ExamBuilder().dictionaryIntoExam(shrinkedDict, activity);
         Quiz quiz = new QuizBuilderFactory()
                 .getBuilder(activity, phase)

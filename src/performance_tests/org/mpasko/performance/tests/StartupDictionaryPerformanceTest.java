@@ -10,7 +10,7 @@ public class StartupDictionaryPerformanceTest {
     private final int TIMEOUT = 2 * TimeUnits.MINUTE;
 
     @Rule
-    public Timeout globalTimeout = new Timeout(2 * TIMEOUT);
+    public Timeout globalTimeout = new Timeout(TIMEOUT);
 
     @Test
     public void dictionary_should_load_in_reasonable_time() {

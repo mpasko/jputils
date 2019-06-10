@@ -8,8 +8,8 @@ package org.mpasko.japanese.runners.workflow;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import org.mpasko.configuration.DefaultPaths;
 import org.mpasko.japanese.wordfilters.NotEnglishOriginFilter;
-import org.mpasko.management.console.DefaultConfig;
 import org.mpasko.dictionary.Dictionary;
 import org.mpasko.dictionary.DictionaryFileLoader;
 import org.mpasko.dictionary.formatters.DictionaryFormatter;
@@ -41,7 +41,7 @@ public class ProcessEverything {
     private Map<String, String> directoriesAsSelectedSources() {
         return DataSources.getGlobalSourceList()
                 .stream()
-                .collect(Collectors.toMap(dir -> dir, dir -> DefaultConfig.wordsGlobalSources + "/" + dir + "/"));
+                .collect(Collectors.toMap(dir -> dir, dir -> DefaultPaths.wordsGlobalSources + "/" + dir + "/"));
     }
 
     private void generateReadingFromSelectedSources() {
@@ -49,12 +49,12 @@ public class ProcessEverything {
         directoriesAsSelectedSources()
                 .entrySet()
                 .stream()
-                .forEach((entry) -> generateWritingFromSelectedSource(entry.getKey(), entry.getValue(), formatter, DefaultConfig.readingSources));
+                .forEach((entry) -> generateWritingFromSelectedSource(entry.getKey(), entry.getValue(), formatter, DefaultPaths.readingSources));
     }
 
     private void generateListeningFromSelectedSources() {
         final DictionaryFormatter formatter = DictionaryFormatter.buildListeningFormatter();
-        generateFromSelectedSourcesUsingFormatter(formatter, DefaultConfig.listeningSources);
+        generateFromSelectedSourcesUsingFormatter(formatter, DefaultPaths.listeningSources);
     }
 
     private void generateFromSelectedSourcesUsingFormatter(final DictionaryFormatter formatter, String outputDirectory) {
@@ -100,6 +100,6 @@ public class ProcessEverything {
         Dictionary listening = data.getListeningWhitelist();
         Dictionary commonPart = new Product(reading, listening).result();
         System.out.println("Common part: " + commonPart.size());
-        saveAs(commonPart, DictionaryFormatter.buildStandardFormatter(), DefaultConfig.understandingWhitelist, DefaultConfig.understandingWhitelistFile);
+        saveAs(commonPart, DictionaryFormatter.buildStandardFormatter(), DefaultPaths.understandingWhitelist, DefaultPaths.understandingWhitelistFile);
     }
 }

@@ -9,9 +9,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import org.mpasko.commons.DictEntry;
-import org.mpasko.dictionary.operations.Merge;
+import org.mpasko.configuration.DefaultPaths;
 import org.mpasko.dictionary.operations.MergeStrict;
-import org.mpasko.management.console.DefaultConfig;
 import org.mpasko.dictionary.Dictionary;
 import org.mpasko.dictionary.DictionaryFileLoader;
 import org.mpasko.japanese.wordcomparison.OrComparer;
@@ -28,8 +27,8 @@ import org.mpasko.util.Filesystem;
 public class ReconstructWritingFromManualDict {
 
     public static void main(String[] args) {
-        final String manualPaths = DefaultConfig.workflowManualSources;
-        final String outputPaths = DefaultConfig.workflowManualProcessed;
+        final String manualPaths = DefaultPaths.workflowManualSources;
+        final String outputPaths = DefaultPaths.workflowManualProcessed;
         Dictionary dict = new ReconstructWritingFromManualDict().reconstruct(manualPaths);
         dict = new DuplicateFilter(new OrComparer(
                 new SamePhonetic(),

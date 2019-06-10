@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.mpasko.dictionary.IDictionary;
-import org.mpasko.management.console.DefaultConfig;
+import org.mpasko.configuration.DefaultPaths;
 import org.mpasko.dictionary.Dictionary;
 import org.mpasko.editor.Asset;
 import org.mpasko.parseTexts.ExtractorFilter;
@@ -40,7 +40,7 @@ public class SongLayout {
         //reuse ExtractWordsFromTexts
         String jap = new Filesystem().loadFile(filename);
         final String dictionaryStringified = findAndFilterWords(jap, full_dict);
-        new Filesystem().saveFile(String.format("./%s/%s/%s", DefaultConfig.wordsGlobalSources, category, song), dictionaryStringified);
+        new Filesystem().saveFile(String.format("./%s/%s/%s", DefaultPaths.wordsGlobalSources, category, song), dictionaryStringified);
         //end reuse
         return generateChunksForFile(song, filename, full_dict);
     }

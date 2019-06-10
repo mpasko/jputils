@@ -10,6 +10,9 @@ import java.util.List;
 import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.mpasko.commons.Classifier;
 import org.mpasko.commons.DictEntry;
 import org.mpasko.commons.Furiganiser;
@@ -24,6 +27,7 @@ import org.mpasko.util.MapUtils;
  * @author marcin
  */
 public class ReadingDecomposer {
+    private static final Logger LOGGER = LogManager.getLogger(ReadingDecomposer.class.getName());
 
     static String removeDots(String input) {
         int index = input.indexOf('.');
@@ -83,7 +87,8 @@ public class ReadingDecomposer {
         int start = word.indexOf(kanji);
         int stop = estimateStop(word, index, containedKanji);
         if (start < 0 || stop < 0 || start >= stop) {
-            System.out.println(String.format("Something went wrong: %s, %s, %s", word, writing, containedKanji.get(index)));
+            String message = String.format("Something went wrong: %s, %s, %s", word, writing, containedKanji.get(index));
+            LOGGER.warn(message);
             return null;
         }
         String fragment = word.substring(start, stop);

@@ -8,10 +8,13 @@ package org.mpasko.japanese.runners.workflow;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.mpasko.commons.DictEntry;
 import org.mpasko.commons.analizers.ReadingDecomposer;
+import org.mpasko.configuration.DefaultPaths;
 import org.mpasko.loadres.AllDictionaries;
-import org.mpasko.management.console.DefaultConfig;
 import org.mpasko.dictionary.Dictionary;
 import org.mpasko.dictionary.DictionaryFileLoader;
 import org.mpasko.dictionary.DictionaryReconstructor;
@@ -29,6 +32,7 @@ import org.mpasko.util.Filesystem;
  * @author marcin
  */
 public class DataSources implements IDataSource {
+    private static final Logger LOGGER = LogManager.getLogger(DataSources.class.getName());
 
     private Dictionary globalDictionary;
 
@@ -42,11 +46,11 @@ public class DataSources implements IDataSource {
 
     private Dictionary readingWhitelist() {
         Dictionary listening = reconstructReadingWhitelist();
-        System.out.println("Reading reconstructed: " + listening.size());
+        LOGGER.info("Reading reconstructed: " + listening.size());
         Dictionary speculation = loadWhitelistSpeculation();
-        System.out.println("Speculation reconstructed: " + speculation.size());
+        LOGGER.info("Speculation reconstructed: " + speculation.size());
         Dictionary result = new Sum(listening, speculation).result();
-        System.out.println("Listening result reconstructed: " + result.size());
+        LOGGER.info("Listening result reconstructed: " + result.size());
         return result;
     }
 
@@ -59,7 +63,7 @@ public class DataSources implements IDataSource {
     }
 
     public static List<String> getGlobalSourceList() {
-        return new Filesystem().getSubdirectories(DefaultConfig.wordsGlobalSources)
+        return new Filesystem().getSubdirectories(DefaultPaths.wordsGlobalSources)
                 .stream()
                 .filter(dir -> !dir.startsWith("_"))
                 .collect(Collectors.toList());
@@ -69,14 +73,14 @@ public class DataSources implements IDataSource {
         List<DictEntry> speculation = getGlobalSourceList()
                 .stream()
                 .map(dir -> new DictionaryFileLoader()
-                .loadTripleDictFromFolder(String.format("%s/%s", DefaultConfig.wordsGlobalSources, dir)).items())
+                .loadTripleDictFromFolder(String.format("%s/%s", DefaultPaths.wordsGlobalSources, dir)).items())
                 .reduce(ReadingDecomposer::mergeLists)
                 .orElseGet(() -> new LinkedList<DictEntry>());
         return speculation;
     }
 
     private Dictionary listeningWhitelist() {
-        return reconstructListening(DefaultConfig.listeningWhitelist);
+        return reconstructListening(DefaultPaths.listeningWhitelist);
     }
 
     private Dictionary reconstructListening(final String listeningPath) {
@@ -94,15 +98,15 @@ public class DataSources implements IDataSource {
     }
 
     private Dictionary reconstructReadingWhitelist() {
-        return reconstructReading(DefaultConfig.readingWhitelist);
+        return reconstructReading(DefaultPaths.readingWhitelist);
     }
 
     private Dictionary readingBlacklist() {
-        return reconstructReading(DefaultConfig.readingBlacklist);
+        return reconstructReading(DefaultPaths.readingBlacklist);
     }
 
     private Dictionary listeningBlacklist() {
-        return reconstructListening(DefaultConfig.listeningBlacklist);
+        return reconstructListening(DefaultPaths.listeningBlacklist);
     }
 
     private Dictionary reconstruct(IFeatureChooser exact,
@@ -139,5 +143,10 @@ public class DataSources implements IDataSource {
     @Override
     public Dictionary getGlobalDictionary() {
         return globalDictionary;
+    }
+
+    @Override
+    public void reloadDataSources() {
+
     }
 }

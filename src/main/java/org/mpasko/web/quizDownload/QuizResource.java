@@ -1,5 +1,6 @@
 package org.mpasko.web.quizDownload;
 
+import org.mpasko.japanese.runners.workflow.IDataSource;
 import org.mpasko.web.DataSourceCache;
 import org.mpasko.web.server.JsonTransformer;
 import org.mpasko.web.textpreview.FileIdMap;
@@ -10,7 +11,7 @@ public class QuizResource {
     private static String QUIZ_CONTEXT = "/api.v2/quizdownload";
     private final QuizPreparer preparer;
 
-    public QuizResource(FileIdMap idCache, DataSourceCache data) {
+    public QuizResource(FileIdMap idCache, IDataSource data) {
         this.preparer = new QuizPreparer(idCache, data);
     }
 

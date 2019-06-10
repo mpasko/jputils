@@ -8,7 +8,7 @@ package org.mpasko.japanese.runners.workflow;
 import java.util.List;
 import java.util.Map;
 import org.mpasko.commons.analizers.ReadingDecomposer;
-import org.mpasko.management.console.DefaultConfig;
+import org.mpasko.configuration.DefaultPaths;
 import org.mpasko.dictionary.Dictionary;
 import org.mpasko.util.Filesystem;
 
@@ -27,7 +27,7 @@ public class GenerateOnyomiWhitelist {
         List<Map.Entry<String, String>> decomposed = ReadingDecomposer
                 .initializeWithDefaultDict()
                 .decompose(whitelist.items());
-        new Filesystem().saveFile(DefaultConfig.onyomiWhitelist, formatDecomposed(decomposed));
+        new Filesystem().saveFile(DefaultPaths.onyomiWhitelist, formatDecomposed(decomposed));
     }
 
     public Dictionary loadWhitelist() {

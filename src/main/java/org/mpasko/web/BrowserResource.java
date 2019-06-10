@@ -5,7 +5,8 @@
  */
 package org.mpasko.web;
 
-import org.mpasko.management.console.DefaultConfig;
+import org.mpasko.configuration.DefaultPaths;
+import org.mpasko.japanese.runners.workflow.IDataSource;
 import org.mpasko.web.controlPanel.PanelResource;
 import org.mpasko.web.editor.EditorResource;
 import org.mpasko.web.examGeneration.ExamResource;
@@ -35,16 +36,15 @@ public class BrowserResource {
     private final FileIdMap dictionariesIdCache;
 
     public BrowserResource() {
-        DataSourceCache data = new DataSourceCache();
-        sourceIdCache = FileIdMap.generateDefault(DefaultConfig.textSources);
-        dictionariesIdCache = FileIdMap.generateDefault(DefaultConfig.wordsGlobalSources);
+        IDataSource data = new DataSourceCache();
+        sourceIdCache = FileIdMap.generateDefault(DefaultPaths.textSources);
+        dictionariesIdCache = FileIdMap.generateDefault(DefaultPaths.wordsGlobalSources);
 
         exams = new SourceDirectory(data);
         search = new FileSearcher();
         song = new Presentation();
         setupEndpoints();
         new ResultResource(data).setupEndpoints();
-        //new ExamDataResource(data).setupEndpoints();
         new ExamResource(data).setupEndpoints();
         new QuizResource(dictionariesIdCache, data).setupEndpoints();
         new PreviewResource(data, sourceIdCache).setupEndpoints();

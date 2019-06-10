@@ -7,7 +7,7 @@ package org.mpasko.web.legacyApi.generateExamData;
 
 import org.mpasko.exams.*;
 import org.mpasko.japanese.runners.workflow.IDataSource;
-import org.mpasko.management.console.DefaultConfig;
+import org.mpasko.configuration.DefaultPaths;
 import org.mpasko.dictionary.Dictionary;
 import org.mpasko.dictionary.DictionaryFileLoader;
 import org.mpasko.util.Filesystem;
@@ -44,7 +44,7 @@ public class ExamsPreparer {
     @Deprecated
     public ExamData getDataAbout(String id, String subid) {
         Dictionary dict = new DictionaryFileLoader()
-                .loadTripleDict(DefaultConfig.wordsGlobalSources + "/" + id + "/" + subid);
+                .loadTripleDict(DefaultPaths.wordsGlobalSources + "/" + id + "/" + subid);
         return new ExamDataBuilder(this.data).buildExamData(dict);
     }
 
@@ -68,14 +68,14 @@ public class ExamsPreparer {
     @Deprecated
     public ExamData getDataAbout(String id) {
         Dictionary dict = new DictionaryFileLoader()
-                .loadTripleDictFromFolder(DefaultConfig.wordsGlobalSources + "/" + id);
+                .loadTripleDictFromFolder(DefaultPaths.wordsGlobalSources + "/" + id);
         return new ExamDataBuilder(this.data).buildExamData(dict);
     }
 
     @Deprecated
     public ExamData getDataAboutSubitem(String params) {
         System.out.println(params);
-        String path = findFileWithName(DefaultConfig.wordsGlobalSources, params);
+        String path = findFileWithName(DefaultPaths.wordsGlobalSources, params);
         Dictionary dict = new DictionaryFileLoader().loadTripleDict(path);
         return new ExamDataBuilder(this.data).buildExamData(dict);
     }

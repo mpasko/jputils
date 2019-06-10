@@ -1,6 +1,7 @@
 package org.mpasko.web.wordspreview;
 
-import org.mpasko.management.console.DefaultConfig;
+import org.mpasko.configuration.DefaultPaths;
+import org.mpasko.japanese.runners.workflow.IDataSource;
 import org.mpasko.web.DataSourceCache;
 import org.mpasko.web.legacyApi.generateExamData.ExamsPreparer;
 import org.mpasko.web.server.JsonTransformer;
@@ -13,10 +14,10 @@ public class WordsPreviewResource {
     private final ExamsPreparer exams;
     private FileIdMap idCache;
 
-    public WordsPreviewResource(DataSourceCache data) {
+    public WordsPreviewResource(IDataSource data) {
         //TODO luckily there are common ids (filenames) between both previews [15.09.2018]
         //..but it would be safer for separate trees for both..
-        idCache = FileIdMap.generateDefault(DefaultConfig.wordsGlobalSources);
+        idCache = FileIdMap.generateDefault(DefaultPaths.wordsGlobalSources);
         exams = new ExamsPreparer(data);
     }
 

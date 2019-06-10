@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.mpasko.management.console;
+package org.mpasko.configuration;
 
 /**
  *
  * @author marcin
  */
-public class DefaultConfig {
+public class DefaultPaths {
 
     public static String exceptions = "dictionaries/all.txt";
     public static String listeningSources = "improved_workflow/words/listening/source/";
@@ -26,4 +26,5 @@ public class DefaultConfig {
     public static String onyomiWhitelist = "improved_workflow/kanji/test_onyomi_whitelist.txt";
     public static String textSources = "improved_workflow/texts";
     public static String readingOutut = "texts";
+    public static String configFile = "improved_workflow/config.json";
 }

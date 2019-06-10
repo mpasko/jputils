@@ -1,7 +1,8 @@
 package org.mpasko.web.examGeneration;
 
 import org.mpasko.exams.Combinations;
-import org.mpasko.management.console.DefaultConfig;
+import org.mpasko.configuration.DefaultPaths;
+import org.mpasko.japanese.runners.workflow.IDataSource;
 import org.mpasko.web.DataSourceCache;
 import org.mpasko.web.legacyApi.generateExamData.ExamsPreparer;
 import org.mpasko.web.server.JsonTransformer;
@@ -16,10 +17,10 @@ public class ExamResource {
     private final ExamsPreparer exams;
     private final FileIdMap idCache;
 
-    public ExamResource(DataSourceCache data) {
+    public ExamResource(IDataSource data) {
         //TODO luckily there are common ids (filenames) between both previews [15.09.2018]
         //..but it would be safer for separate trees for both..
-        idCache = FileIdMap.generateDefault(DefaultConfig.wordsGlobalSources);
+        idCache = FileIdMap.generateDefault(DefaultPaths.wordsGlobalSources);
         exams = new ExamsPreparer(data);
     }
 

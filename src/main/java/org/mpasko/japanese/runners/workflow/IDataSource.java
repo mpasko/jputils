@@ -8,4 +8,5 @@ public interface IDataSource {
     Dictionary getListeningBlacklist();
     Dictionary getReadingBlacklist();
     Dictionary getGlobalDictionary();
+    void reloadDataSources();
 }

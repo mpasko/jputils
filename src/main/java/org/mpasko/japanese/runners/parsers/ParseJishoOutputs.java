@@ -17,6 +17,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.mpasko.commons.Classifier;
+import org.mpasko.configuration.RuntimeSetup;
 import org.mpasko.dictionary.Dictionary;
 import org.mpasko.dictionary.IDictionary;
 import org.mpasko.loadres.JmDictLoader;
@@ -30,7 +31,7 @@ import org.mpasko.util.*;
 public class ParseJishoOutputs {
 
     public static void main(String args[]) {
-        System.getProperties().setProperty("jdk.xml.entityExpansionLimit", "0");
+        RuntimeSetup.configure();
         processAllSongs();
     }
 

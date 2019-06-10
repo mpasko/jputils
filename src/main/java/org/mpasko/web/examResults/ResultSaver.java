@@ -1,6 +1,7 @@
 package org.mpasko.web.examResults;
 
 import org.mpasko.exams.Remover;
+import org.mpasko.japanese.runners.workflow.IDataSource;
 import org.mpasko.util.Filesystem;
 import org.mpasko.web.DataSourceCache;
 
@@ -11,14 +12,14 @@ import java.util.Date;
 
 public class ResultSaver {
 
-    private final DataSourceCache data;
+    private final IDataSource data;
 
-    public ResultSaver(DataSourceCache data) {
+    public ResultSaver(IDataSource data) {
         this.data = data;
     }
 
     public String saveResults(String type, String id, ResultData content) {
-        final Remover remover = new Remover(data.getDataSources().getGlobalDictionary());
+        final Remover remover = new Remover(data.getGlobalDictionary());
         try {
             remover.removeRedundancy("black", type, content.correct);
             remover.removeRedundancy("white", type, content.incorrect);

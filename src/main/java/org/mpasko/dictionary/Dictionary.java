@@ -4,23 +4,17 @@
  */
 package org.mpasko.dictionary;
 
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
 import org.mpasko.commons.Classifier;
 import org.mpasko.commons.DictEntry;
 import org.mpasko.commons.Furiganiser;
-import org.mpasko.dictionary.formatters.DictionaryFormatter;
 import org.mpasko.dictionary.formatters.IFeatureChooser;
 import org.mpasko.dictionary.formatters.KanjiChooser;
 import org.mpasko.dictionary.formatters.WritingChooser;
-import org.mpasko.util.Filesystem;
-import org.mpasko.util.ImmutableList;
 import org.mpasko.util.LangUtils;
 import org.mpasko.util.StringUtils;
 import org.mpasko.util.collectors.DictEntryCollector;
+
+import java.util.*;
 
 /**
  *

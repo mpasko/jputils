@@ -7,9 +7,12 @@ package org.mpasko.japanese.wordfilters;
 
 import java.util.List;
 import java.util.Map;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.mpasko.commons.DictEntry;
 import org.mpasko.commons.analizers.ReadingDecomposer;
-import org.mpasko.management.console.DefaultConfig;
+import org.mpasko.configuration.DefaultPaths;
 import org.mpasko.dictionary.DictionaryFileLoader;
 import org.mpasko.dictionary.MultipleIndexer;
 import org.mpasko.util.Filesystem;
@@ -19,6 +22,7 @@ import org.mpasko.util.Filesystem;
  * @author marcin
  */
 public class OnyomiSpeculationFilter extends GenericFilter {
+    private static final Logger LOGGER = LogManager.getLogger(OnyomiSpeculationFilter.class.getName());
 
     //List<MapEntry<String, String>>
     MultipleIndexer<String> index = new MultipleIndexer<>();
@@ -30,7 +34,7 @@ public class OnyomiSpeculationFilter extends GenericFilter {
     }
 
     public static OnyomiSpeculationFilter initializeDefault() {
-        final String fileContent = new Filesystem().loadFile(DefaultConfig.onyomiWhitelist);
+        final String fileContent = new Filesystem().loadFile(DefaultPaths.onyomiWhitelist);
         final List<Map.Entry<String, String>> onyomiWhitelist = DictionaryFileLoader.parseAsSimpleMap(fileContent);
         final ReadingDecomposer decomposer = ReadingDecomposer.initializeWithDefaultDict();
         return new OnyomiSpeculationFilter(onyomiWhitelist, decomposer);
@@ -57,7 +61,8 @@ public class OnyomiSpeculationFilter extends GenericFilter {
     }
 
     private String debug(String item) {
-        System.out.println("Debuging: " + item);
+        String message = "Debuging: " + item;
+        LOGGER.info(message);
         return item;
     }
 

@@ -1,9 +1,9 @@
 package org.mpasko.parseTexts;
 
 import org.mpasko.commons.DictEntry;
+import org.mpasko.configuration.DefaultPaths;
 import org.mpasko.dictionary.Dictionary;
 import org.mpasko.dictionary.IDictionary;
-import org.mpasko.management.console.DefaultConfig;
 import org.mpasko.util.Filesystem;
 import org.mpasko.util.Traverser;
 
@@ -26,7 +26,7 @@ public class ExtractWordsFromTexts {
         String actualPath = basePath+"/"+relativePath+"/"+filename;
         String jap = new Filesystem().loadFile(actualPath);
         final String dictionaryStringified = findAndFilterWords(jap, this.fullDictionary);
-        new Filesystem().saveFile(String.format("./%s/%s/%s", DefaultConfig.wordsGlobalSources, relativePath, filename), dictionaryStringified);
+        new Filesystem().saveFile(String.format("./%s/%s/%s", DefaultPaths.wordsGlobalSources, relativePath, filename), dictionaryStringified);
     }
 
     private String findAndFilterWords(String sourceText, Dictionary full_dict) {

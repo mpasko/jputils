@@ -21,3 +21,7 @@ install_dict http://www.edrdg.org/kanjidic kanjidic2.xml.gz kanjidic2.xml
 install_dict http://ftp.monash.edu/pub/nihongo enamdict.gz enamdict.xml
 
 mkdir -p improved_workflow/words/global_sources
+
+command="java -jar target/jputils-1.0-SNAPSHOT-jar-with-dependencies.jar "
+
+$command --install

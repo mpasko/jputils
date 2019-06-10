@@ -5,6 +5,8 @@
  */
 package org.mpasko.management.console;
 
+import org.mpasko.configuration.RuntimeSetup;
+
 /**
  *
  * @author marcin
@@ -12,7 +14,7 @@ package org.mpasko.management.console;
 public class Main {
 
     public static void main(String[] argv) {
-        System.getProperties().setProperty("jdk.xml.entityExpansionLimit", "0");
+        RuntimeSetup.configure();
         new CommandlineManager().execute(argv);
     }
 }

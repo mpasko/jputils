@@ -7,7 +7,7 @@ package org.mpasko.japanese.wordfilters;
 import java.util.LinkedList;
 import java.util.List;
 import org.mpasko.commons.DictEntry;
-import org.mpasko.management.console.DefaultConfig;
+import org.mpasko.configuration.DefaultPaths;
 import org.mpasko.dictionary.Dictionary;
 import org.mpasko.dictionary.DictionaryFileLoader;
 import org.mpasko.dictionary.formatters.IFeatureChooser;
@@ -60,17 +60,17 @@ public class KnownWordsFilter extends GenericFilter {
         addList("dictionaries/jlptN5.txt", new Dictionary());
         addList("dictionaries/jlptN4.txt", new Dictionary());
         /*
-        Dictionary exceptions = new DictionaryFileLoader().loadTripleDict(DefaultConfig.exceptions);
+        Dictionary exceptions = new DictionaryFileLoader().loadTripleDict(DefaultPaths.exceptions);
         Dictionary goethe = PopularDictionaries.loadGoetheDictionaries();
         addList(goethe, exceptions);
         System.out.println("Known filter initialized with goethe");
         addList("dictionaries/some_songs.txt", exceptions);
-        addList(DefaultConfig.whitelistFromSongs, exceptions);
-        addList(DefaultConfig.whitelistFromSongsNew, exceptions);
+        addList(DefaultPaths.whitelistFromSongs, exceptions);
+        addList(DefaultPaths.whitelistFromSongsNew, exceptions);
         addListWithoutTranslations("inputs/whitelist_furigana.txt");
         addListWithoutTranslations("inputs/whitelist_words.txt");
         */
-        Dictionary understandingDictionary = new DictionaryFileLoader().loadTripleDictFromFolder(DefaultConfig.understandingWhitelist);
+        Dictionary understandingDictionary = new DictionaryFileLoader().loadTripleDictFromFolder(DefaultPaths.understandingWhitelist);
         knownWords.addAll(understandingDictionary.items());
         this.knownDictionary = new Dictionary(knownWords);
     }
