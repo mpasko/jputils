@@ -3,7 +3,7 @@ package org.mpasko.performance.tests;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.Timeout;
-import org.mpasko.web.DataSourceCache;
+import org.mpasko.repository.dataSource.DataSourceCache;
 
 public class DataLoadingPerformanceTest {
     private final int TIMEOUT = 2 * TimeUnits.MINUTE;

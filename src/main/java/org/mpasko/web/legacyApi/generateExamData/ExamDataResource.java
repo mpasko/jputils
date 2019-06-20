@@ -1,7 +1,7 @@
 package org.mpasko.web.legacyApi.generateExamData;
 
 import org.mpasko.exams.Combinations;
-import org.mpasko.web.DataSourceCache;
+import org.mpasko.repository.dataSource.DataSourceCache;
 import org.mpasko.web.server.JsonTransformer;
 
 import static spark.Spark.get;

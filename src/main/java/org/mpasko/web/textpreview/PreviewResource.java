@@ -3,8 +3,7 @@ package org.mpasko.web.textpreview;
 import org.mpasko.configuration.DefaultPaths;
 import org.mpasko.fileTreeModel.TreeGenerator;
 import org.mpasko.dictionary.Dictionary;
-import org.mpasko.japanese.runners.workflow.IDataSource;
-import org.mpasko.web.DataSourceCache;
+import org.mpasko.repository.dataSource.IDataSource;
 import org.mpasko.web.server.JsonTransformer;
 import org.mpasko.web.server.StringDTO;
 

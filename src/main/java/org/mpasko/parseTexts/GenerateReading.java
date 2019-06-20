@@ -33,7 +33,7 @@ public class GenerateReading {
     private void generateReadingForFile(String relative, String name, Dictionary fullDict) {
         //String dictSourceFullPath = String.format("%s/%s/%s", DefaultPaths.wordsGlobalSources, relative, name);
         String textFullPath = String.format("%s/%s/%s", DefaultPaths.textSources, relative, name);
-        String resultPath = String.format("%s/%s/%s", DefaultPaths.readingOutut, relative, name);
+        String resultPath = String.format("%s/%s/%s", DefaultPaths.readingOutput, relative, name);
         //Dictionary dictionary = new DictionaryFileLoader().loadTripleDict(dictSourceFullPath);
         String content = generateChunked(name, Asset.load(textFullPath), fullDict);
         new Filesystem().saveFile(resultPath, content);

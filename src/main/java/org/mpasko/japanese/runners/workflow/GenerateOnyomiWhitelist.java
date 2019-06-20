@@ -10,6 +10,7 @@ import java.util.Map;
 import org.mpasko.commons.analizers.ReadingDecomposer;
 import org.mpasko.configuration.DefaultPaths;
 import org.mpasko.dictionary.Dictionary;
+import org.mpasko.repository.dataSource.DataSources;
 import org.mpasko.util.Filesystem;
 
 /**

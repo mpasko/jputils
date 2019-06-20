@@ -6,7 +6,7 @@
 package org.mpasko.web.legacyApi.generateExamData;
 
 import org.mpasko.exams.*;
-import org.mpasko.japanese.runners.workflow.IDataSource;
+import org.mpasko.repository.dataSource.IDataSource;
 import org.mpasko.configuration.DefaultPaths;
 import org.mpasko.dictionary.Dictionary;
 import org.mpasko.dictionary.DictionaryFileLoader;

@@ -2,8 +2,7 @@ package org.mpasko.web.examGeneration;
 
 import org.mpasko.exams.Combinations;
 import org.mpasko.configuration.DefaultPaths;
-import org.mpasko.japanese.runners.workflow.IDataSource;
-import org.mpasko.web.DataSourceCache;
+import org.mpasko.repository.dataSource.IDataSource;
 import org.mpasko.web.legacyApi.generateExamData.ExamsPreparer;
 import org.mpasko.web.server.JsonTransformer;
 import org.mpasko.web.textpreview.FileIdMap;

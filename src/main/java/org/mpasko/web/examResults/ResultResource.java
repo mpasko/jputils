@@ -1,7 +1,6 @@
 package org.mpasko.web.examResults;
 
-import org.mpasko.japanese.runners.workflow.IDataSource;
-import org.mpasko.web.DataSourceCache;
+import org.mpasko.repository.dataSource.IDataSource;
 import org.mpasko.web.server.JsonParser;
 
 import static spark.Spark.put;

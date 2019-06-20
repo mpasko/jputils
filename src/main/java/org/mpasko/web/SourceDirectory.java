@@ -8,7 +8,7 @@ package org.mpasko.web;
 import java.util.List;
 
 import org.mpasko.configuration.DefaultPaths;
-import org.mpasko.japanese.runners.workflow.IDataSource;
+import org.mpasko.repository.dataSource.IDataSource;
 import org.mpasko.util.Filesystem;
 
 /**

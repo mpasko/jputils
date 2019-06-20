@@ -1,12 +1,12 @@
 <log4j:configuration debug="true" xmlns:log4j='http://jakarta.apache.org/log4j/'>
     <appenders>
-        <RollingFile name="rolling-file" fileName="logs/jputils.log" filePattern="logs/$${date:MM-yyyy}/jputils-%d{dd-MM-yyyy}-%i.log.gz">
+        <RollingFile name="rolling-file" fileName="logs/jputils.log" filePattern="logs/$${date:MM-yyyy}/jputils-%d{dd-MM-yyyy HH:mm}-%i.log">
             <PatternLayout>
                 <pattern>%d{ABSOLUTE} [%t] %-5p %c{1} - %m%n</pattern>
             </PatternLayout>
             <Policies>
                 <TimeBasedTriggeringPolicy interval="6" modulate="true"/>
-                <SizeBasedTriggeringPolicy size="25 MB"/>
+                <SizeBasedTriggeringPolicy size="100 MB"/>
             </Policies>
         </RollingFile>
     </appenders>

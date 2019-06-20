@@ -17,6 +17,8 @@ import org.mpasko.dictionary.operations.Product;
 import org.mpasko.japanese.wordfilters.DuplicateFilter;
 import org.mpasko.japanese.wordfilters.OnyomiSpeculationFilter;
 import org.mpasko.japanese.wordfilters.wordsplitter.SplittingFilter;
+import org.mpasko.repository.dataSource.DataSources;
+import org.mpasko.repository.dataSource.IDataSource;
 import org.mpasko.util.Filesystem;
 import org.mpasko.util.StringUtils;
 

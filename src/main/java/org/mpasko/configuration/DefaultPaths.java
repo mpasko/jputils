@@ -25,6 +25,7 @@ public class DefaultPaths {
     public static String workflowManualProcessed = wordsGlobalSources + "/manual_dic/recovered_manual.txt";
     public static String onyomiWhitelist = "improved_workflow/kanji/test_onyomi_whitelist.txt";
     public static String textSources = "improved_workflow/texts";
-    public static String readingOutut = "texts";
+    public static String readingOutput = "texts";
     public static String configFile = "improved_workflow/config.json";
+    public static String sourceCaches = "improved_workflow/caches";
 }

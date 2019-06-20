@@ -1,4 +1,4 @@
-package org.mpasko.japanese.runners.workflow;
+package org.mpasko.repository.dataSource;
 
 import org.mpasko.dictionary.Dictionary;
 

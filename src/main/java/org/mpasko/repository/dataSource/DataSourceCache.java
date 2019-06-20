@@ -1,9 +1,9 @@
-package org.mpasko.web;
+package org.mpasko.repository.dataSource;
 
 import org.mpasko.dictionary.Dictionary;
-import org.mpasko.japanese.runners.workflow.DataSources;
+import org.mpasko.repository.dataSource.DataSources;
 import org.mpasko.japanese.runners.workflow.GenerateOnyomiWhitelist;
-import org.mpasko.japanese.runners.workflow.IDataSource;
+import org.mpasko.repository.dataSource.IDataSource;
 
 public class DataSourceCache implements IDataSource {
     private Dictionary listeningWhitelist;
