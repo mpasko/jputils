@@ -1,7 +1,7 @@
 package org.mpasko.web.legacyApi.generateExamData;
 
 import org.mpasko.exams.Combinations;
-import org.mpasko.repository.dataSource.DataSourceCache;
+import org.mpasko.repository.dataSource.IDataSource;
 import org.mpasko.web.server.JsonTransformer;
 
 import static spark.Spark.get;
@@ -12,7 +12,7 @@ public class ExamDataResource {
     private static final String BROWSER_CONTEXT = "/api/browser";
     private final ExamsPreparer exams;
 
-    public ExamDataResource(DataSourceCache data) {
+    public ExamDataResource(IDataSource data) {
         exams = new ExamsPreparer(data);
     }
 

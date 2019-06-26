@@ -7,6 +7,7 @@ package org.mpasko.web;
 
 import org.mpasko.configuration.DefaultPaths;
 import org.mpasko.repository.dataSource.DataSourceCache;
+import org.mpasko.repository.dataSource.DataSourceFactory;
 import org.mpasko.repository.dataSource.IDataSource;
 import org.mpasko.web.controlPanel.PanelResource;
 import org.mpasko.web.editor.EditorResource;
@@ -37,7 +38,7 @@ public class BrowserResource {
     private final FileIdMap dictionariesIdCache;
 
     public BrowserResource() {
-        IDataSource data = new DataSourceCache();
+        IDataSource data = DataSourceFactory.build();
         sourceIdCache = FileIdMap.generateDefault(DefaultPaths.textSources);
         dictionariesIdCache = FileIdMap.generateDefault(DefaultPaths.wordsGlobalSources);
 

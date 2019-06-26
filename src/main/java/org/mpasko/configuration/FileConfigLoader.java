@@ -2,6 +2,7 @@ package org.mpasko.configuration;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.mpasko.configuration.configurationModel.Configuration;
 import org.mpasko.util.Filesystem;
 import org.mpasko.web.server.JsonParser;
 import org.mpasko.web.server.JsonTransformer;

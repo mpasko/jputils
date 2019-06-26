@@ -15,7 +15,7 @@ public class ParseNovels {
     }
 
     public void rewriteAll() {
-        for (int i=1; i<=40; ++i) {
+        for (int i=80; i<=120; ++i) {
             rewriteChapter(i);
         }
     }

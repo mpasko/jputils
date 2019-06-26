@@ -1,5 +1,6 @@
 package org.mpasko.loadres;
 
+import org.mpasko.configuration.FileConfigLoader;
 import org.mpasko.dictionary.Dictionary;
 import org.mpasko.dictionary.DictionaryFileLoader;
 import org.mpasko.dictionary.IDictionary;
@@ -15,15 +16,22 @@ public class AllDictionaries {
         new Merge().mergeDictionaries(dictionary, jmdict);
         addEntriesFromFile(dictionary, "dictionaries/jlpt_grammar.txt");
         addEntriesFromFile(dictionary, "dictionaries/character_names.txt");
-        Dictionary emdict = filterDictionary(EmDictLoader.loadDictionary());
-        new Merge().mergeDictionaries(dictionary, emdict);
+        addEmdictIfNeeded(dictionary);
         return dictionary;
     }
 
+    public static void addEmdictIfNeeded(Dictionary dictionary) {
+        boolean emdictEnabled = new FileConfigLoader().loadConfig().dictionarySources.enableNameDictionary;
+        if (emdictEnabled) {
+            Dictionary emdict = filterDictionary(EmDictLoader.loadDictionary());
+            new Merge().mergeDictionaries(dictionary, emdict);
+        }
+    }
+
     private static void addEntriesFromFile(IDictionary jmdict, String filename) {
-        Dictionary jlptGrammar = new DictionaryFileLoader()
+        Dictionary dictionaryFromFile = new DictionaryFileLoader()
                 .loadTripleDict(filename);
-        new Merge().mergeDictionaries(jmdict, jlptGrammar);
+        new Merge().mergeDictionaries(jmdict, dictionaryFromFile);
     }
 
     private static Dictionary filterDictionary(Dictionary dict) {
