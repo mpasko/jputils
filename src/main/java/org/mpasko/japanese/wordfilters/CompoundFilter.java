@@ -34,5 +34,13 @@ public class CompoundFilter implements IFilter{
         }
         return partial;
     }
-    
+
+    @Override
+    public List<DictEntry> filter(List<DictEntry> dict) {
+        List<DictEntry> partial = dict;
+        for (IFilter filter : filters) {
+            partial = filter.filter(partial);
+        }
+        return partial;
+    }
 }

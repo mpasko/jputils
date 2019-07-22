@@ -5,7 +5,10 @@
  */
 package org.mpasko.japanese.wordfilters;
 
+import org.mpasko.commons.DictEntry;
 import org.mpasko.dictionary.Dictionary;
+
+import java.util.List;
 
 /**
  *
@@ -14,4 +17,5 @@ import org.mpasko.dictionary.Dictionary;
 public interface IFilter {
 
     Dictionary filter(Dictionary dict);
+    List<DictEntry> filter(List<DictEntry> dict);
 }

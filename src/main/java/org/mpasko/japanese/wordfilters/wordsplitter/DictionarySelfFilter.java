@@ -8,21 +8,28 @@ import org.mpasko.japanese.wordfilters.IFilter;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.LinkedList;
+import java.util.List;
 
 public class DictionarySelfFilter implements IFilter {
 
     @Override
     public Dictionary filter(Dictionary dict) {
-        return new Dictionary(filterInternal(dict));
+        return new Dictionary(filterInternal(dict.items()));
     }
 
-    private IDictionary filterInternal(IDictionary dict) {
+    @Override
+    public List<DictEntry> filter(List<DictEntry> dict) {
+        return filterInternal(dict);
+    }
+
+    private List<DictEntry> filterInternal(List<DictEntry> dict) {
         LightDictionary raw = new LightDictionary();
-        raw.putAll(dict.items());
-        Dictionary result = new Dictionary();
-        for (DictEntry entry: dict.items()) {
+        raw.putAll(dict);
+        List<DictEntry> result = new LinkedList<>();
+        for (DictEntry entry: dict) {
             if(!wordIsBuitFromExisting(entry, raw)) {
-                result.put(entry);
+                result.add(entry);
             }
         }
         return result;

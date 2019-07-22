@@ -6,6 +6,8 @@
 package org.mpasko.japanese.wordfilters.wordsplitter;
 
 import java.util.LinkedList;
+import java.util.List;
+
 import org.mpasko.commons.DictEntry;
 import org.mpasko.parseTexts.splitters.DictionarySplitter;
 import org.mpasko.dictionary.Dictionary;
@@ -30,11 +32,15 @@ public class SplittingFilter implements IFilter {
 
     @Override
     public Dictionary filter(Dictionary dict) {
-        LinkedList<DictEntry> results = new LinkedList<>();
-        for (DictEntry item : dict.items()) {
-            results.addAll(splitter.split(item));
-        }
-        return new Dictionary(results);
+        return new Dictionary(this.filter(dict.items()));
     }
 
+    @Override
+    public List<DictEntry> filter(List<DictEntry> dict) {
+        LinkedList<DictEntry> results = new LinkedList<>();
+        for (DictEntry item : dict) {
+            results.addAll(splitter.split(item));
+        }
+        return results;
+    }
 }

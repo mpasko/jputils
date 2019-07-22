@@ -8,6 +8,10 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.mpasko.commons.DictEntry;
 import org.mpasko.dictionary.Dictionary;
+import org.mpasko.japanese.dictionaries.IDictEntry;
+
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  *
@@ -24,9 +28,15 @@ public abstract class GenericFilter implements IFilter {
 
     public Dictionary filter(Dictionary dict) {
         Dictionary filtered = new Dictionary();
-        for (DictEntry item : dict.items()) {
+        filtered.putAll(filter(dict.items()));
+        return filtered;
+    }
+
+    public List<DictEntry> filter(List<DictEntry> dict) {
+        List<DictEntry> filtered = new LinkedList<>();
+        for (DictEntry item : dict) {
             if (itemMatches(item)) {
-                filtered.put(item);
+                filtered.add(item);
                 String message = String.format("Accepted item: %s", item.serializedKeywords());
                 LOGGER.info(message);
             }
